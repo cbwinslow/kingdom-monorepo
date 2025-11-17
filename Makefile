@@ -1,8 +1,9 @@
-.PHONY: help bootstrap dev build test lint clean submodule:init submodule:update submodule:status
+.PHONY: help setup bootstrap dev build test lint clean submodule:init submodule:update submodule:status
 
 # Default target
 help:
 	@echo "Kingdom Monorepo Commands:"
+	@echo "  setup          - Run the complete setup script"
 	@echo "  bootstrap      - Install dependencies and build all workspaces"
 	@echo "  dev            - Start development servers for all workspaces"
 	@echo "  build          - Build all workspaces"
@@ -12,6 +13,9 @@ help:
 	@echo "  submodule:init - Initialize git submodules"
 	@echo "  submodule:update - Update git submodules"
 	@echo "  submodule:status - Show submodule status"
+
+setup:
+	./setup.sh
 
 bootstrap:
 	npm install && npm run build --workspaces

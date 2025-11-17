@@ -19,10 +19,36 @@ A comprehensive monorepo for all development projects, tools, and infrastructure
 
 ## Getting Started
 
-1. Clone this repository
-2. Initialize submodules: `git submodule update --init --recursive`
-3. Install dependencies for your target workspace
-4. Check the specific README in each workspace for detailed setup
+### Quick Setup
+```bash
+# Clone the repository
+git clone https://github.com/cbwinslow/kingdom-monorepo.git
+cd kingdom-monorepo
+
+# Run the setup script (handles submodules properly)
+./setup.sh
+
+# Install dependencies and bootstrap
+make bootstrap
+```
+
+### Manual Setup
+```bash
+# Clone the repository
+git clone https://github.com/cbwinslow/kingdom-monorepo.git
+cd kingdom-monorepo
+
+# Initialize main submodules
+git submodule update --init
+
+# Handle opendiscourse separately (has nested submodules)
+cd opendiscourse
+git submodule update --init --recursive || echo "Some nested submodules may need manual setup"
+cd ..
+
+# Install dependencies
+make bootstrap
+```
 
 ## Submodules
 
