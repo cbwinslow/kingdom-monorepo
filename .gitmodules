@@ -1,0 +1,9 @@
+[submodule "opendiscourse"]
+	path = opendiscourse
+	url = https://github.com/cbwinslow/opendiscourse.git
+[submodule "cloudcurio-monorepo"]
+	path = cloudcurio-monorepo
+	url = https://github.com/cbwinslow/cloudcurio-monorepo-2.git
+[submodule "cbw-knowledge-base"]
+	path = cbw-knowledge-base
+	url = https://github.com/cbwinslow/cbw-knowledge-base.git
