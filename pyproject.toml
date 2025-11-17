@@ -1,0 +1,35 @@
+[tool]
+requires = ["poetry-core"]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "kingdom-monorepo"
+version = "1.0.0"
+description = "Kingdom monorepo - comprehensive development workspace"
+authors = ["Your Name <your.email@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.0.0"
+ruff = "^0.1.0"
+mypy = "^1.0.0"
+pytest = "^7.0.0"
+pre-commit = "^3.0.0"
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true

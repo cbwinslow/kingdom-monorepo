@@ -1,0 +1,35 @@
+{
+  "name": "kingdom-monorepo",
+  "version": "1.0.0",
+  "description": "Kingdom monorepo - comprehensive development workspace",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "libs/*",
+    "tools/*",
+    "services/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "clean": "npm run clean --workspaces && rm -rf node_modules",
+    "bootstrap": "npm install && npm run build --workspaces",
+    "submodule:init": "git submodule update --init --recursive",
+    "submodule:update": "git submodule update --remote --merge",
+    "submodule:status": "git submodule status"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
