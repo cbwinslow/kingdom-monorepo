@@ -1,3 +1,6 @@
+# Don't ignore our lib directory (override root .gitignore)
+!lib/
+
 # Dependencies
 node_modules/
 package-lock.json
