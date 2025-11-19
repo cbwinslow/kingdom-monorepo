@@ -1,0 +1,51 @@
+{
+  "id": "email-marketing-platform-crew-024",
+  "name": "Email Marketing Platform Crew",
+  "description": "Team for building email marketing and automation platforms",
+  "goal": "Create scalable email marketing platform with high deliverability",
+  "agents": [
+    "email-systems-specialist",
+    "backend-python-developer",
+    "frontend-react-developer",
+    "data-engineer",
+    "ui-ux-designer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "email_infrastructure",
+      "description": "Setup email sending infrastructure",
+      "agent": "email-systems-specialist",
+      "expected_output": "Reliable email infrastructure with tracking"
+    },
+    {
+      "name": "campaign_backend",
+      "description": "Build campaign management backend",
+      "agent": "backend-python-developer",
+      "expected_output": "Campaign API and automation engine"
+    },
+    {
+      "name": "analytics_pipeline",
+      "description": "Build email analytics pipeline",
+      "agent": "data-engineer",
+      "expected_output": "Email metrics and reporting"
+    },
+    {
+      "name": "template_editor",
+      "description": "Design email template editor",
+      "agent": "ui-ux-designer",
+      "expected_output": "Drag-and-drop template builder design"
+    },
+    {
+      "name": "campaign_interface",
+      "description": "Build campaign management UI",
+      "agent": "frontend-react-developer",
+      "expected_output": "Campaign creation and management interface"
+    }
+  ],
+  "manager_agent": "email-systems-specialist",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

@@ -1,0 +1,51 @@
+{
+  "id": "performance-optimization-crew-016",
+  "name": "Performance Optimization Crew",
+  "description": "Specialized team for improving application performance",
+  "goal": "Identify and resolve performance bottlenecks across the stack",
+  "agents": [
+    "performance-engineer",
+    "database-architect",
+    "backend-go-developer",
+    "frontend-react-developer",
+    "observability-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "performance_analysis",
+      "description": "Analyze system performance",
+      "agent": "performance-engineer",
+      "expected_output": "Performance bottleneck report"
+    },
+    {
+      "name": "database_optimization",
+      "description": "Optimize database queries",
+      "agent": "database-architect",
+      "expected_output": "Optimized queries and indexes"
+    },
+    {
+      "name": "backend_optimization",
+      "description": "Optimize backend code",
+      "agent": "backend-go-developer",
+      "expected_output": "Optimized backend services"
+    },
+    {
+      "name": "frontend_optimization",
+      "description": "Optimize frontend performance",
+      "agent": "frontend-react-developer",
+      "expected_output": "Optimized bundle and rendering"
+    },
+    {
+      "name": "monitoring_setup",
+      "description": "Setup performance monitoring",
+      "agent": "observability-engineer",
+      "expected_output": "Performance dashboards and alerts"
+    }
+  ],
+  "manager_agent": "performance-engineer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

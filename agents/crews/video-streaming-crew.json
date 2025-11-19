@@ -1,0 +1,51 @@
+{
+  "id": "video-streaming-crew-048",
+  "name": "Video Streaming Platform Crew",
+  "description": "Team for building video streaming and content delivery platforms",
+  "goal": "Create scalable video streaming platform with excellent playback experience",
+  "agents": [
+    "backend-api-developer",
+    "frontend-react-developer",
+    "cloud-architect",
+    "performance-engineer",
+    "devops-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "streaming_architecture",
+      "description": "Design streaming architecture",
+      "agent": "cloud-architect",
+      "expected_output": "Video streaming infrastructure design"
+    },
+    {
+      "name": "video_backend",
+      "description": "Build video management backend",
+      "agent": "backend-api-developer",
+      "expected_output": "Video upload and transcoding APIs"
+    },
+    {
+      "name": "video_player",
+      "description": "Implement video player",
+      "agent": "frontend-react-developer",
+      "expected_output": "Adaptive streaming video player"
+    },
+    {
+      "name": "cdn_optimization",
+      "description": "Optimize CDN delivery",
+      "agent": "performance-engineer",
+      "expected_output": "Low-latency video delivery"
+    },
+    {
+      "name": "infrastructure_deployment",
+      "description": "Deploy streaming infrastructure",
+      "agent": "devops-engineer",
+      "expected_output": "Scalable streaming infrastructure"
+    }
+  ],
+  "manager_agent": "cloud-architect",
+  "max_rpm": 80,
+  "language": "en",
+  "full_output": true
+}

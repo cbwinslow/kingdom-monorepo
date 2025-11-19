@@ -1,0 +1,51 @@
+{
+  "id": "ml-pipeline-crew-004",
+  "name": "Machine Learning Pipeline Crew",
+  "description": "End-to-end ML model development and deployment team",
+  "goal": "Build production-ready machine learning pipelines from data to deployment",
+  "agents": [
+    "data-engineer",
+    "data-scientist",
+    "ml-engineer",
+    "backend-python-developer",
+    "devops-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "data_pipeline",
+      "description": "Build data ingestion and processing pipeline",
+      "agent": "data-engineer",
+      "expected_output": "ETL pipeline with data quality checks"
+    },
+    {
+      "name": "model_development",
+      "description": "Develop and train ML models",
+      "agent": "data-scientist",
+      "expected_output": "Trained models with evaluation metrics"
+    },
+    {
+      "name": "model_optimization",
+      "description": "Optimize models for production",
+      "agent": "ml-engineer",
+      "expected_output": "Optimized, deployable models with monitoring"
+    },
+    {
+      "name": "api_development",
+      "description": "Create model serving API",
+      "agent": "backend-python-developer",
+      "expected_output": "FastAPI service for model inference"
+    },
+    {
+      "name": "mlops_deployment",
+      "description": "Deploy ML pipeline to production",
+      "agent": "devops-engineer",
+      "expected_output": "Automated ML deployment pipeline"
+    }
+  ],
+  "manager_agent": "ml-engineer",
+  "max_rpm": 80,
+  "language": "en",
+  "full_output": true
+}

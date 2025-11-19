@@ -1,0 +1,51 @@
+{
+  "id": "computer-vision-crew-015",
+  "name": "Computer Vision Application Crew",
+  "description": "Team for building computer vision powered applications",
+  "goal": "Develop accurate, efficient computer vision systems",
+  "agents": [
+    "computer-vision-engineer",
+    "ml-engineer",
+    "backend-python-developer",
+    "data-engineer",
+    "performance-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "data_collection",
+      "description": "Collect and prepare image/video data",
+      "agent": "data-engineer",
+      "expected_output": "Annotated image datasets"
+    },
+    {
+      "name": "model_development",
+      "description": "Train computer vision models",
+      "agent": "computer-vision-engineer",
+      "expected_output": "Trained vision models with metrics"
+    },
+    {
+      "name": "model_optimization",
+      "description": "Optimize for inference",
+      "agent": "ml-engineer",
+      "expected_output": "Optimized models for deployment"
+    },
+    {
+      "name": "inference_api",
+      "description": "Build inference API",
+      "agent": "backend-python-developer",
+      "expected_output": "Real-time inference API"
+    },
+    {
+      "name": "performance_tuning",
+      "description": "Optimize inference performance",
+      "agent": "performance-engineer",
+      "expected_output": "Low-latency inference system"
+    }
+  ],
+  "manager_agent": "computer-vision-engineer",
+  "max_rpm": 80,
+  "language": "en",
+  "full_output": true
+}

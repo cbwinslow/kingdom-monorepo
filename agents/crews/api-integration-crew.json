@@ -1,0 +1,51 @@
+{
+  "id": "api-integration-crew-034",
+  "name": "Third-Party API Integration Crew",
+  "description": "Team for integrating with external APIs and services",
+  "goal": "Successfully integrate and maintain connections with third-party services",
+  "agents": [
+    "api-integration-specialist",
+    "backend-api-developer",
+    "security-engineer",
+    "qa-automation-engineer",
+    "technical-writer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "integration_planning",
+      "description": "Plan API integrations",
+      "agent": "api-integration-specialist",
+      "expected_output": "Integration architecture and strategy"
+    },
+    {
+      "name": "integration_implementation",
+      "description": "Implement API integrations",
+      "agent": "backend-api-developer",
+      "expected_output": "Working API integrations"
+    },
+    {
+      "name": "security_review",
+      "description": "Secure API credentials and data",
+      "agent": "security-engineer",
+      "expected_output": "Secure credential management"
+    },
+    {
+      "name": "integration_testing",
+      "description": "Test API integrations",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Integration test suite"
+    },
+    {
+      "name": "integration_documentation",
+      "description": "Document integrations",
+      "agent": "technical-writer",
+      "expected_output": "Integration documentation"
+    }
+  ],
+  "manager_agent": "api-integration-specialist",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

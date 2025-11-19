@@ -1,0 +1,51 @@
+{
+  "id": "blockchain-dapp-crew-013",
+  "name": "Blockchain DApp Development Crew",
+  "description": "Team for building decentralized applications on blockchain",
+  "goal": "Create secure, efficient blockchain applications and smart contracts",
+  "agents": [
+    "blockchain-developer",
+    "security-engineer",
+    "frontend-react-developer",
+    "backend-nodejs-developer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "smart_contract_development",
+      "description": "Develop smart contracts",
+      "agent": "blockchain-developer",
+      "expected_output": "Audited smart contracts"
+    },
+    {
+      "name": "security_audit",
+      "description": "Audit smart contract security",
+      "agent": "security-engineer",
+      "expected_output": "Security audit report and fixes"
+    },
+    {
+      "name": "backend_integration",
+      "description": "Build backend services",
+      "agent": "backend-nodejs-developer",
+      "expected_output": "Blockchain indexer and APIs"
+    },
+    {
+      "name": "dapp_frontend",
+      "description": "Build DApp frontend",
+      "agent": "frontend-react-developer",
+      "expected_output": "Web3-enabled frontend"
+    },
+    {
+      "name": "integration_testing",
+      "description": "Test blockchain integration",
+      "agent": "qa-automation-engineer",
+      "expected_output": "End-to-end DApp tests"
+    }
+  ],
+  "manager_agent": "blockchain-developer",
+  "max_rpm": 80,
+  "language": "en",
+  "full_output": true
+}

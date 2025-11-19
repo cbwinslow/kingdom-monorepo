@@ -1,0 +1,51 @@
+{
+  "id": "recommendation-system-crew-043",
+  "name": "Recommendation System Crew",
+  "description": "Team for building personalized recommendation engines",
+  "goal": "Create accurate, scalable recommendation systems",
+  "agents": [
+    "data-scientist",
+    "ml-engineer",
+    "data-engineer",
+    "backend-api-developer",
+    "performance-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "data_collection",
+      "description": "Collect and prepare user data",
+      "agent": "data-engineer",
+      "expected_output": "User interaction datasets"
+    },
+    {
+      "name": "model_development",
+      "description": "Develop recommendation models",
+      "agent": "data-scientist",
+      "expected_output": "Collaborative filtering models"
+    },
+    {
+      "name": "model_deployment",
+      "description": "Deploy recommendation models",
+      "agent": "ml-engineer",
+      "expected_output": "Production recommendation service"
+    },
+    {
+      "name": "api_integration",
+      "description": "Build recommendation API",
+      "agent": "backend-api-developer",
+      "expected_output": "Real-time recommendation API"
+    },
+    {
+      "name": "optimization",
+      "description": "Optimize recommendation latency",
+      "agent": "performance-engineer",
+      "expected_output": "Low-latency recommendation system"
+    }
+  ],
+  "manager_agent": "data-scientist",
+  "max_rpm": 80,
+  "language": "en",
+  "full_output": true
+}

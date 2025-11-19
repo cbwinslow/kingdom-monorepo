@@ -1,0 +1,51 @@
+{
+  "id": "frontend-modernization-crew-009",
+  "name": "Frontend Modernization Crew",
+  "description": "Team for modernizing legacy frontend applications",
+  "goal": "Modernize legacy frontends with current best practices and technologies",
+  "agents": [
+    "frontend-react-developer",
+    "ui-ux-designer",
+    "accessibility-specialist",
+    "performance-engineer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "ui_redesign",
+      "description": "Redesign user interface",
+      "agent": "ui-ux-designer",
+      "expected_output": "Modern UI design system"
+    },
+    {
+      "name": "frontend_implementation",
+      "description": "Implement modern frontend",
+      "agent": "frontend-react-developer",
+      "expected_output": "React-based frontend application"
+    },
+    {
+      "name": "accessibility_compliance",
+      "description": "Ensure accessibility standards",
+      "agent": "accessibility-specialist",
+      "expected_output": "WCAG compliant frontend"
+    },
+    {
+      "name": "performance_optimization",
+      "description": "Optimize frontend performance",
+      "agent": "performance-engineer",
+      "expected_output": "Optimized loading and runtime performance"
+    },
+    {
+      "name": "testing",
+      "description": "Comprehensive frontend testing",
+      "agent": "qa-automation-engineer",
+      "expected_output": "E2E and component test suites"
+    }
+  ],
+  "manager_agent": "frontend-react-developer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

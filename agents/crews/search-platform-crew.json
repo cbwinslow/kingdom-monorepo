@@ -1,0 +1,51 @@
+{
+  "id": "search-platform-crew-020",
+  "name": "Search Platform Crew",
+  "description": "Team for building advanced search and discovery platforms",
+  "goal": "Create powerful, relevant search experiences for users",
+  "agents": [
+    "search-engineer",
+    "elasticsearch-specialist",
+    "backend-python-developer",
+    "data-engineer",
+    "frontend-react-developer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "search_design",
+      "description": "Design search architecture",
+      "agent": "search-engineer",
+      "expected_output": "Search strategy and ranking design"
+    },
+    {
+      "name": "indexing_infrastructure",
+      "description": "Setup search infrastructure",
+      "agent": "elasticsearch-specialist",
+      "expected_output": "Elasticsearch cluster with mappings"
+    },
+    {
+      "name": "data_pipeline",
+      "description": "Build indexing pipeline",
+      "agent": "data-engineer",
+      "expected_output": "Data ingestion and indexing pipeline"
+    },
+    {
+      "name": "search_api",
+      "description": "Build search API",
+      "agent": "backend-python-developer",
+      "expected_output": "Search API with filtering"
+    },
+    {
+      "name": "search_ui",
+      "description": "Implement search UI",
+      "agent": "frontend-react-developer",
+      "expected_output": "Search interface with facets"
+    }
+  ],
+  "manager_agent": "search-engineer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

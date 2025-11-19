@@ -1,0 +1,51 @@
+{
+  "id": "realtime-systems-crew-019",
+  "name": "Real-Time Systems Crew",
+  "description": "Team for building real-time communication and collaboration systems",
+  "goal": "Develop scalable, low-latency real-time applications",
+  "agents": [
+    "websocket-specialist",
+    "backend-nodejs-developer",
+    "frontend-react-developer",
+    "message-queue-specialist",
+    "performance-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "realtime_architecture",
+      "description": "Design real-time architecture",
+      "agent": "websocket-specialist",
+      "expected_output": "WebSocket architecture design"
+    },
+    {
+      "name": "message_infrastructure",
+      "description": "Setup messaging infrastructure",
+      "agent": "message-queue-specialist",
+      "expected_output": "Message broker and pub/sub system"
+    },
+    {
+      "name": "backend_implementation",
+      "description": "Build real-time backend",
+      "agent": "backend-nodejs-developer",
+      "expected_output": "WebSocket server with rooms"
+    },
+    {
+      "name": "frontend_integration",
+      "description": "Integrate real-time frontend",
+      "agent": "frontend-react-developer",
+      "expected_output": "Real-time UI updates"
+    },
+    {
+      "name": "latency_optimization",
+      "description": "Optimize for low latency",
+      "agent": "performance-engineer",
+      "expected_output": "Low-latency real-time system"
+    }
+  ],
+  "manager_agent": "websocket-specialist",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

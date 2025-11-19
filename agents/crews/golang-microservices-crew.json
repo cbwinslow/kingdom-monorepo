@@ -1,0 +1,51 @@
+{
+  "id": "golang-microservices-crew-040",
+  "name": "Go Microservices Crew",
+  "description": "Team for building high-performance Go microservices",
+  "goal": "Create efficient, concurrent microservices using Go",
+  "agents": [
+    "backend-go-developer",
+    "microservices-developer",
+    "devops-engineer",
+    "performance-engineer",
+    "observability-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "service_design",
+      "description": "Design microservices architecture",
+      "agent": "microservices-developer",
+      "expected_output": "Microservices design with boundaries"
+    },
+    {
+      "name": "go_implementation",
+      "description": "Implement Go microservices",
+      "agent": "backend-go-developer",
+      "expected_output": "Go microservices with gRPC"
+    },
+    {
+      "name": "performance_optimization",
+      "description": "Optimize Go services",
+      "agent": "performance-engineer",
+      "expected_output": "High-performance concurrent services"
+    },
+    {
+      "name": "deployment",
+      "description": "Deploy microservices",
+      "agent": "devops-engineer",
+      "expected_output": "Kubernetes deployment"
+    },
+    {
+      "name": "observability",
+      "description": "Implement observability",
+      "agent": "observability-engineer",
+      "expected_output": "Distributed tracing and metrics"
+    }
+  ],
+  "manager_agent": "backend-go-developer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

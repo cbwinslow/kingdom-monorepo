@@ -1,0 +1,51 @@
+{
+  "id": "code-quality-crew-031",
+  "name": "Code Quality Improvement Crew",
+  "description": "Team focused on improving and maintaining code quality",
+  "goal": "Ensure high code quality through reviews, refactoring, and best practices",
+  "agents": [
+    "code-reviewer",
+    "technical-debt-analyst",
+    "performance-engineer",
+    "security-engineer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "code_review",
+      "description": "Perform thorough code reviews",
+      "agent": "code-reviewer",
+      "expected_output": "Code review findings and recommendations"
+    },
+    {
+      "name": "technical_debt_analysis",
+      "description": "Analyze and prioritize technical debt",
+      "agent": "technical-debt-analyst",
+      "expected_output": "Technical debt remediation plan"
+    },
+    {
+      "name": "security_review",
+      "description": "Review code security",
+      "agent": "security-engineer",
+      "expected_output": "Security vulnerabilities report"
+    },
+    {
+      "name": "performance_review",
+      "description": "Review performance issues",
+      "agent": "performance-engineer",
+      "expected_output": "Performance optimization suggestions"
+    },
+    {
+      "name": "test_coverage",
+      "description": "Improve test coverage",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Enhanced test suite"
+    }
+  ],
+  "manager_agent": "code-reviewer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

@@ -1,0 +1,51 @@
+{
+  "id": "embedded-iot-crew-044",
+  "name": "Embedded IoT Device Crew",
+  "description": "Team for developing embedded systems and IoT devices",
+  "goal": "Create reliable, efficient embedded software for IoT devices",
+  "agents": [
+    "embedded-developer",
+    "backend-api-developer",
+    "security-engineer",
+    "data-engineer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "firmware_development",
+      "description": "Develop device firmware",
+      "agent": "embedded-developer",
+      "expected_output": "Optimized embedded firmware"
+    },
+    {
+      "name": "device_security",
+      "description": "Implement device security",
+      "agent": "security-engineer",
+      "expected_output": "Secure boot and communication"
+    },
+    {
+      "name": "backend_services",
+      "description": "Build device backend services",
+      "agent": "backend-api-developer",
+      "expected_output": "Device management APIs"
+    },
+    {
+      "name": "data_collection",
+      "description": "Setup data collection pipeline",
+      "agent": "data-engineer",
+      "expected_output": "IoT data ingestion pipeline"
+    },
+    {
+      "name": "device_testing",
+      "description": "Test device functionality",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Hardware-in-loop tests"
+    }
+  ],
+  "manager_agent": "embedded-developer",
+  "max_rpm": 80,
+  "language": "en",
+  "full_output": true
+}

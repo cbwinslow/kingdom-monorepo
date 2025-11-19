@@ -1,0 +1,51 @@
+{
+  "id": "automation-testing-crew-055",
+  "name": "Test Automation and Quality Crew",
+  "description": "Team dedicated to building comprehensive test automation",
+  "goal": "Create robust, maintainable test automation framework and suites",
+  "agents": [
+    "qa-automation-engineer",
+    "performance-engineer",
+    "security-engineer",
+    "backend-api-developer",
+    "frontend-react-developer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "test_strategy",
+      "description": "Define test automation strategy",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Test automation framework and strategy"
+    },
+    {
+      "name": "api_testing",
+      "description": "Implement API test automation",
+      "agent": "backend-api-developer",
+      "expected_output": "API integration tests"
+    },
+    {
+      "name": "ui_testing",
+      "description": "Implement UI test automation",
+      "agent": "frontend-react-developer",
+      "expected_output": "E2E and component tests"
+    },
+    {
+      "name": "performance_testing",
+      "description": "Implement performance tests",
+      "agent": "performance-engineer",
+      "expected_output": "Load and stress tests"
+    },
+    {
+      "name": "security_testing",
+      "description": "Implement security tests",
+      "agent": "security-engineer",
+      "expected_output": "Automated security scans"
+    }
+  ],
+  "manager_agent": "qa-automation-engineer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

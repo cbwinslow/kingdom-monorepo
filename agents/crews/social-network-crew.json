@@ -1,0 +1,51 @@
+{
+  "id": "social-network-crew-049",
+  "name": "Social Network Platform Crew",
+  "description": "Team for building social networking platforms",
+  "goal": "Create engaging social platform with feeds, messaging, and interactions",
+  "agents": [
+    "full-stack-developer",
+    "database-architect",
+    "websocket-specialist",
+    "ui-ux-designer",
+    "performance-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "social_design",
+      "description": "Design social features",
+      "agent": "ui-ux-designer",
+      "expected_output": "Social network UI/UX designs"
+    },
+    {
+      "name": "data_modeling",
+      "description": "Design social graph database",
+      "agent": "database-architect",
+      "expected_output": "Social network data model"
+    },
+    {
+      "name": "core_features",
+      "description": "Implement core social features",
+      "agent": "full-stack-developer",
+      "expected_output": "Posts, likes, comments, follows"
+    },
+    {
+      "name": "realtime_features",
+      "description": "Implement real-time messaging",
+      "agent": "websocket-specialist",
+      "expected_output": "Real-time chat and notifications"
+    },
+    {
+      "name": "feed_optimization",
+      "description": "Optimize feed performance",
+      "agent": "performance-engineer",
+      "expected_output": "Fast, personalized feeds"
+    }
+  ],
+  "manager_agent": "full-stack-developer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

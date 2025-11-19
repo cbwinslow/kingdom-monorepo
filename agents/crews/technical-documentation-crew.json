@@ -1,0 +1,51 @@
+{
+  "id": "technical-documentation-crew-029",
+  "name": "Technical Documentation Crew",
+  "description": "Team for creating comprehensive technical documentation",
+  "goal": "Produce clear, maintainable documentation for developers and users",
+  "agents": [
+    "technical-writer",
+    "api-documentation-specialist",
+    "system-architect",
+    "full-stack-developer",
+    "ui-ux-designer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "architecture_documentation",
+      "description": "Document system architecture",
+      "agent": "system-architect",
+      "expected_output": "Architecture diagrams and decisions"
+    },
+    {
+      "name": "api_documentation",
+      "description": "Create API documentation",
+      "agent": "api-documentation-specialist",
+      "expected_output": "Interactive API reference"
+    },
+    {
+      "name": "code_documentation",
+      "description": "Write code documentation",
+      "agent": "full-stack-developer",
+      "expected_output": "Inline code comments and README files"
+    },
+    {
+      "name": "user_guides",
+      "description": "Create user documentation",
+      "agent": "technical-writer",
+      "expected_output": "User guides and tutorials"
+    },
+    {
+      "name": "ui_documentation",
+      "description": "Document UI components",
+      "agent": "ui-ux-designer",
+      "expected_output": "Component library documentation"
+    }
+  ],
+  "manager_agent": "technical-writer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

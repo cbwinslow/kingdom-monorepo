@@ -1,0 +1,51 @@
+{
+  "id": "audit-logging-crew-052",
+  "name": "Audit Logging and Compliance Crew",
+  "description": "Team for implementing comprehensive audit logging and compliance",
+  "goal": "Create tamper-proof audit trails for regulatory compliance",
+  "agents": [
+    "backend-api-developer",
+    "database-architect",
+    "security-engineer",
+    "elasticsearch-specialist",
+    "technical-writer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "audit_design",
+      "description": "Design audit logging architecture",
+      "agent": "database-architect",
+      "expected_output": "Immutable audit log design"
+    },
+    {
+      "name": "logging_implementation",
+      "description": "Implement audit logging",
+      "agent": "backend-api-developer",
+      "expected_output": "Comprehensive audit trail"
+    },
+    {
+      "name": "log_storage",
+      "description": "Setup audit log storage",
+      "agent": "elasticsearch-specialist",
+      "expected_output": "Searchable audit log system"
+    },
+    {
+      "name": "security_controls",
+      "description": "Implement audit security",
+      "agent": "security-engineer",
+      "expected_output": "Tamper-proof audit logs"
+    },
+    {
+      "name": "compliance_documentation",
+      "description": "Document compliance procedures",
+      "agent": "technical-writer",
+      "expected_output": "Audit and compliance documentation"
+    }
+  ],
+  "manager_agent": "security-engineer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

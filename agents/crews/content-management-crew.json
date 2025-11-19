@@ -1,0 +1,51 @@
+{
+  "id": "content-management-crew-054",
+  "name": "Content Management System Crew",
+  "description": "Team for building headless CMS and content management platforms",
+  "goal": "Create flexible, scalable content management solutions",
+  "agents": [
+    "backend-api-developer",
+    "frontend-react-developer",
+    "database-architect",
+    "ui-ux-designer",
+    "technical-writer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "content_modeling",
+      "description": "Design content models",
+      "agent": "database-architect",
+      "expected_output": "Flexible content schema"
+    },
+    {
+      "name": "cms_api",
+      "description": "Build CMS API",
+      "agent": "backend-api-developer",
+      "expected_output": "Headless CMS API"
+    },
+    {
+      "name": "admin_interface_design",
+      "description": "Design admin interface",
+      "agent": "ui-ux-designer",
+      "expected_output": "Content editor UI design"
+    },
+    {
+      "name": "admin_interface",
+      "description": "Build admin interface",
+      "agent": "frontend-react-developer",
+      "expected_output": "Rich content editor"
+    },
+    {
+      "name": "cms_documentation",
+      "description": "Document CMS usage",
+      "agent": "technical-writer",
+      "expected_output": "CMS user and developer guides"
+    }
+  ],
+  "manager_agent": "backend-api-developer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

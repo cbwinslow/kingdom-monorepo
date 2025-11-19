@@ -1,0 +1,51 @@
+{
+  "id": "ecommerce-development-crew-017",
+  "name": "E-Commerce Development Crew",
+  "description": "Team for building complete e-commerce platforms",
+  "goal": "Develop secure, scalable e-commerce solutions with great UX",
+  "agents": [
+    "full-stack-developer",
+    "payment-integration-specialist",
+    "security-engineer",
+    "ui-ux-designer",
+    "seo-specialist"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "ecommerce_design",
+      "description": "Design shopping experience",
+      "agent": "ui-ux-designer",
+      "expected_output": "E-commerce UI/UX designs"
+    },
+    {
+      "name": "platform_development",
+      "description": "Build e-commerce platform",
+      "agent": "full-stack-developer",
+      "expected_output": "Product catalog, cart, and checkout"
+    },
+    {
+      "name": "payment_integration",
+      "description": "Integrate payment processing",
+      "agent": "payment-integration-specialist",
+      "expected_output": "Secure payment gateway integration"
+    },
+    {
+      "name": "security_hardening",
+      "description": "Secure e-commerce platform",
+      "agent": "security-engineer",
+      "expected_output": "PCI DSS compliant security"
+    },
+    {
+      "name": "seo_optimization",
+      "description": "Optimize for search engines",
+      "agent": "seo-specialist",
+      "expected_output": "SEO-optimized product pages"
+    }
+  ],
+  "manager_agent": "full-stack-developer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

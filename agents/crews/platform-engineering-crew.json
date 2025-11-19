@@ -1,0 +1,51 @@
+{
+  "id": "platform-engineering-crew-014",
+  "name": "Platform Engineering Crew",
+  "description": "Team for building internal developer platforms",
+  "goal": "Create self-service platforms that enhance developer productivity",
+  "agents": [
+    "platform-engineer",
+    "devops-engineer",
+    "backend-go-developer",
+    "technical-writer",
+    "ui-ux-designer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "platform_design",
+      "description": "Design developer platform architecture",
+      "agent": "platform-engineer",
+      "expected_output": "Platform architecture and golden paths"
+    },
+    {
+      "name": "infrastructure_abstraction",
+      "description": "Build infrastructure abstractions",
+      "agent": "devops-engineer",
+      "expected_output": "Terraform modules and service catalog"
+    },
+    {
+      "name": "platform_apis",
+      "description": "Develop platform APIs and CLIs",
+      "agent": "backend-go-developer",
+      "expected_output": "Platform APIs and CLI tools"
+    },
+    {
+      "name": "portal_ui",
+      "description": "Design developer portal UI",
+      "agent": "ui-ux-designer",
+      "expected_output": "Developer portal design"
+    },
+    {
+      "name": "documentation",
+      "description": "Create platform documentation",
+      "agent": "technical-writer",
+      "expected_output": "Comprehensive platform docs"
+    }
+  ],
+  "manager_agent": "platform-engineer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

@@ -1,0 +1,51 @@
+{
+  "id": "fintech-application-crew-051",
+  "name": "FinTech Application Crew",
+  "description": "Team for building financial technology applications",
+  "goal": "Create secure, compliant financial applications with robust transaction handling",
+  "agents": [
+    "backend-api-developer",
+    "payment-integration-specialist",
+    "security-engineer",
+    "database-architect",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "financial_architecture",
+      "description": "Design financial system architecture",
+      "agent": "database-architect",
+      "expected_output": "ACID-compliant financial data model"
+    },
+    {
+      "name": "payment_integration",
+      "description": "Integrate payment processing",
+      "agent": "payment-integration-specialist",
+      "expected_output": "Multi-provider payment integration"
+    },
+    {
+      "name": "financial_apis",
+      "description": "Build financial APIs",
+      "agent": "backend-api-developer",
+      "expected_output": "Transaction and account management APIs"
+    },
+    {
+      "name": "security_compliance",
+      "description": "Implement security and compliance",
+      "agent": "security-engineer",
+      "expected_output": "SOC2 and PCI DSS compliance"
+    },
+    {
+      "name": "financial_testing",
+      "description": "Test financial transactions",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Transaction accuracy tests"
+    }
+  ],
+  "manager_agent": "backend-api-developer",
+  "max_rpm": 80,
+  "language": "en",
+  "full_output": true
+}

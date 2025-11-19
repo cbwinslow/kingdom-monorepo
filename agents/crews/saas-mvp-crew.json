@@ -1,0 +1,51 @@
+{
+  "id": "saas-mvp-crew-045",
+  "name": "SaaS MVP Development Crew",
+  "description": "Team for rapidly building SaaS minimum viable products",
+  "goal": "Quickly deliver functional SaaS MVP to validate product-market fit",
+  "agents": [
+    "product-owner",
+    "full-stack-developer",
+    "ui-ux-designer",
+    "devops-engineer",
+    "qa-automation-engineer"
+  ],
+  "process": "hierarchical",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "feature_prioritization",
+      "description": "Define MVP features",
+      "agent": "product-owner",
+      "expected_output": "Prioritized MVP feature list"
+    },
+    {
+      "name": "mvp_design",
+      "description": "Design MVP UI/UX",
+      "agent": "ui-ux-designer",
+      "expected_output": "MVP wireframes and designs"
+    },
+    {
+      "name": "rapid_development",
+      "description": "Develop MVP quickly",
+      "agent": "full-stack-developer",
+      "expected_output": "Working SaaS application"
+    },
+    {
+      "name": "deployment_setup",
+      "description": "Setup MVP deployment",
+      "agent": "devops-engineer",
+      "expected_output": "Simple, reliable deployment"
+    },
+    {
+      "name": "mvp_testing",
+      "description": "Test MVP functionality",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Core functionality tests"
+    }
+  ],
+  "manager_agent": "product-owner",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

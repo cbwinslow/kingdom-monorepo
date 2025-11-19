@@ -1,0 +1,51 @@
+{
+  "id": "agile-scrum-crew-021",
+  "name": "Agile Scrum Development Crew",
+  "description": "A complete agile scrum team for iterative software development",
+  "goal": "Deliver high-quality software through agile practices and continuous improvement",
+  "agents": [
+    "product-owner",
+    "scrum-master",
+    "full-stack-developer",
+    "qa-automation-engineer",
+    "ui-ux-designer"
+  ],
+  "process": "hierarchical",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "backlog_management",
+      "description": "Manage and prioritize product backlog",
+      "agent": "product-owner",
+      "expected_output": "Prioritized backlog with user stories"
+    },
+    {
+      "name": "sprint_facilitation",
+      "description": "Facilitate sprint ceremonies",
+      "agent": "scrum-master",
+      "expected_output": "Sprint plan and team velocity"
+    },
+    {
+      "name": "design_iteration",
+      "description": "Design features iteratively",
+      "agent": "ui-ux-designer",
+      "expected_output": "Incremental design deliverables"
+    },
+    {
+      "name": "feature_development",
+      "description": "Develop features in sprint",
+      "agent": "full-stack-developer",
+      "expected_output": "Working software increment"
+    },
+    {
+      "name": "quality_assurance",
+      "description": "Test and validate features",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Test results and bug reports"
+    }
+  ],
+  "manager_agent": "scrum-master",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

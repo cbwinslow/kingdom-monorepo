@@ -1,0 +1,51 @@
+{
+  "id": "flutter-multiplatform-crew-038",
+  "name": "Flutter Multi-Platform Crew",
+  "description": "Team for building Flutter apps across mobile, web, and desktop",
+  "goal": "Create beautiful Flutter applications that work on all platforms",
+  "agents": [
+    "flutter-developer",
+    "ui-ux-designer",
+    "backend-api-developer",
+    "mobile-developer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "responsive_design",
+      "description": "Design for multiple platforms",
+      "agent": "ui-ux-designer",
+      "expected_output": "Adaptive UI designs"
+    },
+    {
+      "name": "flutter_development",
+      "description": "Develop Flutter application",
+      "agent": "flutter-developer",
+      "expected_output": "Multi-platform Flutter app"
+    },
+    {
+      "name": "backend_api",
+      "description": "Build backend services",
+      "agent": "backend-api-developer",
+      "expected_output": "Cross-platform compatible APIs"
+    },
+    {
+      "name": "native_features",
+      "description": "Implement platform-specific features",
+      "agent": "mobile-developer",
+      "expected_output": "Platform channels and native modules"
+    },
+    {
+      "name": "multiplatform_testing",
+      "description": "Test on all platforms",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Cross-platform test suite"
+    }
+  ],
+  "manager_agent": "flutter-developer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

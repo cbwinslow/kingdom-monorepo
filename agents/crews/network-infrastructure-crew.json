@@ -1,0 +1,51 @@
+{
+  "id": "network-infrastructure-crew-035",
+  "name": "Network Infrastructure Crew",
+  "description": "Team for managing network, DNS, and connectivity",
+  "goal": "Build reliable, performant network infrastructure",
+  "agents": [
+    "dns-networking-specialist",
+    "devops-engineer",
+    "security-engineer",
+    "site-reliability-engineer",
+    "cloud-architect"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "network_design",
+      "description": "Design network topology",
+      "agent": "dns-networking-specialist",
+      "expected_output": "Network architecture design"
+    },
+    {
+      "name": "cloud_networking",
+      "description": "Setup cloud networking",
+      "agent": "cloud-architect",
+      "expected_output": "VPC and networking configuration"
+    },
+    {
+      "name": "security_configuration",
+      "description": "Configure network security",
+      "agent": "security-engineer",
+      "expected_output": "Firewall rules and security groups"
+    },
+    {
+      "name": "load_balancing",
+      "description": "Setup load balancing",
+      "agent": "devops-engineer",
+      "expected_output": "Load balancer configuration"
+    },
+    {
+      "name": "network_monitoring",
+      "description": "Monitor network performance",
+      "agent": "site-reliability-engineer",
+      "expected_output": "Network monitoring and alerts"
+    }
+  ],
+  "manager_agent": "dns-networking-specialist",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

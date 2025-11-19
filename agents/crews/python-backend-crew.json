@@ -1,0 +1,51 @@
+{
+  "id": "python-backend-crew-039",
+  "name": "Python Backend Development Crew",
+  "description": "Team specialized in Python backend services and APIs",
+  "goal": "Build robust, scalable Python backend systems",
+  "agents": [
+    "backend-python-developer",
+    "database-architect",
+    "security-engineer",
+    "performance-engineer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "api_development",
+      "description": "Develop Python APIs",
+      "agent": "backend-python-developer",
+      "expected_output": "FastAPI/Django REST APIs"
+    },
+    {
+      "name": "database_design",
+      "description": "Design database schema",
+      "agent": "database-architect",
+      "expected_output": "Optimized database schema"
+    },
+    {
+      "name": "security_implementation",
+      "description": "Implement security measures",
+      "agent": "security-engineer",
+      "expected_output": "Secure authentication and authorization"
+    },
+    {
+      "name": "performance_tuning",
+      "description": "Optimize Python backend",
+      "agent": "performance-engineer",
+      "expected_output": "Optimized async Python code"
+    },
+    {
+      "name": "testing",
+      "description": "Test Python backend",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Pytest test suite"
+    }
+  ],
+  "manager_agent": "backend-python-developer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}
