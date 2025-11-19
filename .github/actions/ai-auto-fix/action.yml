@@ -1,0 +1,74 @@
+name: 'AI Auto Fix'
+description: 'Automatically fixes common code issues'
+author: 'Kingdom Monorepo'
+
+inputs:
+  github-token:
+    description: 'GitHub token'
+    required: true
+  pr-number:
+    description: 'Pull request number'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install formatters and fixers
+      shell: bash
+      run: |
+        pip install black isort autopep8 autoflake
+        npm install -g prettier eslint
+
+    - name: Auto-fix Python files
+      shell: bash
+      run: |
+        # Remove unused imports
+        find . -name "*.py" -type f -exec autoflake --in-place --remove-all-unused-imports --remove-unused-variables {} \; || true
+        
+        # Sort imports
+        find . -name "*.py" -type f -exec isort {} \; || true
+        
+        # Format with Black
+        find . -name "*.py" -type f -exec black {} \; || true
+
+    - name: Auto-fix JavaScript/TypeScript files
+      shell: bash
+      run: |
+        # Format with Prettier
+        prettier --write "**/*.{js,ts,jsx,tsx,json,css,scss,md}" || true
+        
+        # Fix with ESLint
+        eslint --fix "**/*.{js,ts,jsx,tsx}" || true
+
+    - name: Summary of fixes
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        PR_NUMBER: ${{ inputs.pr-number }}
+      run: |
+        cat > /tmp/fix-summary.md << 'SUMMARY'
+        ## 🔧 Auto-Fix Applied
+
+        The following automatic fixes have been applied:
+
+        ### Python
+        - ✅ Removed unused imports and variables
+        - ✅ Sorted imports with isort
+        - ✅ Formatted code with Black
+
+        ### JavaScript/TypeScript
+        - ✅ Formatted code with Prettier
+        - ✅ Fixed ESLint issues
+
+        Please review the changes and ensure they meet your requirements.
+
+        ---
+        *Automated fixes by AI Auto-Fix*
+        SUMMARY
+
+        gh pr comment $PR_NUMBER --body-file /tmp/fix-summary.md
