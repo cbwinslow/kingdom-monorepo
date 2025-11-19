@@ -33,18 +33,20 @@ services:
   jump-host:
     image: alpine:latest
     container_name: ssh-jumphost
-    command: sh -c "
-      apk add --no-cache openssh-server openssh-client sudo &&
-      ssh-keygen -A &&
-      mkdir -p /var/log/ssh &&
-      echo 'root:${JUMP_ROOT_PASSWORD:-changeme}' | chpasswd &&
-      echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config &&
-      echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config &&
-      echo 'PubkeyAuthentication yes' >> /etc/ssh/sshd_config &&
-      echo 'LogLevel VERBOSE' >> /etc/ssh/sshd_config &&
-      echo 'SyslogFacility AUTHPRIV' >> /etc/ssh/sshd_config &&
-      /usr/sbin/sshd -D -e
-    "
+    command:
+      - sh
+      - -c
+      - |
+        apk add --no-cache openssh-server openssh-client sudo &&
+        ssh-keygen -A &&
+        mkdir -p /var/log/ssh &&
+        echo "root:$${JUMP_ROOT_PASSWORD:-changeme}" | chpasswd &&
+        echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config &&
+        echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config &&
+        echo 'PubkeyAuthentication yes' >> /etc/ssh/sshd_config &&
+        echo 'LogLevel VERBOSE' >> /etc/ssh/sshd_config &&
+        echo 'SyslogFacility AUTHPRIV' >> /etc/ssh/sshd_config &&
+        /usr/sbin/sshd -D -e
     ports:
       - "2223:22"
     volumes:
@@ -123,13 +125,15 @@ services:
   audit-logger:
     image: alpine:latest
     container_name: ssh-audit-logger
-    command: sh -c "
-      apk add --no-cache audit rsyslog &&
-      mkdir -p /var/log/audit &&
-      auditd &&
-      auditctl -a exit,always -F arch=b64 -S connect -S accept -k ssh_connections &&
-      tail -f /var/log/audit/audit.log
-    "
+    command:
+      - sh
+      - -c
+      - |
+        apk add --no-cache audit rsyslog &&
+        mkdir -p /var/log/audit &&
+        auditd &&
+        auditctl -a exit,always -F arch=b64 -S connect -S accept -k ssh_connections &&
+        tail -f /var/log/audit/audit.log
     volumes:
       - ./audit/logs:/var/log/audit
       - ./audit/rules:/etc/audit/rules.d
@@ -142,12 +146,14 @@ services:
   session-recorder:
     image: alpine:latest
     container_name: ssh-session-recorder
-    command: sh -c "
-      apk add --no-cache python3 py3-pip &&
-      pip3 install asciinema &&
-      mkdir -p /recordings &&
-      sleep infinity
-    "
+    command:
+      - sh
+      - -c
+      - |
+        apk add --no-cache python3 py3-pip &&
+        pip3 install asciinema &&
+        mkdir -p /recordings &&
+        sleep infinity
     volumes:
       - ./recordings:/recordings
     networks:
@@ -158,16 +164,15 @@ services:
   connection-monitor:
     image: alpine:latest
     container_name: ssh-connection-monitor
-    command: sh -c "
-      apk add --no-cache netcat-openbsd curl &&
+    command: >
+      sh -c "apk add --no-cache netcat-openbsd curl &&
       while true; do
-        echo '=== SSH Bastion Connections ===' > /logs/connections.log
-        nc -zv bastion 2222 >> /logs/connections.log 2>&1
-        nc -zv ssh-jumphost 22 >> /logs/connections.log 2>&1
-        echo 'Timestamp: '$(date) >> /logs/connections.log
-        sleep 60
-      done
-    "
+        echo '=== SSH Bastion Connections ===' > /logs/connections.log;
+        nc -zv bastion 2222 >> /logs/connections.log 2>&1;
+        nc -zv ssh-jumphost 22 >> /logs/connections.log 2>&1;
+        echo \"Timestamp: $$(date)\" >> /logs/connections.log;
+        sleep 60;
+      done"
     volumes:
       - ./monitor/logs:/logs
     networks:
@@ -195,27 +200,25 @@ services:
   key-manager:
     image: alpine:latest
     container_name: ssh-key-manager
-    command: sh -c "
-      apk add --no-cache openssh-keygen openssh-client &&
-      mkdir -p /keys/generated /keys/authorized &&
-      cat > /keys/README.md <<'EOF'
-# SSH Key Management
-
-## Generate new SSH key pair
-ssh-keygen -t ed25519 -f /keys/generated/key_name -C 'comment'
-
-## Generate RSA key pair
-ssh-keygen -t rsa -b 4096 -f /keys/generated/key_name -C 'comment'
-
-## Copy public key
-cat /keys/generated/key_name.pub >> /keys/authorized/authorized_keys
-
-## Set permissions
-chmod 600 /keys/generated/* /keys/authorized/authorized_keys
-chmod 644 /keys/generated/*.pub
-EOF
-      sleep infinity
-    "
+    command:
+      - sh
+      - -c
+      - |
+        apk add --no-cache openssh-keygen openssh-client &&
+        mkdir -p /keys/generated /keys/authorized &&
+        cat > /keys/README.md <<'EOFKEY'
+        # SSH Key Management
+        ## Generate new SSH key pair
+        ssh-keygen -t ed25519 -f /keys/generated/key_name -C 'comment'
+        ## Generate RSA key pair
+        ssh-keygen -t rsa -b 4096 -f /keys/generated/key_name -C 'comment'
+        ## Copy public key
+        cat /keys/generated/key_name.pub >> /keys/authorized/authorized_keys
+        ## Set permissions
+        chmod 600 /keys/generated/* /keys/authorized/authorized_keys
+        chmod 644 /keys/generated/*.pub
+        EOFKEY
+        sleep infinity
     volumes:
       - ./ssh_keys:/keys
     networks:

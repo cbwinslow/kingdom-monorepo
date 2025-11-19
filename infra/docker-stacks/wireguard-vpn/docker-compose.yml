@@ -204,30 +204,21 @@ services:
   vpn-monitor:
     image: alpine:latest
     container_name: vpn-monitor
-    command: sh -c "
-      apk add --no-cache curl netcat-openbsd wireguard-tools &&
-      cat > /monitor.sh <<'EOF'
-#!/bin/sh
-while true; do
-  echo '=== VPN Status Report ===' > /logs/status.log
-  echo 'Timestamp: '$(date) >> /logs/status.log
-  echo '' >> /logs/status.log
-  
-  echo '--- WireGuard ---' >> /logs/status.log
-  wg show 2>&1 >> /logs/status.log || echo 'WireGuard not available' >> /logs/status.log
-  echo '' >> /logs/status.log
-  
-  echo '--- Port Checks ---' >> /logs/status.log
-  nc -zv wireguard-server 51820 >> /logs/status.log 2>&1
-  nc -zv openvpn-server 1194 >> /logs/status.log 2>&1
-  echo '' >> /logs/status.log
-  
-  sleep 300
-done
-EOF
-      chmod +x /monitor.sh &&
-      /monitor.sh
-    "
+    command: >
+      sh -c "apk add --no-cache curl netcat-openbsd wireguard-tools &&
+      while true; do
+        echo '=== VPN Status Report ===' > /logs/status.log;
+        echo \"Timestamp: $$(date)\" >> /logs/status.log;
+        echo '' >> /logs/status.log;
+        echo '--- WireGuard ---' >> /logs/status.log;
+        wg show 2>&1 >> /logs/status.log || echo 'WireGuard not available' >> /logs/status.log;
+        echo '' >> /logs/status.log;
+        echo '--- Port Checks ---' >> /logs/status.log;
+        nc -zv wireguard-server 51820 >> /logs/status.log 2>&1;
+        nc -zv openvpn-server 1194 >> /logs/status.log 2>&1;
+        echo '' >> /logs/status.log;
+        sleep 300;
+      done"
     volumes:
       - ./monitor/logs:/logs
     networks:
@@ -288,10 +279,12 @@ EOF
   vpn-client-test:
     image: alpine:latest
     container_name: vpn-client-test
-    command: sh -c "
-      apk add --no-cache wireguard-tools curl wget netcat-openbsd &&
-      sleep infinity
-    "
+    command:
+      - sh
+      - -c
+      - |
+        apk add --no-cache wireguard-tools curl wget netcat-openbsd &&
+        sleep infinity
     volumes:
       - ./client-configs:/configs:ro
     networks:

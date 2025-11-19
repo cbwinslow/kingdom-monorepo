@@ -94,44 +94,39 @@ services:
     image: python:3.11
     container_name: ai-langchain-agent
     working_dir: /app
-    command: sh -c "
-      pip install --no-cache-dir langchain langchain-openai langchain-anthropic langserve fastapi uvicorn &&
-      cat > /app/agent.py <<'EOF'
-from fastapi import FastAPI
-from langserve import add_routes
-from langchain.agents import AgentExecutor, create_openai_functions_agent
-from langchain_openai import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.tools import Tool
-import os
-
-app = FastAPI(title='LangChain Agent API')
-
-llm = ChatOpenAI(
-    openai_api_base=os.getenv('OPENAI_API_BASE', 'http://openai-api:4000/v1'),
-    openai_api_key=os.getenv('OPENAI_API_KEY', 'dummy')
-)
-
-tools = []
-
-prompt = ChatPromptTemplate.from_messages([
-    ('system', 'You are a helpful AI assistant.'),
-    MessagesPlaceholder(variable_name='chat_history', optional=True),
-    ('user', '{input}'),
-    MessagesPlaceholder(variable_name='agent_scratchpad')
-])
-
-agent = create_openai_functions_agent(llm, tools, prompt)
-agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
-
-add_routes(app, agent_executor, path='/agent')
-
-if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run(app, host='0.0.0.0', port=8000)
-EOF
-      python /app/agent.py
-    "
+    command:
+      - sh
+      - -c
+      - |
+        pip install --no-cache-dir langchain langchain-openai langchain-anthropic langserve fastapi uvicorn &&
+        cat > /app/agent.py <<'EOFPY'
+        from fastapi import FastAPI
+        from langserve import add_routes
+        from langchain.agents import AgentExecutor, create_openai_functions_agent
+        from langchain_openai import ChatOpenAI
+        from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+        from langchain.tools import Tool
+        import os
+        app = FastAPI(title='LangChain Agent API')
+        llm = ChatOpenAI(
+            openai_api_base=os.getenv('OPENAI_API_BASE', 'http://openai-api:4000/v1'),
+            openai_api_key=os.getenv('OPENAI_API_KEY', 'dummy')
+        )
+        tools = []
+        prompt = ChatPromptTemplate.from_messages([
+            ('system', 'You are a helpful AI assistant.'),
+            MessagesPlaceholder(variable_name='chat_history', optional=True),
+            ('user', '{input}'),
+            MessagesPlaceholder(variable_name='agent_scratchpad')
+        ])
+        agent = create_openai_functions_agent(llm, tools, prompt)
+        agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+        add_routes(app, agent_executor, path='/agent')
+        if __name__ == '__main__':
+            import uvicorn
+            uvicorn.run(app, host='0.0.0.0', port=8000)
+        EOFPY
+        python /app/agent.py
     ports:
       - "8000:8000"
     environment:
@@ -195,60 +190,55 @@ EOF
     image: python:3.11
     container_name: ai-crewai
     working_dir: /app
-    command: sh -c "
-      pip install --no-cache-dir crewai crewai-tools openai anthropic fastapi uvicorn &&
-      cat > /app/crew.py <<'EOF'
-from crewai import Agent, Task, Crew, Process
-from langchain_openai import ChatOpenAI
-import os
-
-llm = ChatOpenAI(
-    openai_api_base=os.getenv('OPENAI_API_BASE', 'http://openai-api:4000/v1'),
-    openai_api_key=os.getenv('OPENAI_API_KEY', 'dummy')
-)
-
-researcher = Agent(
-    role='Research Analyst',
-    goal='Research and analyze information',
-    backstory='Expert researcher with analytical skills',
-    llm=llm,
-    verbose=True
-)
-
-writer = Agent(
-    role='Content Writer',
-    goal='Create engaging content',
-    backstory='Experienced writer with creative flair',
-    llm=llm,
-    verbose=True
-)
-
-research_task = Task(
-    description='Research the given topic',
-    agent=researcher,
-    expected_output='Research findings'
-)
-
-write_task = Task(
-    description='Write content based on research',
-    agent=writer,
-    expected_output='Written content'
-)
-
-crew = Crew(
-    agents=[researcher, writer],
-    tasks=[research_task, write_task],
-    process=Process.sequential,
-    verbose=True
-)
-
-print('CrewAI initialized and ready')
-import time
-while True:
-    time.sleep(60)
-EOF
-      python /app/crew.py
-    "
+    command:
+      - sh
+      - -c
+      - |
+        pip install --no-cache-dir crewai crewai-tools openai anthropic fastapi uvicorn &&
+        cat > /app/crew.py <<'EOFCREW'
+        from crewai import Agent, Task, Crew, Process
+        from langchain_openai import ChatOpenAI
+        import os
+        import time
+        llm = ChatOpenAI(
+            openai_api_base=os.getenv('OPENAI_API_BASE', 'http://openai-api:4000/v1'),
+            openai_api_key=os.getenv('OPENAI_API_KEY', 'dummy')
+        )
+        researcher = Agent(
+            role='Research Analyst',
+            goal='Research and analyze information',
+            backstory='Expert researcher with analytical skills',
+            llm=llm,
+            verbose=True
+        )
+        writer = Agent(
+            role='Content Writer',
+            goal='Create engaging content',
+            backstory='Experienced writer with creative flair',
+            llm=llm,
+            verbose=True
+        )
+        research_task = Task(
+            description='Research the given topic',
+            agent=researcher,
+            expected_output='Research findings'
+        )
+        write_task = Task(
+            description='Write content based on research',
+            agent=writer,
+            expected_output='Written content'
+        )
+        crew = Crew(
+            agents=[researcher, writer],
+            tasks=[research_task, write_task],
+            process=Process.sequential,
+            verbose=True
+        )
+        print('CrewAI initialized and ready')
+        while True:
+            time.sleep(60)
+        EOFCREW
+        python /app/crew.py
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - OPENAI_API_BASE=http://openai-api:4000/v1
@@ -406,33 +396,29 @@ EOF
     image: python:3.11
     container_name: ai-agent-monitor
     working_dir: /app
-    command: sh -c "
-      pip install --no-cache-dir fastapi uvicorn prometheus-client &&
-      cat > /app/monitor.py <<'EOF'
-from fastapi import FastAPI
-from prometheus_client import Counter, Gauge, generate_latest
-import time
-
-app = FastAPI(title='Agent Monitor')
-
-agent_requests = Counter('agent_requests_total', 'Total agent requests')
-agent_errors = Counter('agent_errors_total', 'Total agent errors')
-active_agents = Gauge('active_agents', 'Currently active agents')
-
-@app.get('/metrics')
-async def metrics():
-    return generate_latest()
-
-@app.get('/health')
-async def health():
-    return {'status': 'healthy'}
-
-if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run(app, host='0.0.0.0', port=9090)
-EOF
-      python /app/monitor.py
-    "
+    command:
+      - sh
+      - -c
+      - |
+        pip install --no-cache-dir fastapi uvicorn prometheus-client &&
+        cat > /app/monitor.py <<'EOFMON'
+        from fastapi import FastAPI
+        from prometheus_client import Counter, Gauge, generate_latest
+        app = FastAPI(title='Agent Monitor')
+        agent_requests = Counter('agent_requests_total', 'Total agent requests')
+        agent_errors = Counter('agent_errors_total', 'Total agent errors')
+        active_agents = Gauge('active_agents', 'Currently active agents')
+        @app.get('/metrics')
+        async def metrics():
+            return generate_latest()
+        @app.get('/health')
+        async def health():
+            return {'status': 'healthy'}
+        if __name__ == '__main__':
+            import uvicorn
+            uvicorn.run(app, host='0.0.0.0', port=9090)
+        EOFMON
+        python /app/monitor.py
     ports:
       - "9090:9090"
     networks:
