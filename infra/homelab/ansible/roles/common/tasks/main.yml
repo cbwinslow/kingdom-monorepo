@@ -1,0 +1,99 @@
+---
+# Common system setup tasks
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_os_family == "Debian"
+
+- name: Upgrade all packages
+  apt:
+    upgrade: dist
+    autoremove: yes
+    autoclean: yes
+  when: ansible_os_family == "Debian"
+
+- name: Install common packages
+  apt:
+    name: "{{ system_packages }}"
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Set timezone
+  timezone:
+    name: "{{ timezone }}"
+
+- name: Configure NTP
+  apt:
+    name: systemd-timesyncd
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Ensure systemd-timesyncd is running
+  systemd:
+    name: systemd-timesyncd
+    state: started
+    enabled: yes
+
+- name: Create admin users
+  user:
+    name: "{{ item.name }}"
+    groups: "{{ item.groups }}"
+    shell: "{{ item.shell }}"
+    create_home: yes
+    append: yes
+  loop: "{{ admin_users }}"
+
+- name: Set up authorized keys for admin users
+  authorized_key:
+    user: "{{ item.name }}"
+    state: present
+    key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  loop: "{{ admin_users }}"
+  when: lookup('file', '~/.ssh/id_rsa.pub', errors='ignore')
+
+- name: Configure sudo without password for admin users
+  lineinfile:
+    path: /etc/sudoers.d/{{ item.name }}
+    line: "{{ item.name }} ALL=(ALL) NOPASSWD:ALL"
+    create: yes
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  loop: "{{ admin_users }}"
+
+- name: Configure SSH
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+  loop:
+    - { regexp: '^#?Port', line: 'Port {{ ssh_port }}' }
+    - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin {{ ssh_permit_root_login }}' }
+    - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication {{ ssh_password_authentication }}' }
+  notify: Restart SSH
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+    policy: deny
+
+- name: Configure UFW rules
+  ufw:
+    rule: allow
+    port: "{{ item.split('/')[0] }}"
+    proto: "{{ item.split('/')[1] }}"
+  loop: "{{ firewall_allowed_ports }}"
+
+- name: Install and configure fail2ban
+  apt:
+    name: fail2ban
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Ensure fail2ban is running
+  systemd:
+    name: fail2ban
+    state: started
+    enabled: yes

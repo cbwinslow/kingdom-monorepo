@@ -1,0 +1,43 @@
+---
+# Global variables for all hosts
+
+# System configuration
+system_packages:
+  - curl
+  - wget
+  - git
+  - vim
+  - htop
+  - net-tools
+  - ufw
+  - fail2ban
+
+# User configuration
+admin_users:
+  - name: homelab
+    groups: ['sudo', 'docker']
+    shell: /bin/bash
+
+# Security settings
+ssh_port: 22
+ssh_permit_root_login: "no"
+ssh_password_authentication: "no"
+
+# Firewall settings
+firewall_allowed_ports:
+  - 22/tcp   # SSH
+  - 80/tcp   # HTTP
+  - 443/tcp  # HTTPS
+
+# Docker configuration
+docker_compose_version: "2.23.0"
+docker_users:
+  - homelab
+
+# Monitoring configuration
+monitoring_enabled: true
+prometheus_retention_days: 15
+
+# Backup configuration
+backup_enabled: true
+backup_retention_days: 30

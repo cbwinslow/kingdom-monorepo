@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-America/New_York}
+      - VERSION=docker
+    volumes:
+      - ./plex/config:/config
+      - ${MEDIA_DIR_TV:-./media/tv}:/tv
+      - ${MEDIA_DIR_MOVIES:-./media/movies}:/movies
+      - ${MEDIA_DIR_MUSIC:-./media/music}:/music
+    restart: unless-stopped
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-America/New_York}
+    volumes:
+      - ./jellyfin/config:/config
+      - ${MEDIA_DIR_TV:-./media/tv}:/data/tvshows
+      - ${MEDIA_DIR_MOVIES:-./media/movies}:/data/movies
+    ports:
+      - "8096:8096"
+      - "8920:8920"
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-America/New_York}
+    volumes:
+      - ./sonarr/config:/config
+      - ${MEDIA_DIR_TV:-./media/tv}:/tv
+      - ${DOWNLOAD_DIR:-./downloads}:/downloads
+    ports:
+      - "8989:8989"
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-America/New_York}
+    volumes:
+      - ./radarr/config:/config
+      - ${MEDIA_DIR_MOVIES:-./media/movies}:/movies
+      - ${DOWNLOAD_DIR:-./downloads}:/downloads
+    ports:
+      - "7878:7878"
+    restart: unless-stopped
+
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-America/New_York}
+      - USER=${TRANSMISSION_USER:-admin}
+      - PASS=${TRANSMISSION_PASS:-changeme}
+    volumes:
+      - ./transmission/config:/config
+      - ${DOWNLOAD_DIR:-./downloads}:/downloads
+    ports:
+      - "9091:9091"
+      - "51413:51413"
+      - "51413:51413/udp"
+    restart: unless-stopped
+
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-America/New_York}
+      - AUTO_UPDATE=true
+    volumes:
+      - ./jackett/config:/config
+      - ${DOWNLOAD_DIR:-./downloads}:/downloads
+    ports:
+      - "9117:9117"
+    restart: unless-stopped
