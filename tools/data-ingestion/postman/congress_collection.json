@@ -1,0 +1,195 @@
+{
+  "info": {
+    "name": "Congress.gov API v3",
+    "description": "Comprehensive collection for Congress.gov API v3 endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.congress.gov/v3",
+      "type": "string"
+    },
+    {
+      "key": "api_key",
+      "value": "YOUR_API_KEY_HERE",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Bills",
+      "description": "Congressional bills and legislation",
+      "item": [
+        {
+          "name": "List Bills",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/bill/118?api_key={{api_key}}&format=json&limit=250",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "List bills for Congress 118"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bill Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/bill/118/hr/1?api_key={{api_key}}&format=json",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get details for a specific bill"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bill Actions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/bill/118/hr/1/actions?api_key={{api_key}}&format=json&limit=250",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get actions for a bill"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Bill Cosponsors",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/bill/118/hr/1/cosponsors?api_key={{api_key}}&format=json&limit=250",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get cosponsors for a bill"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Members",
+      "description": "Members of Congress",
+      "item": [
+        {
+          "name": "List Members",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/member/118?api_key={{api_key}}&format=json&limit=250",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "List members for Congress 118"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Member Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/member/A000055?api_key={{api_key}}&format=json",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get details for a member by bioguide ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Sponsored Legislation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/member/A000055/sponsored-legislation?api_key={{api_key}}&format=json&limit=250",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get legislation sponsored by a member"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Committees",
+      "description": "Congressional committees",
+      "item": [
+        {
+          "name": "List Committees",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/committee/118?api_key={{api_key}}&format=json&limit=250",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "List committees for Congress 118"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Committee Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/committee/house/hsag?api_key={{api_key}}&format=json",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get details for a committee"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Amendments",
+      "description": "Amendments to bills",
+      "item": [
+        {
+          "name": "List Amendments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/amendment/118?api_key={{api_key}}&format=json&limit=250",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "List amendments for Congress 118"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

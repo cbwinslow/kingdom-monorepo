@@ -24,6 +24,20 @@ def create_postman_request(
     headers: List[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     """Create a Postman request object."""
+    # Parse URL components
+    if "://" in url:
+        protocol, rest = url.split("://", 1)
+        if "/" in rest:
+            host_part, path_part = rest.split("/", 1)
+            path = path_part.split("/") if path_part else []
+        else:
+            host_part = rest
+            path = []
+        host = host_part.split(".")
+    else:
+        host = []
+        path = []
+    
     request = {
         "name": name,
         "request": {
@@ -31,8 +45,8 @@ def create_postman_request(
             "header": headers or [],
             "url": {
                 "raw": url,
-                "host": url.split("://")[1].split("/")[0].split("."),
-                "path": url.split("://")[1].split("/")[1:] if "/" in url.split("://")[1] else [],
+                "host": host,
+                "path": path,
                 "query": params or [],
             },
             "description": description,

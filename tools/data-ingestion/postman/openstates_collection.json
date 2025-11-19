@@ -1,0 +1,138 @@
+{
+  "info": {
+    "name": "OpenStates API v3",
+    "description": "Comprehensive collection for OpenStates.org API v3 endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://v3.openstates.org",
+      "type": "string"
+    },
+    {
+      "key": "api_key",
+      "value": "YOUR_API_KEY_HERE",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Jurisdictions",
+      "description": "State and local jurisdictions",
+      "item": [
+        {
+          "name": "List Jurisdictions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/jurisdictions",
+              "host": [
+                "v3",
+                "openstates",
+                "org"
+              ],
+              "path": [
+                "jurisdictions"
+              ]
+            },
+            "description": "List all jurisdictions"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "People",
+      "description": "Legislators and officials",
+      "item": [
+        {
+          "name": "List People",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/people?jurisdiction=ca&per_page=100",
+              "host": [
+                "v3",
+                "openstates",
+                "org"
+              ],
+              "path": [
+                "people"
+              ],
+              "query": [
+                {
+                  "key": "jurisdiction",
+                  "value": "ca"
+                },
+                {
+                  "key": "per_page",
+                  "value": "100"
+                }
+              ]
+            },
+            "description": "List people for California"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Bills",
+      "description": "State bills and legislation",
+      "item": [
+        {
+          "name": "Search Bills",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "{{api_key}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/bills?jurisdiction=ca&session=2024&per_page=100",
+              "host": [
+                "v3",
+                "openstates",
+                "org"
+              ],
+              "path": [
+                "bills"
+              ],
+              "query": [
+                {
+                  "key": "jurisdiction",
+                  "value": "ca"
+                },
+                {
+                  "key": "session",
+                  "value": "2024"
+                },
+                {
+                  "key": "per_page",
+                  "value": "100"
+                }
+              ]
+            },
+            "description": "Search bills for California 2024 session"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
