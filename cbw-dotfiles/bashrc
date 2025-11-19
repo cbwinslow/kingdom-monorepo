@@ -1,0 +1,242 @@
+#!/usr/bin/env bash
+# Main Bash Configuration File
+# Source this file from ~/.bashrc or ~/.bash_profile
+
+# Get the directory where this file is located
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Load all function files
+if [ -d "$DOTFILES_DIR/bash/functions" ]; then
+    for func_file in "$DOTFILES_DIR/bash/functions"/*.sh; do
+        [ -f "$func_file" ] && source "$func_file"
+    done
+fi
+
+# Load custom aliases
+if [ -f "$DOTFILES_DIR/bash/aliases/aliases.sh" ]; then
+    source "$DOTFILES_DIR/bash/aliases/aliases.sh"
+fi
+
+# Shell options
+shopt -s histappend        # Append to history file
+shopt -s checkwinsize      # Check window size after each command
+shopt -s cdspell           # Autocorrect typos in path names
+shopt -s autocd            # Auto cd when entering just a path
+shopt -s dirspell          # Autocorrect directory names
+shopt -s nocaseglob        # Case-insensitive globbing
+
+# History settings
+export HISTSIZE=10000
+export HISTFILESIZE=20000
+export HISTCONTROL=ignoreboth:erasedups
+export HISTIGNORE="ls:ll:la:cd:pwd:exit:clear:history"
+export HISTTIMEFORMAT="%F %T "
+
+# Enhanced prompt
+if [ -n "$BASH_VERSION" ]; then
+    # Git branch in prompt (if git is available)
+    parse_git_branch() {
+        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    }
+    
+    # Set colorful PS1
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+        # Color prompt
+        PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[33m\]$(parse_git_branch)\[\033[00m\]\$ '
+    else
+        # Simple prompt
+        PS1='\u@\h:\w$(parse_git_branch)\$ '
+    fi
+fi
+
+# Editor settings
+export EDITOR='vim'
+export VISUAL='vim'
+export PAGER='less'
+
+# Less settings
+export LESS='-R -i -F -X'
+export LESSCHARSET='utf-8'
+
+# Color support for common commands
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# FZF configuration (if installed)
+if command -v fzf > /dev/null 2>&1; then
+    export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+    [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+fi
+
+# NVM configuration (if installed)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# Pyenv configuration (if installed)
+if command -v pyenv > /dev/null 2>&1; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi
+
+# Rbenv configuration (if installed)
+if command -v rbenv > /dev/null 2>&1; then
+    eval "$(rbenv init -)"
+fi
+
+# Go configuration
+if [ -d "$HOME/go" ]; then
+    export GOPATH="$HOME/go"
+    export PATH="$PATH:$GOPATH/bin"
+fi
+
+# Rust configuration
+if [ -f "$HOME/.cargo/env" ]; then
+    source "$HOME/.cargo/env"
+fi
+
+# Local bin
+export PATH="$HOME/.local/bin:$PATH"
+
+# Custom PATH additions
+if [ -d "$HOME/bin" ]; then
+    export PATH="$HOME/bin:$PATH"
+fi
+
+# Kubernetes aliases
+if command -v kubectl > /dev/null 2>&1; then
+    source <(kubectl completion bash 2>/dev/null)
+    complete -F __start_kubectl k 2>/dev/null
+fi
+
+# Docker completion
+if command -v docker > /dev/null 2>&1; then
+    if [ -f /etc/bash_completion.d/docker ]; then
+        source /etc/bash_completion.d/docker
+    fi
+fi
+
+# AWS CLI completion
+if command -v aws_completer > /dev/null 2>&1; then
+    complete -C aws_completer aws
+fi
+
+# Enable bash completion
+if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        source /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        source /etc/bash_completion
+    fi
+fi
+
+# macOS specific
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # Homebrew
+    if [ -f /opt/homebrew/bin/brew ]; then
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    elif [ -f /usr/local/bin/brew ]; then
+        eval "$(/usr/local/bin/brew shellenv)"
+    fi
+    
+    # iTerm2 integration
+    [ -e "${HOME}/.iterm2_shell_integration.bash" ] && source "${HOME}/.iterm2_shell_integration.bash"
+fi
+
+# Welcome message
+if [ -n "$PS1" ]; then
+    echo "Welcome to $(hostname)!"
+    echo "Dotfiles loaded from: $DOTFILES_DIR"
+    echo "Type 'dotfiles_help' for available functions"
+fi
+
+# Help function
+dotfiles_help() {
+    echo "=== Available Function Categories ==="
+    echo ""
+    echo "Navigation & Directory Management:"
+    echo "  mkcd, up, cdgr, cdpr, bookmark, goto"
+    echo ""
+    echo "File Operations:"
+    echo "  extract, archive, backup, ff, fd, findtext, largest, recent"
+    echo ""
+    echo "Git Operations:"
+    echo "  gs, gaa, gc, gac, gacp, gp, gpl, gco, gcb, gl, gst"
+    echo ""
+    echo "Docker Operations:"
+    echo "  dps, di, db, dr, dex, dl, dst, drm, dcup, dcdown"
+    echo ""
+    echo "Kubernetes Operations:"
+    echo "  kgp, kgs, kgd, kl, kex, ka, kdel, kscale"
+    echo ""
+    echo "System Utilities:"
+    echo "  diskusage, meminfo, cpuinfo, procs, killport, myip, sysinfo"
+    echo ""
+    echo "Development Tools:"
+    echo "  npm_clean, pip_upgrade_all, venv_create, test_all, code_stats"
+    echo ""
+    echo "Text Processing:"
+    echo "  lowercase, uppercase, dedup, csv2json, json2csv, word_freq"
+    echo ""
+    echo "AWS Cloud:"
+    echo "  ec2_list, s3_list, lambda_list, rds_list, aws_profile"
+    echo ""
+    echo "Network Tools:"
+    echo "  ping_ts, portscan, http_headers, ssl_cert, dns_check"
+    echo ""
+    echo "Media Processing:"
+    echo "  img_convert, img_resize, vid_to_gif, vid_compress, pdf_merge"
+    echo ""
+    echo "For detailed help on any category, view the function files in:"
+    echo "  $DOTFILES_DIR/bash/functions/"
+}
+
+# Function count
+dotfiles_count() {
+    local count=0
+    for func_file in "$DOTFILES_DIR/bash/functions"/*.sh; do
+        if [ -f "$func_file" ]; then
+            count=$((count + $(grep -c "^[a-zA-Z_][a-zA-Z0-9_]*() {" "$func_file")))
+        fi
+    done
+    echo "Total functions available: $count"
+}
+
+# List all functions
+dotfiles_list() {
+    echo "=== All Available Functions ==="
+    for func_file in "$DOTFILES_DIR/bash/functions"/*.sh; do
+        if [ -f "$func_file" ]; then
+            echo ""
+            echo "From $(basename "$func_file"):"
+            grep "^[a-zA-Z_][a-zA-Z0-9_]*() {" "$func_file" | sed 's/() {//' | column -c 80
+        fi
+    done
+}
+
+# Update dotfiles
+dotfiles_update() {
+    cd "$DOTFILES_DIR" || return
+    if [ -d .git ]; then
+        git pull
+        echo "Dotfiles updated. Run 'reload' to reload configuration."
+    else
+        echo "Not a git repository"
+    fi
+}
+
+# Show dotfiles version
+dotfiles_version() {
+    cd "$DOTFILES_DIR" || return
+    if [ -d .git ]; then
+        git log -1 --format="Version: %h - %s (%ar)"
+    else
+        echo "Version information not available"
+    fi
+}
