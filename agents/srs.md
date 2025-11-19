@@ -690,7 +690,436 @@ Potential future requirements (not in current scope):
 
 ---
 
-## 8. Approval and Sign-Off
+## 8. Extended Requirements
+
+### 8.1 Advanced Collaboration Requirements
+
+**REQ-051: Collaborative Editing**
+- **Priority:** P2 (Normal)
+- **Description:** Multiple agents should be able to work on different tasks simultaneously without conflicts
+- **Acceptance Criteria:**
+  - Git-based coordination prevents conflicts
+  - Clear task assignment prevents overlap
+  - Communication protocol enables coordination
+- **Verification:** Multiple agents can work concurrently
+- **Status:** ✅ Implemented (through git and task assignment)
+
+**REQ-052: Agent Capability Discovery**
+- **Priority:** P2 (Normal)
+- **Description:** Agents should be able to discover capabilities of other agents
+- **Acceptance Criteria:**
+  - Agent profiles documented
+  - Capability tags or metadata available
+  - Discovery mechanism defined
+- **Verification:** Agents can find appropriate agents for tasks
+- **Status:** ⚪ Planned (Future Enhancement)
+
+**REQ-053: Work Handoff Protocol**
+- **Priority:** P1 (High)
+- **Description:** Clear protocol for handing off incomplete work between agents
+- **Acceptance Criteria:**
+  - Handoff communication type defined
+  - State transfer documentation required
+  - Acceptance confirmation required
+- **Verification:** HANDOFF communication type in rules.md Section 5
+- **Status:** ✅ Implemented
+
+### 8.2 Advanced Testing Requirements
+
+**REQ-054: Visual Regression Testing**
+- **Priority:** P2 (Normal)
+- **Description:** Support for visual regression testing in UI projects
+- **Acceptance Criteria:**
+  - Visual test framework guidelines provided
+  - Screenshot comparison process documented
+  - Visual test evidence format defined
+- **Verification:** Testing guidelines cover visual testing
+- **Status:** ⚪ Planned (Future Enhancement)
+
+**REQ-055: Performance Benchmarking**
+- **Priority:** P2 (Normal)
+- **Description:** Requirements for performance testing and benchmarking
+- **Acceptance Criteria:**
+  - Performance test types defined
+  - Benchmarking methodology documented
+  - Performance evidence format specified
+- **Verification:** Performance testing in rules.md Section 16.14
+- **Status:** ✅ Implemented
+
+**REQ-056: Mutation Testing**
+- **Priority:** P3 (Low)
+- **Description:** Guidelines for mutation testing to verify test quality
+- **Acceptance Criteria:**
+  - Mutation testing concept explained
+  - When to use mutation testing documented
+  - Tools and techniques referenced
+- **Verification:** Advanced testing strategies documented
+- **Status:** ⚪ Planned (Future Enhancement)
+
+### 8.3 Advanced Documentation Requirements
+
+**REQ-057: Architecture Decision Records (ADR)**
+- **Priority:** P2 (Normal)
+- **Description:** Template and process for documenting architectural decisions
+- **Acceptance Criteria:**
+  - ADR template provided
+  - ADR storage location defined
+  - ADR creation process documented
+- **Verification:** Documentation practices in rules.md
+- **Status:** ✅ Implemented (through journal.md)
+
+**REQ-058: API Documentation**
+- **Priority:** P2 (Normal)
+- **Description:** Standards for API documentation
+- **Acceptance Criteria:**
+  - API documentation format specified
+  - Required API doc elements defined
+  - Examples provided
+- **Verification:** Documentation section in rules.md Section 16.10
+- **Status:** ✅ Implemented
+
+**REQ-059: Diagram and Visual Documentation**
+- **Priority:** P2 (Normal)
+- **Description:** Guidelines for creating and maintaining diagrams
+- **Acceptance Criteria:**
+  - Diagram types identified
+  - Diagram tools recommended
+  - Diagram storage and versioning defined
+- **Verification:** Documentation practices covered
+- **Status:** ⚪ Planned (Future Enhancement)
+
+### 8.4 Advanced Git Requirements
+
+**REQ-060: Branch Protection Rules**
+- **Priority:** P1 (High)
+- **Description:** Guidelines for implementing branch protection
+- **Acceptance Criteria:**
+  - Protected branch strategy documented
+  - Review requirements specified
+  - Merge conditions defined
+- **Verification:** Git workflow documented in agents.md
+- **Status:** ✅ Implemented
+
+**REQ-061: Commit Signing**
+- **Priority:** P2 (Normal)
+- **Description:** Requirements for commit signing and verification
+- **Acceptance Criteria:**
+  - Commit signing process documented
+  - GPG key setup instructions provided
+  - Verification process explained
+- **Verification:** Git best practices covered
+- **Status:** ⚪ Planned (Future Enhancement)
+
+**REQ-062: Git Hooks**
+- **Priority:** P2 (Normal)
+- **Description:** Guidelines for implementing git hooks
+- **Acceptance Criteria:**
+  - Useful git hooks identified
+  - Hook implementation examples provided
+  - Hook testing documented
+- **Verification:** Git workflow enhancements
+- **Status:** ⚪ Planned (Future Enhancement)
+
+### 8.5 Security Requirements
+
+**REQ-063: Secrets Management**
+- **Priority:** P0 (Critical)
+- **Description:** Comprehensive secrets management guidelines
+- **Acceptance Criteria:**
+  - Secret storage solutions documented
+  - Secret rotation process defined
+  - Secret detection tools recommended
+- **Verification:** Security practices in rules.md Section 16.4
+- **Status:** ✅ Implemented
+
+**REQ-064: Vulnerability Scanning**
+- **Priority:** P1 (High)
+- **Description:** Requirements for regular vulnerability scanning
+- **Acceptance Criteria:**
+  - Scan tools identified
+  - Scan frequency defined
+  - Remediation process documented
+- **Verification:** Dependency management in rules.md Section 16.9
+- **Status:** ✅ Implemented
+
+**REQ-065: Security Audit Trail**
+- **Priority:** P0 (Critical)
+- **Description:** Complete audit trail of security-relevant actions
+- **Acceptance Criteria:**
+  - Security actions logged to journal.md
+  - Access attempts tracked
+  - Security reviews documented
+- **Verification:** Logging requirements cover security
+- **Status:** ✅ Implemented
+
+### 8.6 Performance Requirements
+
+**REQ-066: Response Time Targets**
+- **Priority:** P1 (High)
+- **Description:** Define acceptable response times for agent operations
+- **Acceptance Criteria:**
+  - Task completion time guidelines
+  - Response time for communications
+  - System performance expectations
+- **Verification:** Response times in communication protocols
+- **Status:** ✅ Implemented
+
+**REQ-067: Scalability Guidelines**
+- **Priority:** P2 (Normal)
+- **Description:** Framework must scale to large projects
+- **Acceptance Criteria:**
+  - Journal growth management strategy
+  - Task list scalability addressed
+  - Multi-agent coordination at scale
+- **Verification:** Scalability addressed in requirements
+- **Status:** ✅ Implemented (REQ-047, REQ-048)
+
+**REQ-068: Resource Usage Monitoring**
+- **Priority:** P2 (Normal)
+- **Description:** Guidelines for monitoring resource usage
+- **Acceptance Criteria:**
+  - Resource metrics defined
+  - Monitoring approaches documented
+  - Optimization triggers specified
+- **Verification:** Performance monitoring in rules.md
+- **Status:** ✅ Implemented
+
+### 8.7 Integration Requirements
+
+**REQ-069: IDE Integration**
+- **Priority:** P2 (Normal)
+- **Description:** Guidelines for IDE-specific workflows
+- **Acceptance Criteria:**
+  - Common IDE features documented
+  - IDE shortcuts referenced
+  - IDE-specific best practices
+- **Verification:** IDE tools covered in agents.md
+- **Status:** ✅ Implemented
+
+**REQ-070: CI/CD Integration**
+- **Priority:** P1 (High)
+- **Description:** Integration with CI/CD pipelines
+- **Acceptance Criteria:**
+  - CI/CD workflow documented
+  - Automated testing in CI
+  - Deployment automation guidelines
+- **Verification:** CI/CD practices in rules.md
+- **Status:** ✅ Implemented
+
+**REQ-071: Monitoring Tool Integration**
+- **Priority:** P2 (Normal)
+- **Description:** Integration with monitoring and observability tools
+- **Acceptance Criteria:**
+  - Monitoring guidelines provided
+  - Logging standards defined
+  - Alerting best practices documented
+- **Verification:** Monitoring section in rules.md
+- **Status:** ✅ Implemented
+
+### 8.8 Quality Metrics Requirements
+
+**REQ-072: Code Coverage Targets**
+- **Priority:** P1 (High)
+- **Description:** Define code coverage expectations
+- **Acceptance Criteria:**
+  - Coverage targets specified (>80%)
+  - Coverage measurement tools identified
+  - Coverage reporting process defined
+- **Verification:** Testing strategies include coverage
+- **Status:** ✅ Implemented
+
+**REQ-073: Code Quality Metrics**
+- **Priority:** P2 (Normal)
+- **Description:** Define code quality metrics to track
+- **Acceptance Criteria:**
+  - Quality metrics identified
+  - Measurement tools documented
+  - Quality gates defined
+- **Verification:** Code quality in rules.md
+- **Status:** ✅ Implemented
+
+**REQ-074: Documentation Quality**
+- **Priority:** P1 (High)
+- **Description:** Standards for documentation quality
+- **Acceptance Criteria:**
+  - Documentation completeness criteria
+  - Documentation accuracy requirements
+  - Documentation review process
+- **Verification:** Documentation practices extensively covered
+- **Status:** ✅ Implemented
+
+### 8.9 Accessibility Requirements
+
+**REQ-075: Documentation Accessibility**
+- **Priority:** P1 (High)
+- **Description:** Documentation must be accessible and easy to navigate
+- **Acceptance Criteria:**
+  - Clear structure and organization
+  - Table of contents provided
+  - Search-friendly format
+  - Examples and visual aids included
+- **Verification:** All documents well-structured with TOC
+- **Status:** ✅ Implemented
+
+**REQ-076: Inclusive Language**
+- **Priority:** P1 (High)
+- **Description:** Use inclusive, bias-free language
+- **Acceptance Criteria:**
+  - Gender-neutral language used
+  - Culturally sensitive terminology
+  - Clear and simple language
+- **Verification:** Documentation review for inclusive language
+- **Status:** ✅ Implemented
+
+### 8.10 Internationalization Requirements
+
+**REQ-077: Timezone Handling**
+- **Priority:** P1 (High)
+- **Description:** Consistent timezone handling across framework
+- **Acceptance Criteria:**
+  - UTC used for all timestamps
+  - ISO 8601 format required
+  - Timezone conversion documented when needed
+- **Verification:** ISO 8601 timestamps required throughout
+- **Status:** ✅ Implemented
+
+**REQ-078: Multi-Language Support**
+- **Priority:** P3 (Low)
+- **Description:** Framework should support projects in multiple languages
+- **Acceptance Criteria:**
+  - Language-agnostic documentation
+  - Examples in multiple languages
+  - Tool-agnostic approaches
+- **Verification:** Framework is language-agnostic
+- **Status:** ✅ Implemented
+
+---
+
+## 9. Use Cases
+
+### 9.1 Use Case: New Agent Onboarding
+
+**Actor:** New AI Agent
+**Goal:** Successfully start working on project
+**Preconditions:** Framework documentation available
+
+**Main Flow:**
+1. Agent reads agents.md master control document
+2. Agent reads rules.md comprehensive rules
+3. Agent reviews current tasks.md
+4. Agent reads recent journal.md entries
+5. Agent makes first journal entry (onboarding)
+6. Agent selects first task
+7. Agent begins work following framework
+
+**Postconditions:** Agent productive and following standards
+
+**Extensions:**
+- 2a. Agent finds rule unclear → Escalate for clarification
+- 6a. No suitable tasks available → Create new task from features.md
+
+### 9.2 Use Case: Task Execution
+
+**Actor:** AI Agent
+**Goal:** Complete assigned task with quality
+**Preconditions:** Task exists in tasks.md
+
+**Main Flow:**
+1. Agent selects task from tasks.md
+2. Agent updates task status to IN_PROGRESS
+3. Agent logs task start to journal.md
+4. Agent executes each microgoal sequentially
+5. Agent runs tests after each microgoal
+6. Agent documents test results in tasks.md
+7. Agent signs off on each completed microgoal
+8. Agent verifies all acceptance criteria met
+9. Agent updates task status to COMPLETED
+10. Agent signs off on task with timestamp
+11. Agent commits changes to git
+12. Agent logs task completion to journal.md
+
+**Postconditions:** Task completed, tested, documented, committed
+
+**Extensions:**
+- 5a. Tests fail → Fix issue and retry
+- 8a. Criteria not met → Continue work
+- Various. Blocked → Document and escalate
+
+### 9.3 Use Case: Inter-Agent Collaboration
+
+**Actor:** Multiple AI Agents
+**Goal:** Coordinate work on dependent tasks
+**Preconditions:** Multiple agents working on project
+
+**Main Flow:**
+1. Agent A identifies need to coordinate with Agent B
+2. Agent A logs intent to communicate in journal.md
+3. Agent A creates REQUEST communication in journal.md
+4. Agent B reviews journal.md and sees request
+5. Agent B responds with RESPONSE communication
+6. Agent A acknowledges response
+7. Both agents proceed with coordinated work
+8. Results integrated successfully
+
+**Postconditions:** Work coordinated, both tasks progress
+
+**Extensions:**
+- 5a. Agent B needs more information → REQUEST clarification
+- 6a. Coordination reveals blocker → ESCALATION to human
+
+### 9.4 Use Case: Emergency Response
+
+**Actor:** AI Agent
+**Goal:** Handle critical error safely
+**Preconditions:** Critical error occurs
+
+**Main Flow:**
+1. Agent detects critical error
+2. Agent immediately stops current work
+3. Agent logs error to journal.md with full details
+4. Agent assesses impact and severity
+5. Agent contains damage if possible
+6. Agent creates URGENT ESCALATION communication
+7. Agent documents steps taken
+8. Agent waits for guidance
+9. Human provides resolution guidance
+10. Agent implements resolution
+11. Agent verifies resolution successful
+12. Agent documents lessons learned
+
+**Postconditions:** Error handled, system recovered, knowledge captured
+
+**Extensions:**
+- 5a. Cannot contain → Escalate immediately
+- 10a. Resolution unsuccessful → Re-escalate
+
+### 9.5 Use Case: Framework Deployment
+
+**Actor:** Project Lead / Developer
+**Goal:** Deploy framework to new project
+**Preconditions:** New project initiated
+
+**Main Flow:**
+1. Copy all files from /agents/ folder to new project
+2. Initialize git repository if needed
+3. Update srs.md with project requirements
+4. Update features.md with project features
+5. Create project_summary.md with project context
+6. Create initial tasks in tasks.md
+7. Create first journal.md entry
+8. Configure project-specific conventions
+9. First agent onboards using agents.md
+10. Framework operational
+
+**Postconditions:** Framework deployed and operational
+
+**Extensions:**
+- 9a. Agent finds framework unclear → Update documentation
+- Various. Customization needed → Document in project files
+
+---
+
+## 10. Approval and Sign-Off
 
 | Role | Name | Date | Signature |
 |------|------|------|-----------|

@@ -693,4 +693,791 @@ When starting a new project with this framework:
 
 ---
 
+## 16. Advanced Topics & Best Practices
+
+### 16.1 Performance Optimization
+
+**Code Efficiency:**
+- Profile code before optimizing (measure, don't guess)
+- Document optimization decisions with benchmarks
+- Consider readability vs. performance trade-offs
+- Log performance improvements in journal.md
+
+**Resource Management:**
+- Monitor memory usage for long-running processes
+- Clean up temporary files and resources
+- Close file handles, database connections properly
+- Document resource constraints in tasks.md
+
+**Parallel Processing:**
+- Identify tasks that can run concurrently
+- Document parallelization strategies in journal.md
+- Test parallel code thoroughly for race conditions
+- Use appropriate synchronization mechanisms
+
+### 16.2 Error Handling Strategies
+
+**Defensive Programming:**
+- Validate all inputs before processing
+- Check return values and handle errors explicitly
+- Use appropriate exception types
+- Document error handling patterns in journal.md
+
+**Error Recovery:**
+- Implement graceful degradation where possible
+- Log all errors with full context (stack traces, variables)
+- Provide actionable error messages
+- Document recovery procedures in tasks.md
+
+**Error Categories:**
+
+| Category | Response | Example | Documentation |
+|----------|----------|---------|---------------|
+| **Transient** | Retry with backoff | Network timeout | Log retry attempts |
+| **User Error** | Return clear message | Invalid input | Document validation rules |
+| **System Error** | Log and escalate | Out of memory | Document system requirements |
+| **Logic Error** | Fix immediately | Off-by-one | Document fix and test |
+
+### 16.3 Code Style & Conventions
+
+**Naming Conventions:**
+- Use descriptive, intention-revealing names
+- Follow language-specific conventions (PEP 8, ESLint, etc.)
+- Be consistent within each codebase
+- Document project-specific conventions
+
+**Code Organization:**
+- Group related functionality together
+- Keep functions/methods focused and small
+- Use appropriate abstraction levels
+- Document architectural decisions in journal.md
+
+**Comments & Documentation:**
+- Write self-documenting code when possible
+- Add comments for "why" not "what"
+- Document complex algorithms and business logic
+- Keep documentation synchronized with code
+
+**Example - Good vs. Poor Naming:**
+```python
+# Poor
+def calc(x, y):
+    return x * y * 0.08
+
+# Good
+def calculate_sales_tax(subtotal, quantity):
+    TAX_RATE = 0.08
+    return subtotal * quantity * TAX_RATE
+```
+
+### 16.4 Security Best Practices
+
+**Input Validation:**
+- Never trust user input
+- Validate, sanitize, and escape all inputs
+- Use parameterized queries for databases
+- Document validation rules in code
+
+**Authentication & Authorization:**
+- Never hardcode credentials
+- Use environment variables or secret managers
+- Implement principle of least privilege
+- Log authentication attempts (without credentials)
+
+**Data Protection:**
+- Encrypt sensitive data at rest and in transit
+- Use secure communication protocols (HTTPS, TLS)
+- Implement proper session management
+- Document security measures in srs.md
+
+**Security Checklist:**
+- [ ] No credentials in code or logs
+- [ ] Input validation implemented
+- [ ] SQL injection prevented
+- [ ] XSS attacks prevented
+- [ ] CSRF protection enabled
+- [ ] Dependencies regularly updated
+- [ ] Security headers configured
+
+### 16.5 Testing Strategies
+
+**Test Pyramid:**
+```
+         /\
+        /E2E\      <- Few (slow, expensive)
+       /------\
+      /Integr.\   <- Some (medium speed/cost)
+     /----------\
+    /   Unit     \ <- Many (fast, cheap)
+   /--------------\
+```
+
+**Unit Testing Best Practices:**
+- Test one thing per test
+- Use descriptive test names
+- Follow AAA pattern (Arrange, Act, Assert)
+- Mock external dependencies
+- Aim for high coverage (>80%)
+
+**Integration Testing:**
+- Test component interactions
+- Use test databases/services
+- Clean up test data after each test
+- Document integration test setup
+
+**End-to-End Testing:**
+- Test critical user workflows
+- Use realistic test data
+- Test against staging environment
+- Document E2E test scenarios
+
+**Example Test Structure:**
+```python
+def test_calculate_sales_tax_returns_correct_amount():
+    # Arrange
+    subtotal = 100.00
+    quantity = 2
+    expected_tax = 16.00
+    
+    # Act
+    actual_tax = calculate_sales_tax(subtotal, quantity)
+    
+    # Assert
+    assert actual_tax == expected_tax
+```
+
+### 16.6 Debugging Techniques
+
+**Systematic Debugging:**
+1. **Reproduce** the issue consistently
+2. **Isolate** the failing component
+3. **Hypothesize** the root cause
+4. **Test** the hypothesis
+5. **Fix** the issue
+6. **Verify** the fix works
+7. **Document** in journal.md
+
+**Debugging Tools:**
+- Use debuggers (pdb, gdb, Chrome DevTools)
+- Add strategic logging statements
+- Use print statements sparingly
+- Remove debug code before committing
+
+**Common Debugging Patterns:**
+
+| Problem | Technique | Example |
+|---------|-----------|---------|
+| **Crash** | Stack trace analysis | Check exception message and line |
+| **Wrong output** | Print intermediate values | Log calculation steps |
+| **Performance** | Profiling | Use cProfile, Chrome Profiler |
+| **Intermittent** | Logging + reproduction | Add extensive logging |
+
+### 16.7 Refactoring Guidelines
+
+**When to Refactor:**
+- Code is duplicated in multiple places
+- Functions are too long (>50 lines)
+- Classes have too many responsibilities
+- Code is difficult to understand
+- Before adding new features to messy code
+
+**Refactoring Process:**
+1. **Ensure tests pass** before refactoring
+2. **Make small changes** incrementally
+3. **Run tests** after each change
+4. **Commit frequently** with clear messages
+5. **Document** refactoring decisions in journal.md
+
+**Common Refactorings:**
+- Extract Method: Pull code into new function
+- Extract Variable: Name magic numbers/strings
+- Rename: Use more descriptive names
+- Remove Duplication: Create shared functions
+- Simplify Conditionals: Use guard clauses
+
+**Example - Extract Method:**
+```python
+# Before
+def process_order(order):
+    total = 0
+    for item in order.items:
+        total += item.price * item.quantity
+    tax = total * 0.08
+    shipping = 10 if total < 100 else 0
+    return total + tax + shipping
+
+# After
+def process_order(order):
+    subtotal = calculate_subtotal(order.items)
+    tax = calculate_tax(subtotal)
+    shipping = calculate_shipping(subtotal)
+    return subtotal + tax + shipping
+
+def calculate_subtotal(items):
+    return sum(item.price * item.quantity for item in items)
+
+def calculate_tax(subtotal):
+    TAX_RATE = 0.08
+    return subtotal * TAX_RATE
+
+def calculate_shipping(subtotal):
+    FREE_SHIPPING_THRESHOLD = 100
+    STANDARD_SHIPPING = 10
+    return 0 if subtotal >= FREE_SHIPPING_THRESHOLD else STANDARD_SHIPPING
+```
+
+### 16.8 Code Review Best Practices
+
+**As Code Author:**
+- Self-review before requesting review
+- Provide context in PR description
+- Keep changes focused and small
+- Respond to feedback professionally
+- Document decisions in journal.md
+
+**As Code Reviewer:**
+- Review promptly (within 24 hours)
+- Be constructive and specific
+- Ask questions, don't make demands
+- Approve when acceptable, not perfect
+- Focus on important issues
+
+**Code Review Checklist:**
+- [ ] Code follows project style guidelines
+- [ ] Tests are included and passing
+- [ ] Documentation is updated
+- [ ] No obvious bugs or security issues
+- [ ] Changes are necessary and minimal
+- [ ] Error handling is appropriate
+- [ ] Performance impact is acceptable
+
+### 16.9 Dependency Management
+
+**Adding Dependencies:**
+1. **Evaluate necessity** - Is it really needed?
+2. **Check security** - Any known vulnerabilities?
+3. **Check license** - Compatible with project?
+4. **Check maintenance** - Recently updated?
+5. **Document reason** in journal.md
+6. **Update lock files** (package-lock.json, Pipfile.lock)
+
+**Dependency Security:**
+- Run security audits regularly (`npm audit`, `safety check`)
+- Update dependencies on schedule
+- Pin versions for reproducibility
+- Document security updates in journal.md
+
+**Dependency Hygiene:**
+- Remove unused dependencies
+- Keep direct dependencies minimal
+- Prefer well-maintained libraries
+- Document dependencies in README
+
+### 16.10 Documentation Practices
+
+**Code Documentation:**
+- Document public APIs thoroughly
+- Include usage examples in docstrings
+- Document assumptions and constraints
+- Keep documentation close to code
+
+**Project Documentation:**
+- Maintain up-to-date README
+- Document setup and installation
+- Provide troubleshooting guide
+- Include architecture overview
+
+**Documentation Format:**
+```python
+def calculate_discount(price, discount_percent, customer_type):
+    """
+    Calculate final price after applying discount.
+    
+    Args:
+        price (float): Original price before discount
+        discount_percent (float): Discount percentage (0-100)
+        customer_type (str): Type of customer ('regular', 'premium')
+        
+    Returns:
+        float: Final price after discount
+        
+    Raises:
+        ValueError: If discount_percent is not between 0 and 100
+        
+    Examples:
+        >>> calculate_discount(100, 10, 'regular')
+        90.0
+        >>> calculate_discount(100, 20, 'premium')
+        80.0
+    """
+    if not 0 <= discount_percent <= 100:
+        raise ValueError("Discount must be between 0 and 100")
+    
+    discount = price * (discount_percent / 100)
+    return price - discount
+```
+
+### 16.11 Collaboration Workflows
+
+**Feature Branches:**
+- Create branch per feature/fix
+- Use descriptive branch names
+- Keep branches short-lived
+- Merge frequently to avoid conflicts
+
+**Branch Naming Convention:**
+```
+feature/add-user-authentication
+bugfix/fix-login-timeout
+hotfix/critical-security-patch
+refactor/simplify-payment-logic
+docs/update-api-documentation
+```
+
+**Pull Request Process:**
+1. Create feature branch
+2. Make changes with tests
+3. Self-review changes
+4. Create PR with description
+5. Address review feedback
+6. Merge when approved
+7. Delete feature branch
+
+**Merge Conflicts:**
+- Pull latest changes regularly
+- Resolve conflicts locally
+- Test after resolving conflicts
+- Commit resolution clearly
+- Document complex resolutions
+
+### 16.12 Environment Management
+
+**Environment Types:**
+
+| Environment | Purpose | Data | Updates |
+|-------------|---------|------|---------|
+| **Development** | Active coding | Synthetic | Continuous |
+| **Testing** | QA testing | Synthetic | Per feature |
+| **Staging** | Pre-production | Production-like | Per release |
+| **Production** | Live system | Real | Scheduled |
+
+**Environment Variables:**
+- Never commit .env files
+- Document required variables
+- Use different values per environment
+- Provide .env.example file
+
+**Configuration Management:**
+- Separate config from code
+- Use environment-specific configs
+- Document configuration options
+- Validate configuration on startup
+
+### 16.13 Monitoring & Observability
+
+**Logging Levels:**
+- **DEBUG**: Detailed diagnostic information
+- **INFO**: General informational messages
+- **WARNING**: Warning messages for potentially harmful situations
+- **ERROR**: Error messages for serious problems
+- **CRITICAL**: Critical issues requiring immediate action
+
+**What to Log:**
+- Application startup/shutdown
+- User authentication attempts
+- API requests and responses
+- Errors and exceptions
+- Performance metrics
+- Business events
+
+**What NOT to Log:**
+- Passwords or credentials
+- Credit card numbers
+- Personal identifiable information (PII)
+- Session tokens
+- Full stack traces in production
+
+**Structured Logging Example:**
+```json
+{
+  "timestamp": "2025-11-19T19:24:57Z",
+  "level": "INFO",
+  "service": "payment-service",
+  "event": "payment_processed",
+  "user_id": "user_123",
+  "amount": 99.99,
+  "currency": "USD",
+  "transaction_id": "txn_abc123"
+}
+```
+
+### 16.14 Performance Monitoring
+
+**Key Metrics:**
+- Response time (average, p50, p95, p99)
+- Throughput (requests per second)
+- Error rate (percentage of failed requests)
+- Resource utilization (CPU, memory, disk)
+
+**Performance Testing:**
+- Load testing (normal traffic)
+- Stress testing (peak traffic)
+- Soak testing (sustained traffic)
+- Spike testing (sudden traffic increase)
+
+**Performance Optimization Cycle:**
+1. **Measure** baseline performance
+2. **Identify** bottlenecks
+3. **Optimize** critical paths
+4. **Measure** improvement
+5. **Document** changes in journal.md
+
+### 16.15 Disaster Recovery
+
+**Backup Strategy:**
+- Regular automated backups
+- Test restore procedures
+- Store backups off-site
+- Document backup schedule
+
+**Incident Response:**
+1. **Detect** incident
+2. **Assess** impact
+3. **Contain** damage
+4. **Resolve** issue
+5. **Review** post-mortem
+6. **Document** in journal.md
+
+**Recovery Procedures:**
+- Document recovery steps
+- Test recovery regularly
+- Assign recovery responsibilities
+- Update procedures based on incidents
+
+### 16.16 Technical Debt Management
+
+**Identifying Technical Debt:**
+- Code smells (long methods, large classes)
+- Outdated dependencies
+- Missing tests
+- Poor documentation
+- Temporary workarounds
+
+**Managing Technical Debt:**
+- Track debt in tasks.md
+- Allocate time for debt reduction
+- Prioritize critical debt
+- Prevent new debt accumulation
+- Document debt decisions
+
+**Debt Prioritization:**
+
+| Priority | Type | Impact | Action |
+|----------|------|--------|--------|
+| **High** | Security vulnerabilities | Critical | Fix immediately |
+| **High** | System instability | High | Fix next sprint |
+| **Medium** | Performance issues | Medium | Schedule fix |
+| **Low** | Code quality | Low | Opportunistic fix |
+
+---
+
+## 17. Domain-Specific Guidelines
+
+### 17.1 Web Development
+
+**Frontend Best Practices:**
+- Use semantic HTML
+- Ensure accessibility (WCAG compliance)
+- Optimize assets (images, CSS, JS)
+- Implement responsive design
+- Test across browsers
+
+**Backend Best Practices:**
+- Validate all inputs
+- Use prepared statements
+- Implement rate limiting
+- Handle errors gracefully
+- Log important events
+
+**API Design:**
+- Use RESTful conventions
+- Version your APIs
+- Document endpoints clearly
+- Implement proper authentication
+- Return appropriate status codes
+
+### 17.2 Data Science & ML
+
+**Data Pipeline Best Practices:**
+- Validate data quality
+- Handle missing values appropriately
+- Document data transformations
+- Version datasets
+- Track data lineage
+
+**Model Development:**
+- Start with baseline model
+- Track experiments systematically
+- Validate on holdout set
+- Document model assumptions
+- Version models and code
+
+**Model Deployment:**
+- Monitor model performance
+- Implement A/B testing
+- Plan for model retraining
+- Document deployment process
+- Handle model failures gracefully
+
+### 17.3 DevOps & Infrastructure
+
+**Infrastructure as Code:**
+- Version all infrastructure
+- Use declarative configuration
+- Test infrastructure changes
+- Document infrastructure decisions
+- Implement least privilege access
+
+**CI/CD Best Practices:**
+- Automate testing
+- Implement staged deployments
+- Use feature flags
+- Monitor deployments
+- Plan rollback procedures
+
+**Container Best Practices:**
+- Use official base images
+- Minimize layer count
+- Don't run as root
+- Scan for vulnerabilities
+- Document container setup
+
+### 17.4 Mobile Development
+
+**Mobile-Specific Considerations:**
+- Optimize for battery life
+- Handle offline scenarios
+- Minimize app size
+- Test on real devices
+- Follow platform guidelines
+
+**Performance Optimization:**
+- Lazy load images
+- Cache network responses
+- Minimize network requests
+- Optimize animations
+- Profile app performance
+
+---
+
+## 18. Workflow Examples
+
+### 18.1 Daily Agent Workflow
+
+**Morning Routine:**
+```markdown
+1. Pull latest changes from git
+2. Review journal.md (last 24 hours)
+3. Review tasks.md for priorities
+4. Check for communications in journal.md
+5. Select next task based on priority
+6. Log session start to journal.md
+7. Begin work on selected task
+```
+
+**During Work:**
+```markdown
+1. State current task every 15 minutes
+2. Log significant decisions to journal.md
+3. Commit changes after each microgoal
+4. Run tests frequently
+5. Update tasks.md with progress
+6. Document blockers immediately
+```
+
+**End of Day:**
+```markdown
+1. Complete current microgoal or document status
+2. Update all task statuses in tasks.md
+3. Log session summary to journal.md
+4. Commit and push all changes
+5. Review tomorrow's priorities
+6. Close any open resources
+```
+
+### 18.2 Feature Development Workflow
+
+**Planning Phase:**
+1. Review feature requirements in features.md
+2. Break down into tasks in tasks.md
+3. Identify dependencies and blockers
+4. Estimate effort and set timeline
+5. Log planning decisions to journal.md
+
+**Implementation Phase:**
+1. Create feature branch
+2. Write failing tests first
+3. Implement minimal code to pass tests
+4. Refactor for quality
+5. Document changes
+6. Log progress to journal.md
+
+**Review Phase:**
+1. Self-review all changes
+2. Run full test suite
+3. Update documentation
+4. Create pull request
+5. Address review feedback
+6. Merge when approved
+
+**Deployment Phase:**
+1. Deploy to staging
+2. Perform smoke tests
+3. Monitor for issues
+4. Deploy to production
+5. Monitor production metrics
+6. Document deployment in journal.md
+
+### 18.3 Bug Fix Workflow
+
+**Bug Report:**
+1. Create task in tasks.md
+2. Gather reproduction steps
+3. Document expected vs. actual behavior
+4. Assign priority
+5. Log bug details to journal.md
+
+**Investigation:**
+1. Reproduce bug locally
+2. Add failing test
+3. Debug to find root cause
+4. Log findings to journal.md
+5. Document in task
+
+**Fix Implementation:**
+1. Implement fix
+2. Verify tests pass
+3. Test manually
+4. Document fix approach
+5. Log fix to journal.md
+
+**Verification:**
+1. Test in staging environment
+2. Verify fix doesn't break other features
+3. Update task status
+4. Deploy to production
+5. Monitor for regression
+
+---
+
+## 19. Anti-Patterns to Avoid
+
+### 19.1 Code Anti-Patterns
+
+**God Object:**
+❌ One class/module doing everything
+✅ Separate concerns into focused components
+
+**Spaghetti Code:**
+❌ Tangled, difficult-to-follow logic
+✅ Clear structure with logical flow
+
+**Magic Numbers:**
+❌ Unexplained literal values
+✅ Named constants with clear meaning
+
+**Copy-Paste Programming:**
+❌ Duplicating code everywhere
+✅ Extract common functionality
+
+**Premature Optimization:**
+❌ Optimizing before measuring
+✅ Profile first, then optimize
+
+### 19.2 Process Anti-Patterns
+
+**Big Bang Integration:**
+❌ Integrating everything at once
+✅ Integrate incrementally and test
+
+**No Testing:**
+❌ Skipping tests to save time
+✅ Write tests to save future time
+
+**Cowboy Coding:**
+❌ Coding without planning or collaboration
+✅ Plan, communicate, review
+
+**Analysis Paralysis:**
+❌ Over-analyzing without action
+✅ Make progress iteratively
+
+**Feature Creep:**
+❌ Adding features beyond scope
+✅ Stay focused on requirements
+
+### 19.3 Communication Anti-Patterns
+
+**Silent Failure:**
+❌ Not reporting problems
+✅ Report issues immediately
+
+**Information Hoarding:**
+❌ Not sharing knowledge
+✅ Document and share findings
+
+**Assuming Understanding:**
+❌ Not verifying comprehension
+✅ Confirm understanding explicitly
+
+**Passive Aggressive:**
+❌ Indirect criticism
+✅ Direct, constructive feedback
+
+---
+
+## 20. Glossary of Terms
+
+**Acceptance Criteria:** Conditions that must be met for a task to be considered complete
+
+**Agent:** AI entity performing work on project tasks
+
+**Append-Only:** File that can only have new content added, never edited
+
+**Balance Sheet View:** Strategic perspective showing where we want to be
+
+**Blocker:** Issue preventing progress on a task
+
+**CI/CD:** Continuous Integration/Continuous Deployment
+
+**Code Smell:** Indicator of potential problems in code
+
+**Income Statement View:** Tactical perspective showing how we get there
+
+**Integration Test:** Test verifying components work together
+
+**ISO 8601:** International date/time format (YYYY-MM-DDTHH:MM:SSZ)
+
+**Journal:** Append-only log of all agent activities
+
+**MCP:** Model Context Protocol for agent communication
+
+**Microgoal:** Measurable sub-component of a task
+
+**P0/P1/P2/P3:** Priority levels (0=Critical, 1=High, 2=Normal, 3=Low)
+
+**Pull Request (PR):** Request to merge code changes
+
+**Refactoring:** Improving code structure without changing behavior
+
+**Regression:** Bug reintroduced after previously being fixed
+
+**SRS:** Software Requirements Specification
+
+**Technical Debt:** Code quality issues that slow future development
+
+**Unit Test:** Test verifying a single component works correctly
+
+---
+
 *This document is the source of truth for all AI agent operations. When in doubt, refer to this document. If this document is unclear, log the ambiguity and escalate for clarification.*
