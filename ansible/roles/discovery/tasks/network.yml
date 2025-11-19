@@ -1,0 +1,129 @@
+---
+# Network discovery tasks
+- name: Get network interfaces
+  shell: ip addr show
+  register: network_interfaces
+  changed_when: false
+
+- name: Get routing table
+  shell: ip route show
+  register: routing_table
+  changed_when: false
+
+- name: Get network statistics
+  shell: netstat -s
+  register: network_stats
+  changed_when: false
+  failed_when: false
+
+- name: Get active connections
+  shell: ss -tunap
+  register: active_connections
+  changed_when: false
+  failed_when: false
+
+- name: Get DNS configuration
+  shell: cat /etc/resolv.conf
+  register: dns_config
+  changed_when: false
+  failed_when: false
+
+- name: Get hosts file
+  shell: cat /etc/hosts
+  register: hosts_file
+  changed_when: false
+  failed_when: false
+
+- name: Get hostname configuration
+  shell: cat /etc/hostname
+  register: hostname_config
+  changed_when: false
+  failed_when: false
+
+- name: Get network interface configuration (Debian/Ubuntu)
+  shell: cat /etc/network/interfaces 2>/dev/null || find /etc/netplan/ -type f -exec cat {} \; 2>/dev/null || echo "Not found"
+  register: network_config_debian
+  changed_when: false
+  failed_when: false
+  when: ansible_os_family == "Debian"
+
+- name: Get network interface configuration (RedHat/CentOS)
+  shell: find /etc/sysconfig/network-scripts/ -name "ifcfg-*" -exec echo "=== {} ===" \; -exec cat {} \; 2>/dev/null || echo "Not found"
+  register: network_config_redhat
+  changed_when: false
+  failed_when: false
+  when: ansible_os_family == "RedHat"
+
+- name: Get ARP table
+  shell: ip neigh show
+  register: arp_table
+  changed_when: false
+
+- name: Get network traffic statistics
+  shell: |
+    ifconfig -a 2>/dev/null || ip -s link
+  register: traffic_stats
+  changed_when: false
+
+- name: Get listening ports
+  shell: ss -tunlp
+  register: listening_ports
+  changed_when: false
+  failed_when: false
+
+- name: Get bridge information
+  shell: brctl show 2>/dev/null || bridge link show 2>/dev/null || echo "No bridges"
+  register: bridge_info
+  changed_when: false
+  failed_when: false
+
+- name: Get VLAN information
+  shell: cat /proc/net/vlan/config 2>/dev/null || echo "No VLANs"
+  register: vlan_info
+  changed_when: false
+  failed_when: false
+
+- name: Save network information
+  copy:
+    content: |
+      Network Interfaces:
+      {{ network_interfaces.stdout }}
+      
+      Routing Table:
+      {{ routing_table.stdout }}
+      
+      Network Statistics:
+      {{ network_stats.stdout | default('N/A') }}
+      
+      Active Connections:
+      {{ active_connections.stdout | default('N/A') }}
+      
+      DNS Configuration:
+      {{ dns_config.stdout | default('N/A') }}
+      
+      Hosts File:
+      {{ hosts_file.stdout | default('N/A') }}
+      
+      Hostname:
+      {{ hostname_config.stdout | default('N/A') }}
+      
+      Network Configuration:
+      {{ network_config_debian.stdout | default(network_config_redhat.stdout) | default('N/A') }}
+      
+      ARP Table:
+      {{ arp_table.stdout }}
+      
+      Traffic Statistics:
+      {{ traffic_stats.stdout }}
+      
+      Listening Ports:
+      {{ listening_ports.stdout | default('N/A') }}
+      
+      Bridge Information:
+      {{ bridge_info.stdout | default('N/A') }}
+      
+      VLAN Information:
+      {{ vlan_info.stdout | default('N/A') }}
+    dest: "{{ output_path }}/network.txt"
+  delegate_to: localhost
+  become: false

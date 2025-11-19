@@ -1,0 +1,66 @@
+---
+# System information discovery tasks
+- name: Gather system information
+  set_fact:
+    system_info:
+      hostname: "{{ ansible_hostname }}"
+      fqdn: "{{ ansible_fqdn }}"
+      os_family: "{{ ansible_os_family }}"
+      distribution: "{{ ansible_distribution }}"
+      distribution_version: "{{ ansible_distribution_version }}"
+      distribution_release: "{{ ansible_distribution_release }}"
+      kernel: "{{ ansible_kernel }}"
+      architecture: "{{ ansible_architecture }}"
+      processor_count: "{{ ansible_processor_count }}"
+      processor_cores: "{{ ansible_processor_cores }}"
+      processor_vcpus: "{{ ansible_processor_vcpus }}"
+      memtotal_mb: "{{ ansible_memtotal_mb }}"
+      swaptotal_mb: "{{ ansible_swaptotal_mb }}"
+      python_version: "{{ ansible_python_version }}"
+      selinux_status: "{{ ansible_selinux.status | default('disabled') }}"
+      uptime_seconds: "{{ ansible_uptime_seconds }}"
+      date_time: "{{ ansible_date_time }}"
+
+- name: Get detailed CPU information
+  shell: lscpu
+  register: cpu_info
+  changed_when: false
+  failed_when: false
+
+- name: Get memory details
+  shell: free -h
+  register: memory_info
+  changed_when: false
+  failed_when: false
+
+- name: Get system load
+  shell: uptime
+  register: system_load
+  changed_when: false
+  failed_when: false
+
+- name: Get kernel parameters
+  shell: sysctl -a
+  register: kernel_params
+  changed_when: false
+  failed_when: false
+
+- name: Save system information
+  copy:
+    content: |
+      {{ system_info | to_nice_yaml }}
+      
+      CPU Information:
+      {{ cpu_info.stdout | default('N/A') }}
+      
+      Memory Information:
+      {{ memory_info.stdout | default('N/A') }}
+      
+      System Load:
+      {{ system_load.stdout | default('N/A') }}
+      
+      Kernel Parameters:
+      {{ kernel_params.stdout | default('N/A') }}
+    dest: "{{ output_path }}/system_info.yml"
+  delegate_to: localhost
+  become: false

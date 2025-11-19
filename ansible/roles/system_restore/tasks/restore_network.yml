@@ -1,0 +1,21 @@
+---
+# Network restoration tasks
+- name: Warning about network restoration
+  debug:
+    msg: "WARNING: Network restoration is disabled by default as it can cause connectivity issues. Manual configuration recommended."
+
+- name: Read network file
+  set_fact:
+    network_file: "{{ restore_discovery_path }}/network.txt"
+
+- name: Check if network file exists
+  stat:
+    path: "{{ network_file }}"
+  register: network_stat
+  delegate_to: localhost
+  become: false
+
+- name: Display network restoration info
+  debug:
+    msg: "Network configuration found in {{ network_file }}. Manual review and restoration strongly recommended."
+  when: network_stat.stat.exists

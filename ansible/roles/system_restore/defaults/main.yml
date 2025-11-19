@@ -1,0 +1,16 @@
+---
+# Default variables for system restore role
+restore_discovery_path: ""  # Path to discovery data directory
+restore_packages: true
+restore_users: true
+restore_network: false  # Careful with network restoration
+restore_ssh: true
+restore_services: false  # Careful with service restoration
+restore_config_files: true
+restore_firewall: false  # Careful with firewall restoration
+restore_cron_jobs: true
+
+# Safety options
+dry_run: false
+backup_existing: true
+backup_dir: "/tmp/system_restore_backup"

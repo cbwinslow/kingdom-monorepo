@@ -1,0 +1,82 @@
+---
+# Main tasks for system restoration
+- name: Verify discovery data path is provided
+  fail:
+    msg: "restore_discovery_path must be provided"
+  when: restore_discovery_path == ""
+
+- name: Check if discovery data exists
+  stat:
+    path: "{{ restore_discovery_path }}"
+  register: discovery_data
+  delegate_to: localhost
+  become: false
+
+- name: Fail if discovery data doesn't exist
+  fail:
+    msg: "Discovery data not found at {{ restore_discovery_path }}"
+  when: not discovery_data.stat.exists
+
+- name: Create backup directory
+  file:
+    path: "{{ backup_dir }}"
+    state: directory
+    mode: '0755'
+  when: backup_existing
+
+- name: Display restoration plan
+  debug:
+    msg: |
+      System Restoration Plan:
+      - Source: {{ restore_discovery_path }}
+      - Restore Packages: {{ restore_packages }}
+      - Restore Users: {{ restore_users }}
+      - Restore Network: {{ restore_network }}
+      - Restore SSH: {{ restore_ssh }}
+      - Restore Services: {{ restore_services }}
+      - Restore Config Files: {{ restore_config_files }}
+      - Restore Firewall: {{ restore_firewall }}
+      - Restore Cron Jobs: {{ restore_cron_jobs }}
+      - Dry Run: {{ dry_run }}
+      - Backup Existing: {{ backup_existing }}
+
+- name: Pause for confirmation
+  pause:
+    prompt: "Press ENTER to continue with restoration, or Ctrl+C to abort"
+  when: not dry_run
+
+- name: Include package restoration tasks
+  include_tasks: restore_packages.yml
+  when: restore_packages
+
+- name: Include user restoration tasks
+  include_tasks: restore_users.yml
+  when: restore_users
+
+- name: Include SSH restoration tasks
+  include_tasks: restore_ssh.yml
+  when: restore_ssh
+
+- name: Include config files restoration tasks
+  include_tasks: restore_config_files.yml
+  when: restore_config_files
+
+- name: Include cron jobs restoration tasks
+  include_tasks: restore_cron_jobs.yml
+  when: restore_cron_jobs
+
+- name: Include network restoration tasks
+  include_tasks: restore_network.yml
+  when: restore_network
+
+- name: Include firewall restoration tasks
+  include_tasks: restore_firewall.yml
+  when: restore_firewall
+
+- name: Include service restoration tasks
+  include_tasks: restore_services.yml
+  when: restore_services
+
+- name: Display completion message
+  debug:
+    msg: "System restoration complete! Please review changes and reboot if necessary."

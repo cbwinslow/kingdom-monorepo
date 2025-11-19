@@ -1,0 +1,85 @@
+---
+# MCP (Model Context Protocol) servers discovery tasks
+- name: Check for MCP server configurations
+  shell: |
+    # Check common MCP server locations
+    for config in ~/.config/mcp/servers.json ~/.mcp/servers.json /etc/mcp/servers.json; do
+      if [ -f "$config" ]; then
+        echo "=== $config ==="
+        cat "$config"
+      fi
+    done
+  register: mcp_configs
+  changed_when: false
+  failed_when: false
+
+- name: Check for Claude Desktop MCP configuration
+  shell: |
+    # Check Claude Desktop config
+    if [ -f ~/.config/Claude/claude_desktop_config.json ]; then
+      echo "=== Claude Desktop Config ==="
+      cat ~/.config/Claude/claude_desktop_config.json
+    fi
+  register: claude_mcp_config
+  changed_when: false
+  failed_when: false
+
+- name: Check for running MCP servers
+  shell: |
+    # Look for common MCP server processes
+    ps aux | grep -i mcp | grep -v grep || echo "No MCP processes found"
+  register: mcp_processes
+  changed_when: false
+  failed_when: false
+
+- name: Check for MCP server npm packages
+  shell: npm list -g | grep mcp 2>/dev/null || echo "No global MCP npm packages"
+  register: mcp_npm_packages
+  changed_when: false
+  failed_when: false
+
+- name: Check for MCP server Python packages
+  shell: pip3 list | grep mcp 2>/dev/null || pip list | grep mcp 2>/dev/null || echo "No MCP Python packages"
+  register: mcp_python_packages
+  changed_when: false
+  failed_when: false
+
+- name: Check for MCP related directories
+  shell: |
+    find /opt /usr/local -name "*mcp*" -type d 2>/dev/null | head -20 || echo "No MCP directories found"
+  register: mcp_directories
+  changed_when: false
+  failed_when: false
+
+- name: Check for MCP server systemd services
+  shell: systemctl list-units --all --no-pager | grep -i mcp || echo "No MCP systemd services"
+  register: mcp_services
+  changed_when: false
+  failed_when: false
+
+- name: Save MCP server information
+  copy:
+    content: |
+      MCP Server Configurations:
+      {{ mcp_configs.stdout | default('N/A') }}
+      
+      Claude Desktop MCP Configuration:
+      {{ claude_mcp_config.stdout | default('N/A') }}
+      
+      Running MCP Processes:
+      {{ mcp_processes.stdout | default('N/A') }}
+      
+      MCP NPM Packages:
+      {{ mcp_npm_packages.stdout | default('N/A') }}
+      
+      MCP Python Packages:
+      {{ mcp_python_packages.stdout | default('N/A') }}
+      
+      MCP Directories:
+      {{ mcp_directories.stdout | default('N/A') }}
+      
+      MCP Systemd Services:
+      {{ mcp_services.stdout | default('N/A') }}
+    dest: "{{ output_path }}/mcp_servers.txt"
+  delegate_to: localhost
+  become: false

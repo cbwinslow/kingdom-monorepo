@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Configuration Report - {{ report_hostname }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #555;
+            margin-top: 30px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+        h3 {
+            color: #666;
+            margin-top: 20px;
+        }
+        .info-box {
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .info-box h3 {
+            margin-top: 0;
+        }
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 0.9em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .timestamp {
+            color: #888;
+            font-size: 0.9em;
+        }
+        .section {
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>System Configuration Report</h1>
+        <div class="info-box">
+            <h3>Report Information</h3>
+            <p><strong>Hostname:</strong> {{ report_hostname }}</p>
+            <p><strong>Generated:</strong> <span class="timestamp">{{ ansible_date_time.iso8601 }}</span></p>
+            <p><strong>Discovery Path:</strong> {{ discovery_dir }}</p>
+        </div>
+
+        <div class="section">
+            <h2>📊 System Overview</h2>
+            <p>This report contains comprehensive system configuration information collected from <strong>{{ report_hostname }}</strong>.</p>
+            <p>All discovered configuration files and data are available in: <code>{{ discovery_dir }}</code></p>
+        </div>
+
+        <div class="section">
+            <h2>📁 Collected Information</h2>
+            <ul>
+                <li><strong>System Information:</strong> OS, kernel, hardware details</li>
+                <li><strong>Packages:</strong> Installed packages and package managers</li>
+                <li><strong>Users & Groups:</strong> User accounts, groups, and permissions</li>
+                <li><strong>Filesystem:</strong> Disk partitions, mount points, and usage</li>
+                <li><strong>Network:</strong> Network interfaces, routing, and configuration</li>
+                <li><strong>SSH:</strong> SSH server and client configuration</li>
+                <li><strong>Services:</strong> Running services and daemons</li>
+                <li><strong>Ports:</strong> Open ports and firewall rules</li>
+                <li><strong>Configuration Files:</strong> System and application configuration</li>
+                <li><strong>Ceph:</strong> Ceph cluster information (if applicable)</li>
+                <li><strong>MCP Servers:</strong> Model Context Protocol servers</li>
+                <li><strong>Firewall:</strong> Firewall rules and status</li>
+                <li><strong>Cron Jobs:</strong> Scheduled tasks</li>
+                <li><strong>Installed Software:</strong> Applications and tools</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>🔧 Next Steps</h2>
+            <p>To recreate this system configuration on a new VM:</p>
+            <ol>
+                <li>Review the collected data in <code>{{ discovery_dir }}</code></li>
+                <li>Modify the restoration playbook variables as needed</li>
+                <li>Run the restoration playbook: <code>ansible-playbook playbooks/restore_system.yml</code></li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2>📄 Report Files</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Data File</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>System Info</td>
+                        <td>system_info.yml</td>
+                        <td>Operating system, kernel, hardware details</td>
+                    </tr>
+                    <tr>
+                        <td>Packages</td>
+                        <td>packages.txt</td>
+                        <td>Installed packages from all package managers</td>
+                    </tr>
+                    <tr>
+                        <td>Users & Groups</td>
+                        <td>users_groups.txt</td>
+                        <td>User accounts, groups, sudoers configuration</td>
+                    </tr>
+                    <tr>
+                        <td>Filesystem</td>
+                        <td>filesystem.txt</td>
+                        <td>Disk partitions, mount points, LVM, RAID</td>
+                    </tr>
+                    <tr>
+                        <td>Network</td>
+                        <td>network.txt</td>
+                        <td>Network interfaces, routing, DNS configuration</td>
+                    </tr>
+                    <tr>
+                        <td>SSH</td>
+                        <td>ssh_config.txt</td>
+                        <td>SSH server and client configuration</td>
+                    </tr>
+                    <tr>
+                        <td>Services</td>
+                        <td>services.txt</td>
+                        <td>Running services, Docker containers, K8s pods</td>
+                    </tr>
+                    <tr>
+                        <td>Ports</td>
+                        <td>ports.txt</td>
+                        <td>Open ports, listening services, firewall rules</td>
+                    </tr>
+                    <tr>
+                        <td>Config Files</td>
+                        <td>config_files/</td>
+                        <td>System configuration files and directories</td>
+                    </tr>
+                    <tr>
+                        <td>Environment</td>
+                        <td>environment.txt</td>
+                        <td>Environment variables and profile configurations</td>
+                    </tr>
+                    <tr>
+                        <td>Ceph</td>
+                        <td>ceph.txt</td>
+                        <td>Ceph cluster status and configuration</td>
+                    </tr>
+                    <tr>
+                        <td>MCP Servers</td>
+                        <td>mcp_servers.txt</td>
+                        <td>Model Context Protocol server configurations</td>
+                    </tr>
+                    <tr>
+                        <td>Firewall</td>
+                        <td>firewall.txt</td>
+                        <td>UFW, firewalld, nftables rules</td>
+                    </tr>
+                    <tr>
+                        <td>Cron Jobs</td>
+                        <td>cron_jobs.txt</td>
+                        <td>Scheduled tasks and cron configurations</td>
+                    </tr>
+                    <tr>
+                        <td>Software</td>
+                        <td>installed_software.txt</td>
+                        <td>Installed applications and development tools</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <footer style="margin-top: 50px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center; color: #888;">
+            <p>Generated by Ansible System Configuration Discovery</p>
+        </footer>
+    </div>
+</body>
+</html>
