@@ -1,0 +1,51 @@
+{
+  "id": "internationalization-crew-027",
+  "name": "Internationalization Crew",
+  "description": "Team for making applications work globally across languages and regions",
+  "goal": "Enable applications to support multiple languages and locales",
+  "agents": [
+    "localization-specialist",
+    "frontend-react-developer",
+    "backend-api-developer",
+    "qa-automation-engineer",
+    "technical-writer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "i18n_strategy",
+      "description": "Design internationalization strategy",
+      "agent": "localization-specialist",
+      "expected_output": "I18n implementation plan"
+    },
+    {
+      "name": "frontend_i18n",
+      "description": "Implement frontend i18n",
+      "agent": "frontend-react-developer",
+      "expected_output": "Multi-language frontend"
+    },
+    {
+      "name": "backend_localization",
+      "description": "Implement backend localization",
+      "agent": "backend-api-developer",
+      "expected_output": "Locale-aware APIs"
+    },
+    {
+      "name": "localization_testing",
+      "description": "Test localized content",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Multi-locale test suite"
+    },
+    {
+      "name": "translation_docs",
+      "description": "Document translation process",
+      "agent": "technical-writer",
+      "expected_output": "Translation workflow documentation"
+    }
+  ],
+  "manager_agent": "localization-specialist",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

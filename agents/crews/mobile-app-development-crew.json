@@ -1,0 +1,51 @@
+{
+  "id": "mobile-app-dev-crew-003",
+  "name": "Mobile App Development Crew",
+  "description": "Cross-platform mobile application development team",
+  "goal": "Build high-quality, performant mobile applications for iOS and Android",
+  "agents": [
+    "mobile-developer",
+    "react-native-developer",
+    "ui-ux-designer",
+    "backend-api-developer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "design_mobile_ui",
+      "description": "Design mobile-specific UI/UX",
+      "agent": "ui-ux-designer",
+      "expected_output": "Mobile UI designs with platform-specific considerations"
+    },
+    {
+      "name": "setup_backend",
+      "description": "Setup mobile backend APIs",
+      "agent": "backend-api-developer",
+      "expected_output": "Mobile-optimized APIs with offline support"
+    },
+    {
+      "name": "implement_app",
+      "description": "Implement mobile application",
+      "agent": "react-native-developer",
+      "expected_output": "Cross-platform mobile app with native features"
+    },
+    {
+      "name": "native_optimization",
+      "description": "Optimize for native platforms",
+      "agent": "mobile-developer",
+      "expected_output": "Platform-specific optimizations and native modules"
+    },
+    {
+      "name": "mobile_testing",
+      "description": "Test on multiple devices",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Comprehensive mobile test suite"
+    }
+  ],
+  "manager_agent": "mobile-developer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

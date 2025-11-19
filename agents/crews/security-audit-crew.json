@@ -1,0 +1,51 @@
+{
+  "id": "security-audit-crew-005",
+  "name": "Security Audit Crew",
+  "description": "Comprehensive security assessment and hardening team",
+  "goal": "Identify and fix security vulnerabilities across the application stack",
+  "agents": [
+    "security-engineer",
+    "code-reviewer",
+    "devops-engineer",
+    "backend-api-developer",
+    "database-architect"
+  ],
+  "process": "hierarchical",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "security_assessment",
+      "description": "Perform comprehensive security assessment",
+      "agent": "security-engineer",
+      "expected_output": "Security audit report with vulnerability list"
+    },
+    {
+      "name": "code_security_review",
+      "description": "Review code for security issues",
+      "agent": "code-reviewer",
+      "expected_output": "Code review findings and recommendations"
+    },
+    {
+      "name": "infrastructure_hardening",
+      "description": "Harden infrastructure and deployments",
+      "agent": "devops-engineer",
+      "expected_output": "Hardened infrastructure configuration"
+    },
+    {
+      "name": "api_security",
+      "description": "Secure API endpoints",
+      "agent": "backend-api-developer",
+      "expected_output": "Secured APIs with authentication and rate limiting"
+    },
+    {
+      "name": "database_security",
+      "description": "Secure database access and data",
+      "agent": "database-architect",
+      "expected_output": "Database security configuration and encryption"
+    }
+  ],
+  "manager_agent": "security-engineer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

@@ -1,0 +1,51 @@
+{
+  "id": "nlp-application-crew-011",
+  "name": "NLP Application Crew",
+  "description": "Team for building natural language processing applications",
+  "goal": "Develop intelligent NLP-powered applications and services",
+  "agents": [
+    "nlp-engineer",
+    "ml-engineer",
+    "backend-python-developer",
+    "data-engineer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "data_preparation",
+      "description": "Prepare and process text data",
+      "agent": "data-engineer",
+      "expected_output": "Clean, processed text datasets"
+    },
+    {
+      "name": "nlp_model_development",
+      "description": "Develop NLP models",
+      "agent": "nlp-engineer",
+      "expected_output": "Fine-tuned language models"
+    },
+    {
+      "name": "model_deployment",
+      "description": "Productionize NLP models",
+      "agent": "ml-engineer",
+      "expected_output": "Deployed, scalable NLP services"
+    },
+    {
+      "name": "api_integration",
+      "description": "Build API layer for NLP services",
+      "agent": "backend-python-developer",
+      "expected_output": "RESTful API for NLP features"
+    },
+    {
+      "name": "testing_validation",
+      "description": "Test NLP functionality",
+      "agent": "qa-automation-engineer",
+      "expected_output": "NLP model validation and API tests"
+    }
+  ],
+  "manager_agent": "nlp-engineer",
+  "max_rpm": 80,
+  "language": "en",
+  "full_output": true
+}

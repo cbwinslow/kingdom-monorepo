@@ -1,0 +1,51 @@
+{
+  "id": "fullstack-web-dev-crew-001",
+  "name": "Full-Stack Web Development Crew",
+  "description": "A comprehensive team for building complete web applications from frontend to backend",
+  "goal": "Deliver high-quality, full-stack web applications with modern architecture and best practices",
+  "agents": [
+    "frontend-react-developer",
+    "backend-nodejs-developer",
+    "database-architect",
+    "ui-ux-designer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "design_ui_ux",
+      "description": "Design user interface and experience",
+      "agent": "ui-ux-designer",
+      "expected_output": "UI/UX designs, wireframes, and prototypes"
+    },
+    {
+      "name": "implement_frontend",
+      "description": "Build the frontend application",
+      "agent": "frontend-react-developer",
+      "expected_output": "Working frontend application with all components"
+    },
+    {
+      "name": "design_database",
+      "description": "Design and implement database schema",
+      "agent": "database-architect",
+      "expected_output": "Database schema, migrations, and documentation"
+    },
+    {
+      "name": "implement_backend",
+      "description": "Build backend APIs and business logic",
+      "agent": "backend-nodejs-developer",
+      "expected_output": "RESTful APIs with authentication and data validation"
+    },
+    {
+      "name": "qa_testing",
+      "description": "Test the complete application",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Test suite with unit, integration, and e2e tests"
+    }
+  ],
+  "manager_agent": "system-architect",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

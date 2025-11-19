@@ -1,0 +1,51 @@
+{
+  "id": "vue-spa-development-crew-036",
+  "name": "Vue.js SPA Development Crew",
+  "description": "Team for building single-page applications with Vue.js",
+  "goal": "Create modern, reactive Vue.js applications with excellent UX",
+  "agents": [
+    "frontend-vue-developer",
+    "ui-ux-designer",
+    "backend-api-developer",
+    "performance-engineer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "ui_design",
+      "description": "Design application UI/UX",
+      "agent": "ui-ux-designer",
+      "expected_output": "Vue application design mockups"
+    },
+    {
+      "name": "vue_implementation",
+      "description": "Implement Vue.js application",
+      "agent": "frontend-vue-developer",
+      "expected_output": "Vue 3 SPA with Composition API"
+    },
+    {
+      "name": "api_backend",
+      "description": "Build backend APIs",
+      "agent": "backend-api-developer",
+      "expected_output": "RESTful APIs for Vue app"
+    },
+    {
+      "name": "optimization",
+      "description": "Optimize application performance",
+      "agent": "performance-engineer",
+      "expected_output": "Optimized Vue application"
+    },
+    {
+      "name": "testing",
+      "description": "Test Vue application",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Vue component and E2E tests"
+    }
+  ],
+  "manager_agent": "frontend-vue-developer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

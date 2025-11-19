@@ -1,0 +1,51 @@
+{
+  "id": "payment-processing-crew-030",
+  "name": "Payment Processing Crew",
+  "description": "Team for implementing secure payment processing systems",
+  "goal": "Build PCI-compliant, reliable payment processing infrastructure",
+  "agents": [
+    "payment-integration-specialist",
+    "security-engineer",
+    "backend-api-developer",
+    "qa-automation-engineer",
+    "technical-writer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "payment_gateway_selection",
+      "description": "Select and integrate payment gateway",
+      "agent": "payment-integration-specialist",
+      "expected_output": "Integrated payment gateway"
+    },
+    {
+      "name": "security_compliance",
+      "description": "Ensure PCI DSS compliance",
+      "agent": "security-engineer",
+      "expected_output": "PCI-compliant security measures"
+    },
+    {
+      "name": "payment_api",
+      "description": "Build payment processing API",
+      "agent": "backend-api-developer",
+      "expected_output": "Payment API with webhooks"
+    },
+    {
+      "name": "payment_testing",
+      "description": "Test payment flows",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Payment integration tests"
+    },
+    {
+      "name": "payment_documentation",
+      "description": "Document payment integration",
+      "agent": "technical-writer",
+      "expected_output": "Payment integration guide"
+    }
+  ],
+  "manager_agent": "payment-integration-specialist",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

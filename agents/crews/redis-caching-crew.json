@@ -1,0 +1,51 @@
+{
+  "id": "redis-caching-crew-025",
+  "name": "Redis Caching Infrastructure Crew",
+  "description": "Team for implementing advanced caching and session management",
+  "goal": "Build high-performance caching layer with Redis",
+  "agents": [
+    "redis-specialist",
+    "backend-api-developer",
+    "performance-engineer",
+    "devops-engineer",
+    "observability-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "cache_strategy",
+      "description": "Design caching strategy",
+      "agent": "redis-specialist",
+      "expected_output": "Cache strategy and data structure design"
+    },
+    {
+      "name": "cache_implementation",
+      "description": "Implement caching in APIs",
+      "agent": "backend-api-developer",
+      "expected_output": "APIs with cache-aside pattern"
+    },
+    {
+      "name": "performance_tuning",
+      "description": "Optimize cache performance",
+      "agent": "performance-engineer",
+      "expected_output": "Optimized cache hit rates"
+    },
+    {
+      "name": "redis_deployment",
+      "description": "Deploy Redis cluster",
+      "agent": "devops-engineer",
+      "expected_output": "Highly available Redis cluster"
+    },
+    {
+      "name": "cache_monitoring",
+      "description": "Monitor cache performance",
+      "agent": "observability-engineer",
+      "expected_output": "Cache metrics and dashboards"
+    }
+  ],
+  "manager_agent": "redis-specialist",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

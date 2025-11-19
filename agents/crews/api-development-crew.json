@@ -1,0 +1,51 @@
+{
+  "id": "api-development-crew-007",
+  "name": "API Development Crew",
+  "description": "Specialized team for building robust, well-documented APIs",
+  "goal": "Create enterprise-grade APIs with comprehensive documentation and testing",
+  "agents": [
+    "backend-api-developer",
+    "api-documentation-specialist",
+    "security-engineer",
+    "qa-automation-engineer",
+    "performance-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "api_design",
+      "description": "Design API architecture and endpoints",
+      "agent": "backend-api-developer",
+      "expected_output": "API specification and implementation"
+    },
+    {
+      "name": "api_security",
+      "description": "Implement API security",
+      "agent": "security-engineer",
+      "expected_output": "Authentication, authorization, and rate limiting"
+    },
+    {
+      "name": "api_documentation",
+      "description": "Create comprehensive API documentation",
+      "agent": "api-documentation-specialist",
+      "expected_output": "OpenAPI spec and developer portal"
+    },
+    {
+      "name": "api_testing",
+      "description": "Test API endpoints thoroughly",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Comprehensive API test suite"
+    },
+    {
+      "name": "performance_optimization",
+      "description": "Optimize API performance",
+      "agent": "performance-engineer",
+      "expected_output": "Performance report and optimizations"
+    }
+  ],
+  "manager_agent": "backend-api-developer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

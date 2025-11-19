@@ -1,0 +1,51 @@
+{
+  "id": "seo-optimization-crew-028",
+  "name": "SEO Optimization Crew",
+  "description": "Team focused on improving search engine visibility and ranking",
+  "goal": "Maximize organic search traffic through technical and content SEO",
+  "agents": [
+    "seo-specialist",
+    "frontend-react-developer",
+    "performance-engineer",
+    "technical-writer",
+    "backend-api-developer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "seo_audit",
+      "description": "Perform comprehensive SEO audit",
+      "agent": "seo-specialist",
+      "expected_output": "SEO audit report with recommendations"
+    },
+    {
+      "name": "technical_seo",
+      "description": "Implement technical SEO",
+      "agent": "frontend-react-developer",
+      "expected_output": "SEO-optimized markup and metadata"
+    },
+    {
+      "name": "performance_optimization",
+      "description": "Optimize Core Web Vitals",
+      "agent": "performance-engineer",
+      "expected_output": "Improved page speed metrics"
+    },
+    {
+      "name": "structured_data",
+      "description": "Implement structured data",
+      "agent": "backend-api-developer",
+      "expected_output": "Schema.org markup implementation"
+    },
+    {
+      "name": "content_optimization",
+      "description": "Optimize content for SEO",
+      "agent": "technical-writer",
+      "expected_output": "SEO-friendly content"
+    }
+  ],
+  "manager_agent": "seo-specialist",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

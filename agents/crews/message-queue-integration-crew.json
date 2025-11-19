@@ -1,0 +1,51 @@
+{
+  "id": "message-queue-integration-crew-033",
+  "name": "Message Queue Integration Crew",
+  "description": "Team for implementing event-driven messaging architecture",
+  "goal": "Build reliable, scalable message-based communication systems",
+  "agents": [
+    "message-queue-specialist",
+    "backend-api-developer",
+    "microservices-developer",
+    "devops-engineer",
+    "observability-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "messaging_architecture",
+      "description": "Design messaging architecture",
+      "agent": "message-queue-specialist",
+      "expected_output": "Event-driven architecture design"
+    },
+    {
+      "name": "producer_implementation",
+      "description": "Implement message producers",
+      "agent": "backend-api-developer",
+      "expected_output": "Message publishing services"
+    },
+    {
+      "name": "consumer_implementation",
+      "description": "Implement message consumers",
+      "agent": "microservices-developer",
+      "expected_output": "Event handlers and processors"
+    },
+    {
+      "name": "infrastructure_setup",
+      "description": "Deploy message broker infrastructure",
+      "agent": "devops-engineer",
+      "expected_output": "Kafka/RabbitMQ cluster"
+    },
+    {
+      "name": "monitoring",
+      "description": "Monitor message queues",
+      "agent": "observability-engineer",
+      "expected_output": "Message queue metrics and alerts"
+    }
+  ],
+  "manager_agent": "message-queue-specialist",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

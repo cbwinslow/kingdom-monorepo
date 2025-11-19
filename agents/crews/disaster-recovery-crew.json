@@ -1,0 +1,51 @@
+{
+  "id": "disaster-recovery-crew-041",
+  "name": "Disaster Recovery Planning Crew",
+  "description": "Team for implementing business continuity and disaster recovery",
+  "goal": "Ensure system resilience and rapid recovery from failures",
+  "agents": [
+    "site-reliability-engineer",
+    "devops-engineer",
+    "database-architect",
+    "cloud-architect",
+    "security-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "dr_planning",
+      "description": "Create disaster recovery plan",
+      "agent": "site-reliability-engineer",
+      "expected_output": "DR plan with RTO and RPO"
+    },
+    {
+      "name": "backup_strategy",
+      "description": "Design backup strategy",
+      "agent": "database-architect",
+      "expected_output": "Automated backup and restore procedures"
+    },
+    {
+      "name": "multi_region_setup",
+      "description": "Setup multi-region infrastructure",
+      "agent": "cloud-architect",
+      "expected_output": "Multi-region deployment architecture"
+    },
+    {
+      "name": "automation",
+      "description": "Automate DR procedures",
+      "agent": "devops-engineer",
+      "expected_output": "Automated failover and recovery"
+    },
+    {
+      "name": "security_compliance",
+      "description": "Ensure DR security compliance",
+      "agent": "security-engineer",
+      "expected_output": "Secure backup and recovery processes"
+    }
+  ],
+  "manager_agent": "site-reliability-engineer",
+  "max_rpm": 80,
+  "language": "en",
+  "full_output": true
+}

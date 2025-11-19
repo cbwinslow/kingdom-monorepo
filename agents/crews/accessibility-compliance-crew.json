@@ -1,0 +1,51 @@
+{
+  "id": "accessibility-compliance-crew-026",
+  "name": "Accessibility Compliance Crew",
+  "description": "Team dedicated to ensuring applications meet accessibility standards",
+  "goal": "Make applications accessible to all users including those with disabilities",
+  "agents": [
+    "accessibility-specialist",
+    "frontend-react-developer",
+    "ui-ux-designer",
+    "qa-automation-engineer",
+    "technical-writer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "accessibility_audit",
+      "description": "Audit current accessibility",
+      "agent": "accessibility-specialist",
+      "expected_output": "WCAG compliance report"
+    },
+    {
+      "name": "accessible_design",
+      "description": "Design accessible interfaces",
+      "agent": "ui-ux-designer",
+      "expected_output": "Accessible design system"
+    },
+    {
+      "name": "implementation",
+      "description": "Implement accessibility features",
+      "agent": "frontend-react-developer",
+      "expected_output": "ARIA-compliant components"
+    },
+    {
+      "name": "automated_testing",
+      "description": "Setup accessibility testing",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Automated accessibility test suite"
+    },
+    {
+      "name": "documentation",
+      "description": "Document accessibility features",
+      "agent": "technical-writer",
+      "expected_output": "Accessibility documentation"
+    }
+  ],
+  "manager_agent": "accessibility-specialist",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

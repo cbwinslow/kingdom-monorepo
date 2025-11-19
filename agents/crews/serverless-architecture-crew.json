@@ -1,0 +1,51 @@
+{
+  "id": "serverless-architecture-crew-053",
+  "name": "Serverless Architecture Crew",
+  "description": "Team for building serverless applications and functions",
+  "goal": "Create cost-effective, scalable serverless applications",
+  "agents": [
+    "cloud-architect",
+    "backend-api-developer",
+    "devops-engineer",
+    "performance-engineer",
+    "observability-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "serverless_design",
+      "description": "Design serverless architecture",
+      "agent": "cloud-architect",
+      "expected_output": "Event-driven serverless architecture"
+    },
+    {
+      "name": "function_development",
+      "description": "Develop serverless functions",
+      "agent": "backend-api-developer",
+      "expected_output": "Lambda/Cloud Functions"
+    },
+    {
+      "name": "infrastructure_as_code",
+      "description": "Implement IaC for serverless",
+      "agent": "devops-engineer",
+      "expected_output": "Serverless deployment automation"
+    },
+    {
+      "name": "cold_start_optimization",
+      "description": "Optimize function performance",
+      "agent": "performance-engineer",
+      "expected_output": "Optimized cold start times"
+    },
+    {
+      "name": "serverless_monitoring",
+      "description": "Monitor serverless functions",
+      "agent": "observability-engineer",
+      "expected_output": "Function metrics and logs"
+    }
+  ],
+  "manager_agent": "cloud-architect",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

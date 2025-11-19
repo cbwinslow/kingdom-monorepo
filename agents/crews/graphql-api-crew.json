@@ -1,0 +1,51 @@
+{
+  "id": "graphql-api-crew-023",
+  "name": "GraphQL API Development Crew",
+  "description": "Specialized team for building GraphQL-based APIs",
+  "goal": "Create efficient, type-safe GraphQL APIs with excellent developer experience",
+  "agents": [
+    "graphql-specialist",
+    "backend-nodejs-developer",
+    "api-documentation-specialist",
+    "performance-engineer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "schema_design",
+      "description": "Design GraphQL schema",
+      "agent": "graphql-specialist",
+      "expected_output": "GraphQL schema with types and resolvers"
+    },
+    {
+      "name": "server_implementation",
+      "description": "Implement GraphQL server",
+      "agent": "backend-nodejs-developer",
+      "expected_output": "GraphQL server with authentication"
+    },
+    {
+      "name": "performance_optimization",
+      "description": "Optimize query performance",
+      "agent": "performance-engineer",
+      "expected_output": "Optimized resolvers with DataLoader"
+    },
+    {
+      "name": "api_documentation",
+      "description": "Document GraphQL API",
+      "agent": "api-documentation-specialist",
+      "expected_output": "Interactive GraphQL documentation"
+    },
+    {
+      "name": "api_testing",
+      "description": "Test GraphQL endpoints",
+      "agent": "qa-automation-engineer",
+      "expected_output": "GraphQL API test suite"
+    }
+  ],
+  "manager_agent": "graphql-specialist",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

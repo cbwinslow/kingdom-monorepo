@@ -1,0 +1,51 @@
+{
+  "id": "release-deployment-crew-032",
+  "name": "Release and Deployment Crew",
+  "description": "Team managing software releases and deployments",
+  "goal": "Execute smooth, reliable software releases with minimal downtime",
+  "agents": [
+    "release-manager",
+    "devops-engineer",
+    "qa-automation-engineer",
+    "site-reliability-engineer",
+    "technical-writer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "release_planning",
+      "description": "Plan release strategy",
+      "agent": "release-manager",
+      "expected_output": "Release plan and checklist"
+    },
+    {
+      "name": "deployment_automation",
+      "description": "Prepare deployment automation",
+      "agent": "devops-engineer",
+      "expected_output": "Automated deployment pipeline"
+    },
+    {
+      "name": "pre_release_testing",
+      "description": "Execute pre-release tests",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Test results and sign-off"
+    },
+    {
+      "name": "deployment_monitoring",
+      "description": "Monitor deployment",
+      "agent": "site-reliability-engineer",
+      "expected_output": "Deployment health metrics"
+    },
+    {
+      "name": "release_notes",
+      "description": "Create release notes",
+      "agent": "technical-writer",
+      "expected_output": "Comprehensive release notes"
+    }
+  ],
+  "manager_agent": "release-manager",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

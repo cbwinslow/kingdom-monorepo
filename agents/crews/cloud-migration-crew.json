@@ -1,0 +1,51 @@
+{
+  "id": "cloud-migration-crew-006",
+  "name": "Cloud Migration Crew",
+  "description": "Team specialized in migrating applications to cloud platforms",
+  "goal": "Successfully migrate on-premise or legacy applications to cloud infrastructure",
+  "agents": [
+    "cloud-architect",
+    "devops-engineer",
+    "database-architect",
+    "security-engineer",
+    "site-reliability-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "cloud_architecture",
+      "description": "Design cloud architecture",
+      "agent": "cloud-architect",
+      "expected_output": "Cloud architecture design with cost estimates"
+    },
+    {
+      "name": "database_migration",
+      "description": "Plan and execute database migration",
+      "agent": "database-architect",
+      "expected_output": "Database migration strategy and tools"
+    },
+    {
+      "name": "security_compliance",
+      "description": "Ensure cloud security and compliance",
+      "agent": "security-engineer",
+      "expected_output": "Security controls and compliance documentation"
+    },
+    {
+      "name": "infrastructure_setup",
+      "description": "Setup cloud infrastructure",
+      "agent": "devops-engineer",
+      "expected_output": "Infrastructure as Code and deployment pipelines"
+    },
+    {
+      "name": "reliability_monitoring",
+      "description": "Setup monitoring and reliability",
+      "agent": "site-reliability-engineer",
+      "expected_output": "Monitoring, alerting, and incident response plans"
+    }
+  ],
+  "manager_agent": "cloud-architect",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

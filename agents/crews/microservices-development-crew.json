@@ -1,0 +1,51 @@
+{
+  "id": "microservices-dev-crew-002",
+  "name": "Microservices Development Crew",
+  "description": "Specialized team for building distributed microservices architectures",
+  "goal": "Design and implement scalable, resilient microservices-based systems",
+  "agents": [
+    "system-architect",
+    "microservices-developer",
+    "backend-go-developer",
+    "devops-engineer",
+    "site-reliability-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "architecture_design",
+      "description": "Design microservices architecture",
+      "agent": "system-architect",
+      "expected_output": "Architecture diagrams, service boundaries, and communication patterns"
+    },
+    {
+      "name": "implement_services",
+      "description": "Implement individual microservices",
+      "agent": "microservices-developer",
+      "expected_output": "Microservices with clear APIs and service contracts"
+    },
+    {
+      "name": "optimize_performance",
+      "description": "Optimize service performance",
+      "agent": "backend-go-developer",
+      "expected_output": "Optimized, concurrent microservices"
+    },
+    {
+      "name": "setup_infrastructure",
+      "description": "Setup deployment infrastructure",
+      "agent": "devops-engineer",
+      "expected_output": "Container orchestration and CI/CD pipelines"
+    },
+    {
+      "name": "ensure_reliability",
+      "description": "Implement monitoring and reliability",
+      "agent": "site-reliability-engineer",
+      "expected_output": "Monitoring, alerting, and SLO definitions"
+    }
+  ],
+  "manager_agent": "system-architect",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

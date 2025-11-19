@@ -1,0 +1,51 @@
+{
+  "id": "iot-platform-crew-022",
+  "name": "IoT Platform Development Crew",
+  "description": "Team for building Internet of Things platforms and applications",
+  "goal": "Create scalable IoT platforms for device management and data processing",
+  "agents": [
+    "embedded-developer",
+    "backend-api-developer",
+    "data-engineer",
+    "cloud-architect",
+    "security-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "firmware_development",
+      "description": "Develop device firmware",
+      "agent": "embedded-developer",
+      "expected_output": "Device firmware with communication protocols"
+    },
+    {
+      "name": "cloud_architecture",
+      "description": "Design IoT cloud infrastructure",
+      "agent": "cloud-architect",
+      "expected_output": "Scalable cloud architecture for IoT"
+    },
+    {
+      "name": "device_management_api",
+      "description": "Build device management APIs",
+      "agent": "backend-api-developer",
+      "expected_output": "Device provisioning and control APIs"
+    },
+    {
+      "name": "data_processing",
+      "description": "Setup IoT data pipeline",
+      "agent": "data-engineer",
+      "expected_output": "Real-time data processing pipeline"
+    },
+    {
+      "name": "security_implementation",
+      "description": "Secure IoT communications",
+      "agent": "security-engineer",
+      "expected_output": "End-to-end encryption and device authentication"
+    }
+  ],
+  "manager_agent": "cloud-architect",
+  "max_rpm": 80,
+  "language": "en",
+  "full_output": true
+}

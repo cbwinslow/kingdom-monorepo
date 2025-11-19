@@ -1,0 +1,51 @@
+{
+  "id": "progressive-web-app-crew-046",
+  "name": "Progressive Web App (PWA) Crew",
+  "description": "Team for building Progressive Web Applications",
+  "goal": "Create app-like web experiences that work offline and across devices",
+  "agents": [
+    "frontend-react-developer",
+    "backend-api-developer",
+    "performance-engineer",
+    "ui-ux-designer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "pwa_design",
+      "description": "Design PWA experience",
+      "agent": "ui-ux-designer",
+      "expected_output": "Mobile-first PWA design"
+    },
+    {
+      "name": "pwa_implementation",
+      "description": "Implement PWA features",
+      "agent": "frontend-react-developer",
+      "expected_output": "PWA with service workers"
+    },
+    {
+      "name": "offline_support",
+      "description": "Implement offline functionality",
+      "agent": "backend-api-developer",
+      "expected_output": "Offline-first architecture"
+    },
+    {
+      "name": "performance_optimization",
+      "description": "Optimize PWA performance",
+      "agent": "performance-engineer",
+      "expected_output": "Fast-loading PWA"
+    },
+    {
+      "name": "pwa_testing",
+      "description": "Test PWA functionality",
+      "agent": "qa-automation-engineer",
+      "expected_output": "PWA offline and install tests"
+    }
+  ],
+  "manager_agent": "frontend-react-developer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

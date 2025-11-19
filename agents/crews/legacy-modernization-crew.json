@@ -1,0 +1,51 @@
+{
+  "id": "legacy-modernization-crew-018",
+  "name": "Legacy System Modernization Crew",
+  "description": "Team for modernizing and migrating legacy applications",
+  "goal": "Safely modernize legacy systems while maintaining business continuity",
+  "agents": [
+    "legacy-code-specialist",
+    "system-architect",
+    "technical-debt-analyst",
+    "backend-python-developer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "legacy_analysis",
+      "description": "Analyze legacy system",
+      "agent": "legacy-code-specialist",
+      "expected_output": "Legacy system documentation"
+    },
+    {
+      "name": "debt_assessment",
+      "description": "Assess technical debt",
+      "agent": "technical-debt-analyst",
+      "expected_output": "Technical debt report and roadmap"
+    },
+    {
+      "name": "modernization_design",
+      "description": "Design modern architecture",
+      "agent": "system-architect",
+      "expected_output": "Target architecture and migration plan"
+    },
+    {
+      "name": "incremental_migration",
+      "description": "Implement strangler fig pattern",
+      "agent": "backend-python-developer",
+      "expected_output": "Modern services alongside legacy"
+    },
+    {
+      "name": "comprehensive_testing",
+      "description": "Test migrated functionality",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Regression and integration tests"
+    }
+  ],
+  "manager_agent": "system-architect",
+  "max_rpm": 80,
+  "language": "en",
+  "full_output": true
+}

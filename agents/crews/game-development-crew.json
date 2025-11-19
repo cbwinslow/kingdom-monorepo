@@ -1,0 +1,51 @@
+{
+  "id": "game-development-crew-012",
+  "name": "Game Development Crew",
+  "description": "Team for creating engaging games across platforms",
+  "goal": "Build polished, fun, and performant games",
+  "agents": [
+    "game-developer",
+    "graphics-programmer",
+    "backend-api-developer",
+    "ui-ux-designer",
+    "qa-automation-engineer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "game_design",
+      "description": "Design game mechanics and UI",
+      "agent": "ui-ux-designer",
+      "expected_output": "Game design document and UI mockups"
+    },
+    {
+      "name": "graphics_implementation",
+      "description": "Implement graphics and visual effects",
+      "agent": "graphics-programmer",
+      "expected_output": "Rendering engine and shaders"
+    },
+    {
+      "name": "gameplay_programming",
+      "description": "Implement gameplay mechanics",
+      "agent": "game-developer",
+      "expected_output": "Core gameplay systems"
+    },
+    {
+      "name": "backend_services",
+      "description": "Build multiplayer and backend services",
+      "agent": "backend-api-developer",
+      "expected_output": "Game servers and APIs"
+    },
+    {
+      "name": "quality_assurance",
+      "description": "Test game functionality",
+      "agent": "qa-automation-engineer",
+      "expected_output": "Game testing and bug reports"
+    }
+  ],
+  "manager_agent": "game-developer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

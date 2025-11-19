@@ -1,0 +1,51 @@
+{
+  "id": "monitoring-alerting-crew-050",
+  "name": "Monitoring and Alerting Crew",
+  "description": "Team for implementing comprehensive system monitoring and alerting",
+  "goal": "Provide visibility into system health with proactive alerting",
+  "agents": [
+    "observability-engineer",
+    "site-reliability-engineer",
+    "devops-engineer",
+    "backend-api-developer",
+    "frontend-react-developer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "observability_design",
+      "description": "Design observability strategy",
+      "agent": "observability-engineer",
+      "expected_output": "Metrics, logs, traces architecture"
+    },
+    {
+      "name": "monitoring_infrastructure",
+      "description": "Deploy monitoring infrastructure",
+      "agent": "devops-engineer",
+      "expected_output": "Prometheus, Grafana, ELK stack"
+    },
+    {
+      "name": "instrumentation",
+      "description": "Instrument applications",
+      "agent": "backend-api-developer",
+      "expected_output": "Application metrics and traces"
+    },
+    {
+      "name": "alerting_rules",
+      "description": "Configure alerting",
+      "agent": "site-reliability-engineer",
+      "expected_output": "Alert rules and on-call rotation"
+    },
+    {
+      "name": "dashboard_creation",
+      "description": "Build monitoring dashboards",
+      "agent": "frontend-react-developer",
+      "expected_output": "Custom monitoring dashboards"
+    }
+  ],
+  "manager_agent": "observability-engineer",
+  "max_rpm": 100,
+  "language": "en",
+  "full_output": true
+}

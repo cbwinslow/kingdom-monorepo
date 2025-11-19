@@ -1,0 +1,51 @@
+{
+  "id": "analytics-platform-crew-047",
+  "name": "Analytics Platform Crew",
+  "description": "Team for building data analytics and business intelligence platforms",
+  "goal": "Create comprehensive analytics platform for data-driven insights",
+  "agents": [
+    "data-engineer",
+    "data-scientist",
+    "backend-python-developer",
+    "frontend-react-developer",
+    "ui-ux-designer"
+  ],
+  "process": "sequential",
+  "verbose": true,
+  "tasks": [
+    {
+      "name": "data_warehouse",
+      "description": "Build data warehouse",
+      "agent": "data-engineer",
+      "expected_output": "Analytics data warehouse"
+    },
+    {
+      "name": "analytics_models",
+      "description": "Develop analytics models",
+      "agent": "data-scientist",
+      "expected_output": "Statistical models and dashboards"
+    },
+    {
+      "name": "analytics_api",
+      "description": "Build analytics API",
+      "agent": "backend-python-developer",
+      "expected_output": "Analytics query API"
+    },
+    {
+      "name": "dashboard_design",
+      "description": "Design analytics dashboards",
+      "agent": "ui-ux-designer",
+      "expected_output": "Dashboard UI designs"
+    },
+    {
+      "name": "dashboard_implementation",
+      "description": "Implement analytics dashboards",
+      "agent": "frontend-react-developer",
+      "expected_output": "Interactive analytics dashboards"
+    }
+  ],
+  "manager_agent": "data-engineer",
+  "max_rpm": 80,
+  "language": "en",
+  "full_output": true
+}
