@@ -1,0 +1,30 @@
+# WireGuard VPN Configuration Template
+# Copy this file to wg0.conf and fill in your specific values
+
+[Interface]
+# The private key for this device (generate with: wg genkey)
+PrivateKey = YOUR_PRIVATE_KEY_HERE
+
+# IP address assigned to this device in the VPN network
+Address = 10.0.0.2/24
+
+# DNS servers to use when connected to VPN (optional)
+DNS = 1.1.1.1, 1.0.0.1
+
+# Port to listen on (optional, usually not needed for clients)
+# ListenPort = 51820
+
+[Peer]
+# The VPN server's public key (generate with: echo "private_key" | wg pubkey)
+PublicKey = SERVER_PUBLIC_KEY_HERE
+
+# The endpoint (IP:port) of the VPN server
+Endpoint = vpn.example.com:51820
+
+# Which IP ranges to route through the VPN
+# Use 0.0.0.0/0 to route all traffic through VPN
+# Or specify specific subnets like 10.0.0.0/24 for split-tunnel
+AllowedIPs = 0.0.0.0/0, ::/0
+
+# Keep connection alive (useful for NAT traversal)
+PersistentKeepalive = 25
