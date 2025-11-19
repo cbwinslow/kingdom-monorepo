@@ -1,12 +1,12 @@
 ---
 # User and group discovery tasks
 - name: Get user list
-  shell: getent passwd | awk -F: '{print $1":"$3":"$4":"$5":"$6":"$7}'
+  shell: "getent passwd | awk -F: '{print $1\":\"$3\":\"$4\":\"$5\":\"$6\":\"$7}'"
   register: user_list
   changed_when: false
 
 - name: Get group list
-  shell: getent group | awk -F: '{print $1":"$3}'
+  shell: "getent group | awk -F: '{print $1\":\"$3}'"
   register: group_list
   changed_when: false
 
