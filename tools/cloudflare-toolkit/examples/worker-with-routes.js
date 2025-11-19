@@ -88,7 +88,7 @@ async function deployWorkerWithRoutes() {
     console.log(chalk.cyan('\nWorker URLs:'));
     console.log(`  - https://${workerName}.${subdomainResult.subdomain}.workers.dev`);
     routes.forEach(pattern => {
-      const url = pattern.replace('*', '');
+      const url = pattern.replace(/\*/g, '');
       console.log(`  - https://${url}`);
     });
 
