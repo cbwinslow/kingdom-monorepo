@@ -58,4 +58,6 @@
 - name: Display SSH validation result
   debug:
     msg: "SSH configuration validation: {{ 'PASSED' if ssh_validation.rc == 0 else 'FAILED' }}"
-  when: ssh_validation is defined
+  when: 
+    - ssh_validation is defined
+    - ssh_validation.rc is defined
