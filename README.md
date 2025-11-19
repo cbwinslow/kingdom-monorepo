@@ -8,7 +8,7 @@ A comprehensive monorepo for all development projects, tools, and infrastructure
 - **ansible/** - Infrastructure as code and automation
 - **apps/** - GUI, TUI, web, and mobile applications
 - **data/** - Knowledge bases, indexes, and data stores
-- **db/** - Database schemas and migrations
+- **db/** - Database schemas, migrations, and SQL utility scripts
 - **docs/** - Documentation, handbooks, and project notes
 - **infra/** - Infrastructure configuration and deployment
 - **libs/** - Shared libraries and utilities
