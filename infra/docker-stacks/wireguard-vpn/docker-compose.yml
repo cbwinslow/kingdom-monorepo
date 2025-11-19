@@ -1,0 +1,318 @@
+version: '3.8'
+
+services:
+  # WireGuard VPN Server
+  wireguard:
+    image: linuxserver/wireguard:latest
+    container_name: wireguard-server
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - SERVERURL=${SERVERURL:-auto}
+      - SERVERPORT=${SERVERPORT:-51820}
+      - PEERS=${PEERS:-10}
+      - PEERDNS=${PEERDNS:-auto}
+      - INTERNAL_SUBNET=${INTERNAL_SUBNET:-10.13.13.0}
+      - ALLOWEDIPS=${ALLOWEDIPS:-0.0.0.0/0}
+      - LOG_CONFS=true
+    ports:
+      - "51820:51820/udp"
+    volumes:
+      - ./config:/config
+      - /lib/modules:/lib/modules:ro
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+      - net.ipv6.conf.all.forwarding=1
+    networks:
+      - vpn-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wg", "show"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # WireGuard UI for management
+  wireguard-ui:
+    image: ngoduykhanh/wireguard-ui:latest
+    container_name: wireguard-ui
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - SESSION_SECRET=${SESSION_SECRET:-changeme}
+      - WGUI_USERNAME=${WGUI_USERNAME:-admin}
+      - WGUI_PASSWORD=${WGUI_PASSWORD:-admin}
+      - WGUI_ENDPOINT_ADDRESS=${SERVERURL:-auto}
+      - WGUI_SERVER_INTERFACE_ADDRESSES=10.13.13.1/24
+      - WGUI_SERVER_LISTEN_PORT=51820
+      - WGUI_SERVER_POST_UP_SCRIPT=iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth+ -j MASQUERADE
+      - WGUI_SERVER_POST_DOWN_SCRIPT=iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth+ -j MASQUERADE
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./wireguard-ui/db:/app/db
+      - ./config:/etc/wireguard
+    networks:
+      - vpn-network
+    restart: unless-stopped
+
+  # OpenVPN (alternative)
+  openvpn:
+    image: kylemanna/openvpn:latest
+    container_name: openvpn-server
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "1194:1194/udp"
+    volumes:
+      - ./openvpn:/etc/openvpn
+    networks:
+      - vpn-network
+    restart: unless-stopped
+
+  # OpenVPN Admin UI
+  openvpn-admin:
+    image: chocobozzz/openvpn-admin:latest
+    container_name: openvpn-admin
+    environment:
+      - OPENVPN_ADMIN_USERNAME=${OVPN_ADMIN_USER:-admin}
+      - OPENVPN_ADMIN_PASSWORD=${OVPN_ADMIN_PASS:-admin}
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./openvpn:/etc/openvpn
+      - openvpn_admin_data:/var/lib/openvpn-admin
+    depends_on:
+      - openvpn
+    networks:
+      - vpn-network
+    restart: unless-stopped
+
+  # IPsec VPN
+  ipsec-vpn:
+    image: hwdsl2/ipsec-vpn-server:latest
+    container_name: ipsec-vpn-server
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - VPN_IPSEC_PSK=${IPSEC_PSK:-your_ipsec_pre_shared_key}
+      - VPN_USER=${IPSEC_USER:-vpnuser}
+      - VPN_PASSWORD=${IPSEC_PASSWORD:-vpnpassword}
+    ports:
+      - "500:500/udp"
+      - "4500:4500/udp"
+    volumes:
+      - ./ipsec:/etc/ipsec.d
+    privileged: true
+    networks:
+      - vpn-network
+    restart: unless-stopped
+
+  # SoftEther VPN Server
+  softether:
+    image: siomiz/softethervpn:latest
+    container_name: softether-vpn
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PSK=${SOFTETHER_PSK:-notasecret}
+      - SPW=${SOFTETHER_SPW:-notasecret}
+      - HPW=${SOFTETHER_HPW:-notasecret}
+    ports:
+      - "500:500/udp"
+      - "4500:4500/udp"
+      - "1701:1701/tcp"
+      - "1194:1194/udp"
+      - "5555:5555/tcp"
+      - "443:443/tcp"
+    volumes:
+      - softether_data:/usr/vpnserver
+    networks:
+      - vpn-network
+    restart: unless-stopped
+
+  # Pritunl VPN (MongoDB-based)
+  pritunl:
+    image: goofball222/pritunl:latest
+    container_name: pritunl-vpn
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - TZ=UTC
+    ports:
+      - "1194:1194/tcp"
+      - "1194:1194/udp"
+      - "9700:9700/tcp"
+      - "9443:443/tcp"
+    volumes:
+      - pritunl_data:/var/lib/pritunl
+    depends_on:
+      - pritunl-mongo
+    networks:
+      - vpn-network
+    privileged: true
+    restart: unless-stopped
+
+  # MongoDB for Pritunl
+  pritunl-mongo:
+    image: mongo:4.4
+    container_name: pritunl-mongo
+    volumes:
+      - pritunl_mongo_data:/data/db
+    networks:
+      - vpn-network
+    restart: unless-stopped
+
+  # Tailscale (mesh VPN)
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale-vpn
+    hostname: tailscale-node
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=true
+    volumes:
+      - tailscale_data:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    networks:
+      - vpn-network
+    restart: unless-stopped
+
+  # Nebula (overlay network)
+  nebula:
+    image: slackhq/nebula:latest
+    container_name: nebula-vpn
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./nebula/config.yml:/etc/nebula/config.yml:ro
+      - ./nebula/certs:/etc/nebula/certs:ro
+    networks:
+      - vpn-network
+    restart: unless-stopped
+
+  # VPN monitoring
+  vpn-monitor:
+    image: alpine:latest
+    container_name: vpn-monitor
+    command: sh -c "
+      apk add --no-cache curl netcat-openbsd wireguard-tools &&
+      cat > /monitor.sh <<'EOF'
+#!/bin/sh
+while true; do
+  echo '=== VPN Status Report ===' > /logs/status.log
+  echo 'Timestamp: '$(date) >> /logs/status.log
+  echo '' >> /logs/status.log
+  
+  echo '--- WireGuard ---' >> /logs/status.log
+  wg show 2>&1 >> /logs/status.log || echo 'WireGuard not available' >> /logs/status.log
+  echo '' >> /logs/status.log
+  
+  echo '--- Port Checks ---' >> /logs/status.log
+  nc -zv wireguard-server 51820 >> /logs/status.log 2>&1
+  nc -zv openvpn-server 1194 >> /logs/status.log 2>&1
+  echo '' >> /logs/status.log
+  
+  sleep 300
+done
+EOF
+      chmod +x /monitor.sh &&
+      /monitor.sh
+    "
+    volumes:
+      - ./monitor/logs:/logs
+    networks:
+      - vpn-network
+    restart: unless-stopped
+
+  # VPN speed test
+  speedtest:
+    image: openspeedtest/latest:latest
+    container_name: vpn-speedtest
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    networks:
+      - vpn-network
+    restart: unless-stopped
+
+  # Traffic analyzer
+  ntopng:
+    image: ntop/ntopng:stable
+    container_name: vpn-ntopng
+    ports:
+      - "3050:3000"
+    environment:
+      - NTOPNG_ARGS=--community
+    volumes:
+      - ntopng_data:/var/lib/ntopng
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    restart: unless-stopped
+
+  # DNS server for VPN
+  pihole:
+    image: pihole/pihole:latest
+    container_name: vpn-pihole
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8053:80/tcp"
+    environment:
+      - TZ=UTC
+      - WEBPASSWORD=${PIHOLE_PASSWORD:-admin}
+      - SERVERIP=${SERVERIP:-10.13.13.1}
+      - DNS1=1.1.1.1
+      - DNS2=1.0.0.1
+    volumes:
+      - pihole_data:/etc/pihole
+      - pihole_dnsmasq:/etc/dnsmasq.d
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - vpn-network
+    restart: unless-stopped
+
+  # VPN client test container
+  vpn-client-test:
+    image: alpine:latest
+    container_name: vpn-client-test
+    command: sh -c "
+      apk add --no-cache wireguard-tools curl wget netcat-openbsd &&
+      sleep infinity
+    "
+    volumes:
+      - ./client-configs:/configs:ro
+    networks:
+      - vpn-network
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+
+networks:
+  vpn-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.0.0/16
+
+volumes:
+  openvpn_admin_data:
+  softether_data:
+  pritunl_data:
+  pritunl_mongo_data:
+  tailscale_data:
+  ntopng_data:
+  pihole_data:
+  pihole_dnsmasq:
