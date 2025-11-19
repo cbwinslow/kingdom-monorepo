@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database for LiteLLM
+  postgres:
+    image: postgres:16-alpine
+    container_name: litellm-postgres
+    environment:
+      POSTGRES_DB: litellm
+      POSTGRES_USER: litellm
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-litellm_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U litellm"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - litellm-network
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: litellm-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - litellm-network
+
+  # LiteLLM Proxy
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    container_name: litellm-proxy
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://litellm:${POSTGRES_PASSWORD:-litellm_password}@postgres:5432/litellm
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - ./config.yaml:/app/config.yaml
+      - litellm_logs:/app/logs
+    ports:
+      - "${LITELLM_PORT:-4000}:4000"
+    command: 
+      - "--config"
+      - "/app/config.yaml"
+      - "--port"
+      - "4000"
+      - "--host"
+      - "0.0.0.0"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - litellm-network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  litellm_logs:
+    driver: local
+
+networks:
+  litellm-network:
+    driver: bridge
