@@ -1,0 +1,49 @@
+{
+  "name": "@kingdom/cloudflare-toolkit",
+  "version": "1.0.0",
+  "description": "Comprehensive toolkit for managing Cloudflare infrastructure",
+  "main": "lib/index.js",
+  "type": "module",
+  "scripts": {
+    "tunnel:create": "node scripts/tunnel-create.js",
+    "tunnel:list": "node scripts/tunnel-list.js",
+    "tunnel:delete": "node scripts/tunnel-delete.js",
+    "tunnel:route": "node scripts/tunnel-route.js",
+    "tunnel:run": "node scripts/tunnel-run.js",
+    "api:store": "node scripts/api-store.js",
+    "api:verify": "node scripts/api-verify.js",
+    "worker:deploy": "node scripts/worker-deploy.js",
+    "worker:list": "node scripts/worker-list.js",
+    "pages:deploy": "node scripts/pages-deploy.js",
+    "pages:list": "node scripts/pages-list.js",
+    "waf:create-rule": "node scripts/waf-create-rule.js",
+    "waf:list-rules": "node scripts/waf-list-rules.js",
+    "cdn:purge-cache": "node scripts/cdn-purge-cache.js"
+  },
+  "keywords": [
+    "cloudflare",
+    "tunnel",
+    "workers",
+    "pages",
+    "waf",
+    "cdn",
+    "infrastructure"
+  ],
+  "author": "Kingdom Monorepo",
+  "license": "MIT",
+  "dependencies": {
+    "cloudflare": "^3.0.0",
+    "dotenv": "^16.4.0",
+    "inquirer": "^9.2.0",
+    "chalk": "^5.3.0",
+    "ora": "^8.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
