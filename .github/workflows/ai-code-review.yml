@@ -1,0 +1,172 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to review'
+        required: true
+        type: number
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  gemini-review:
+    name: Google Gemini Code Review
+    runs-on: ubuntu-latest
+    if: |
+      !contains(github.event.pull_request.labels.*.name, 'skip-ai-review') &&
+      github.event.pull_request.draft == false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get PR diff
+        id: pr-diff
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: diff } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              mediaType: {
+                format: 'diff'
+              }
+            });
+            return diff;
+
+      - name: Google Gemini Code Review
+        uses: ./.github/actions/gemini-code-review
+        with:
+          gemini-api-key: ${{ secrets.GEMINI_API_KEY }}
+          pr-number: ${{ github.event.pull_request.number }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  openai-review:
+    name: OpenAI Code Review
+    runs-on: ubuntu-latest
+    if: |
+      !contains(github.event.pull_request.labels.*.name, 'skip-ai-review') &&
+      github.event.pull_request.draft == false &&
+      secrets.OPENAI_API_KEY != ''
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: OpenAI Code Review
+        uses: anc95/ChatGPT-CodeReview@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          model: gpt-4
+          review_comment_lgtm: true
+
+  coderabbit-review:
+    name: CodeRabbit AI Review
+    runs-on: ubuntu-latest
+    if: |
+      !contains(github.event.pull_request.labels.*.name, 'skip-ai-review') &&
+      github.event.pull_request.draft == false
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: CodeRabbit Review
+        uses: coderabbitai/ai-pr-reviewer@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          debug: false
+          review_simple_changes: false
+          review_comment_lgtm: false
+
+  code-suggestions:
+    name: AI Code Suggestions
+    runs-on: ubuntu-latest
+    if: |
+      !contains(github.event.pull_request.labels.*.name, 'skip-ai-review') &&
+      github.event.pull_request.draft == false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: AI Code Suggestions
+        uses: ./.github/actions/ai-code-suggestions
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pr-number: ${{ github.event.pull_request.number }}
+
+  auto-fix:
+    name: AI Auto Fix
+    runs-on: ubuntu-latest
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'auto-fix') &&
+      github.event.pull_request.draft == false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: AI Auto Fix Issues
+        uses: ./.github/actions/ai-auto-fix
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          pr-number: ${{ github.event.pull_request.number }}
+
+      - name: Commit and push fixes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git diff --staged --quiet || git commit -m "chore: AI auto-fix applied"
+          git push
+
+  review-summary:
+    name: AI Review Summary
+    if: always()
+    needs: [gemini-review, openai-review, coderabbit-review, code-suggestions, auto-fix]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create review summary
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const summary = `## 🤖 AI Code Review Summary
+            
+            - Gemini Review: ${{ needs.gemini-review.result }}
+            - OpenAI Review: ${{ needs.openai-review.result }}
+            - CodeRabbit Review: ${{ needs.coderabbit-review.result }}
+            - Code Suggestions: ${{ needs.code-suggestions.result }}
+            - Auto Fix: ${{ needs.auto-fix.result }}
+            
+            ---
+            *Automated review by AI assistants*
+            `;
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+              body: summary
+            });

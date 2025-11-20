@@ -1,0 +1,83 @@
+# Configuration for actions/labeler
+
+# Apps
+'area: apps':
+  - apps/**/*
+
+# Libraries
+'area: libs':
+  - libs/**/*
+
+# Services
+'area: services':
+  - services/**/*
+
+# Tools
+'area: tools':
+  - tools/**/*
+
+# Infrastructure
+'area: infra':
+  - infra/**/*
+  - ansible/**/*
+
+# Documentation
+'documentation':
+  - docs/**/*
+  - '**/*.md'
+  - README.md
+
+# Configuration
+'configuration':
+  - '**/*.yml'
+  - '**/*.yaml'
+  - '**/*.json'
+  - '**/*.toml'
+  - '**/*.config.js'
+  - '**/*.config.ts'
+
+# CI/CD
+'ci/cd':
+  - .github/**/*
+
+# Python
+'lang: python':
+  - '**/*.py'
+  - pyproject.toml
+  - poetry.lock
+
+# JavaScript/TypeScript
+'lang: javascript':
+  - '**/*.js'
+  - '**/*.jsx'
+
+'lang: typescript':
+  - '**/*.ts'
+  - '**/*.tsx'
+
+# Docker
+'docker':
+  - '**/Dockerfile'
+  - '**/docker-compose*.yml'
+  - .dockerignore
+
+# Dependencies
+'dependencies':
+  - package.json
+  - package-lock.json
+  - pyproject.toml
+  - poetry.lock
+
+# Tests
+'tests':
+  - '**/*.test.js'
+  - '**/*.test.ts'
+  - '**/*.spec.js'
+  - '**/*.spec.ts'
+  - '**/test_*.py'
+  - '**/*_test.py'
+
+# AI/ML
+'ai/ml':
+  - agents/**/*
+  - '**/agents/**/*'

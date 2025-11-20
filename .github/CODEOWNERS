@@ -1,0 +1,70 @@
+# CODEOWNERS file for automatic reviewer assignment
+# 
+# Each line is a file pattern followed by one or more owners.
+# Order is important; the last matching pattern takes precedence.
+
+# Default owners for everything in the repo
+* @cbwinslow
+
+# CI/CD and GitHub configuration
+/.github/ @cbwinslow
+/.github/workflows/ @cbwinslow
+/.github/actions/ @cbwinslow
+
+# Documentation
+/docs/ @cbwinslow
+*.md @cbwinslow
+/README.md @cbwinslow
+
+# Infrastructure
+/infra/ @cbwinslow
+/ansible/ @cbwinslow
+**/Dockerfile @cbwinslow
+**/docker-compose*.yml @cbwinslow
+
+# Applications
+/apps/ @cbwinslow
+
+# Libraries
+/libs/ @cbwinslow
+
+# Services
+/services/ @cbwinslow
+
+# Tools
+/tools/ @cbwinslow
+
+# AI Agents
+/agents/ @cbwinslow
+/agents/configs/ @cbwinslow
+/agents/crews/ @cbwinslow
+/agents/prompts/ @cbwinslow
+
+# Python specific
+*.py @cbwinslow
+/pyproject.toml @cbwinslow
+/poetry.lock @cbwinslow
+
+# JavaScript/TypeScript specific
+*.js @cbwinslow
+*.ts @cbwinslow
+*.jsx @cbwinslow
+*.tsx @cbwinslow
+/package.json @cbwinslow
+/package-lock.json @cbwinslow
+
+# Configuration files
+*.yml @cbwinslow
+*.yaml @cbwinslow
+*.json @cbwinslow
+*.toml @cbwinslow
+
+# Data and research
+/data/ @cbwinslow
+/research/ @cbwinslow
+
+# Database
+/db/ @cbwinslow
+
+# Projects
+/projects/ @cbwinslow

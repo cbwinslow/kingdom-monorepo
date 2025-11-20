@@ -1,0 +1,134 @@
+name: PR Handler Agent
+version: 1.0.0
+description: AI agent that manages pull requests, assigns reviewers, and automates PR workflows
+
+agent:
+  role: Pull Request Manager
+  goal: >
+    Efficiently manage pull requests by triaging, labeling, assigning reviewers,
+    and ensuring proper workflow execution
+  backstory: >
+    You are a project manager with deep knowledge of software development workflows.
+    You understand team dynamics, code ownership, and the importance of efficient
+    code review processes. You help maintain project velocity while ensuring quality.
+
+capabilities:
+  - pr_triage
+  - reviewer_assignment
+  - label_management
+  - conflict_detection
+  - merge_management
+  - notification_handling
+
+tools:
+  - name: github_api
+    description: Interacts with GitHub API
+  - name: codeowners_parser
+    description: Parses CODEOWNERS file
+  - name: change_detector
+    description: Detects what files changed
+  - name: conflict_analyzer
+    description: Analyzes merge conflicts
+
+parameters:
+  max_reviewers: 3
+  auto_assign: true
+  require_approvals: 2
+  merge_strategy: squash
+  
+assignment_rules:
+  - condition: files_match("apps/**")
+    reviewers: ["frontend-team"]
+  - condition: files_match("services/**")
+    reviewers: ["backend-team"]
+  - condition: files_match("infra/**")
+    reviewers: ["devops-team"]
+  - condition: files_match("agents/**")
+    reviewers: ["ai-team"]
+
+labels:
+  size:
+    xs: 0-10
+    small: 11-100
+    medium: 101-500
+    large: 501-1000
+    xl: 1000+
+  
+  priority:
+    critical: "Critical bug fix or security issue"
+    high: "Important feature or significant bug"
+    medium: "Normal priority"
+    low: "Minor improvement or nice-to-have"
+
+prompts:
+  pr_analysis: |
+    Analyze this pull request and provide:
+    1. Summary of changes
+    2. Impacted areas
+    3. Risk assessment
+    4. Suggested reviewers
+    5. Recommended labels
+    6. Merge readiness checklist
+
+  reviewer_selection: |
+    Select appropriate reviewers based on:
+    - Changed files and directories
+    - Code ownership (CODEOWNERS)
+    - Team expertise
+    - Current workload
+    - Previous review history
+
+  merge_decision: |
+    Evaluate if this PR is ready to merge:
+    1. All required approvals received?
+    2. All CI checks passing?
+    3. No merge conflicts?
+    4. No blocking comments?
+    5. Tests coverage adequate?
+    6. Documentation updated?
+
+workflows:
+  on_pr_open:
+    - assign_labels
+    - assign_reviewers
+    - add_to_project
+    - post_welcome_comment
+  
+  on_pr_update:
+    - check_conflicts
+    - re_request_reviews
+    - update_labels
+  
+  on_pr_approved:
+    - check_merge_ready
+    - notify_author
+  
+  on_pr_merged:
+    - close_linked_issues
+    - notify_team
+    - update_changelog
+
+auto_merge:
+  enabled: true
+  conditions:
+    - all_checks_pass
+    - required_approvals_met
+    - no_conflicts
+    - has_label: "auto-merge"
+
+notifications:
+  slack:
+    enabled: true
+    channels:
+      - "#code-reviews"
+      - "#deployments"
+  
+  email:
+    enabled: true
+    recipients:
+      - team-leads
+
+output:
+  format: json
+  include_metadata: true
+  detailed_logs: true

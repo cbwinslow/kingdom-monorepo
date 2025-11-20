@@ -1,0 +1,234 @@
+name: Documentation
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'docs/**'
+      - '**/*.md'
+      - '.github/workflows/documentation.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'docs/**'
+      - '**/*.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  markdown-lint:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Markdown Lint
+        uses: DavidAnson/markdownlint-cli2-action@v14
+        with:
+          globs: '**/*.md'
+          continue-on-error: true
+
+  link-check:
+    name: Check Links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links in markdown files
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          use-verbose-mode: 'yes'
+          check-modified-files-only: 'yes'
+          continue-on-error: true
+
+  spell-check:
+    name: Spell Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check spelling
+        uses: rojopolis/spellcheck-github-actions@0.36.0
+        continue-on-error: true
+
+  generate-api-docs:
+    name: Generate API Documentation
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install documentation tools
+        run: |
+          npm install -g typedoc jsdoc
+          pip install sphinx sphinx-rtd-theme
+
+      - name: Generate TypeScript docs
+        run: |
+          find . -name "tsconfig.json" | while read config; do
+            dir=$(dirname "$config")
+            echo "Generating docs for $dir"
+            typedoc --out docs/api/typescript/$dir $dir || true
+          done
+
+      - name: Generate JavaScript docs
+        run: |
+          find . -name "*.js" -type f | head -n 1 | xargs dirname | while read dir; do
+            echo "Generating docs for $dir"
+            jsdoc -r $dir -d docs/api/javascript/$dir || true
+          done
+
+      - name: Generate Python docs
+        run: |
+          find . -name "*.py" -type f | head -n 1 | xargs dirname | while read dir; do
+            echo "Generating docs for $dir"
+            sphinx-apidoc -o docs/api/python/$dir $dir || true
+          done
+
+      - name: Upload API docs
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-documentation
+          path: docs/api/
+
+  build-docs-site:
+    name: Build Documentation Site
+    runs-on: ubuntu-latest
+    needs: [markdown-lint, generate-api-docs]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install MkDocs
+        run: |
+          pip install mkdocs mkdocs-material mkdocs-mermaid2-plugin
+
+      - name: Create MkDocs config
+        run: |
+          cat > mkdocs.yml << 'EOF'
+          site_name: Kingdom Monorepo Documentation
+          site_description: Comprehensive documentation for the Kingdom Monorepo
+          theme:
+            name: material
+            palette:
+              primary: indigo
+              accent: indigo
+            features:
+              - navigation.tabs
+              - navigation.sections
+              - toc.integrate
+              - search.suggest
+              - search.highlight
+          plugins:
+            - search
+            - mermaid2
+          markdown_extensions:
+            - pymdownx.highlight
+            - pymdownx.superfences
+            - pymdownx.tabbed
+            - pymdownx.details
+            - admonition
+            - toc:
+                permalink: true
+          nav:
+            - Home: README.md
+            - Agents:
+              - Overview: agents/README.md
+              - Configurations: agents/configs/
+              - Prompts: agents/prompts/
+            - Documentation: docs/
+          EOF
+
+      - name: Build MkDocs site
+        run: mkdocs build
+
+      - name: Upload documentation site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site
+
+  deploy-docs:
+    name: Deploy Documentation
+    runs-on: ubuntu-latest
+    needs: build-docs-site
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  readme-sync:
+    name: Sync README
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update README with latest stats
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const readme = fs.readFileSync('README.md', 'utf8');
+            
+            // Add build badges if not present
+            const badges = `
+            ![CI](https://github.com/${{ github.repository }}/workflows/CI/badge.svg)
+            ![Security](https://github.com/${{ github.repository }}/workflows/Security%20Scanning/badge.svg)
+            ![License](https://img.shields.io/github/license/${{ github.repository }})
+            ![Last Commit](https://img.shields.io/github/last-commit/${{ github.repository }})
+            `;
+            
+            if (!readme.includes('workflows/CI/badge.svg')) {
+              const updatedReadme = readme.replace('# Kingdom Monorepo', `# Kingdom Monorepo\n\n${badges}`);
+              fs.writeFileSync('README.md', updatedReadme);
+            }
+
+      - name: Commit README updates
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add README.md
+          git diff --staged --quiet || git commit -m "docs: update README badges [skip ci]"
+          git push || echo "No changes to push"
+
+  doc-summary:
+    name: Documentation Summary
+    if: always()
+    needs: [markdown-lint, link-check, spell-check, generate-api-docs, build-docs-site, deploy-docs]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create documentation summary
+        run: |
+          echo "## 📚 Documentation Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Markdown Lint: ${{ needs.markdown-lint.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Link Check: ${{ needs.link-check.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Spell Check: ${{ needs.spell-check.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- API Docs: ${{ needs.generate-api-docs.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Build Site: ${{ needs.build-docs-site.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Deploy: ${{ needs.deploy-docs.result }}" >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,49 @@
+# Configuration for github/issue-labeler
+
+# Bug related
+bug:
+  - '\b(bug|error|issue|problem|broken)\b'
+  - '\b(not working|doesn''t work|does not work)\b'
+  - '\b(crash|exception|failure)\b'
+
+# Feature request
+'type: feature':
+  - '\b(feature|enhancement|improvement)\b'
+  - '\b(add|implement|support)\b'
+  - '\b(would be nice|could we)\b'
+
+# Documentation
+documentation:
+  - '\b(documentation|docs|readme)\b'
+  - '\b(document|explain|clarify)\b'
+
+# Question
+question:
+  - '\b(question|how to|how do)\b'
+  - '\b(help|support)\b'
+  - '\?\s*$'
+
+# Performance
+performance:
+  - '\b(performance|slow|optimize|speed)\b'
+  - '\b(memory|cpu|resource)\b'
+
+# Security
+security:
+  - '\b(security|vulnerability|exploit)\b'
+  - '\b(authentication|authorization|permission)\b'
+
+# Good first issue
+'good first issue':
+  - '\b(good first issue|beginner|easy)\b'
+  - '\b(starter|newcomer)\b'
+
+# Help wanted
+'help wanted':
+  - '\b(help wanted|looking for help)\b'
+  - '\b(contribution|contributor)\b'
+
+# Dependencies
+dependencies:
+  - '\b(dependency|dependencies|package)\b'
+  - '\b(upgrade|update|version)\b'

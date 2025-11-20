@@ -1,0 +1,25 @@
+# Configuration for TimonVS/pr-labeler-action
+
+feature/*: 'type: feature'
+feat/*: 'type: feature'
+
+fix/*: 'type: bug'
+bugfix/*: 'type: bug'
+hotfix/*: 'type: hotfix'
+
+docs/*: 'documentation'
+doc/*: 'documentation'
+
+refactor/*: 'type: refactor'
+chore/*: 'type: chore'
+
+test/*: 'tests'
+tests/*: 'tests'
+
+ci/*: 'ci/cd'
+cd/*: 'ci/cd'
+
+release/*: 'type: release'
+
+deps/*: 'dependencies'
+dependencies/*: 'dependencies'

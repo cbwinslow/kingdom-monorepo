@@ -1,0 +1,64 @@
+name: 'Monorepo Change Detector'
+description: 'Detects which packages/workspaces changed in a monorepo'
+author: 'Kingdom Monorepo'
+
+inputs:
+  base-ref:
+    description: 'Base git reference for comparison'
+    default: 'main'
+    required: false
+
+outputs:
+  changed-workspaces:
+    description: 'JSON array of changed workspace names'
+    value: ${{ steps.detect.outputs.workspaces }}
+  changed-paths:
+    description: 'Newline-separated list of changed paths'
+    value: ${{ steps.detect.outputs.paths }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Detect changed workspaces
+      id: detect
+      shell: bash
+      run: |
+        echo "Detecting changes in monorepo..."
+        
+        # Get list of changed files
+        CHANGED_FILES=$(git diff --name-only ${{ inputs.base-ref }}...HEAD)
+        
+        # Initialize arrays
+        WORKSPACES=()
+        PATHS=()
+        
+        # Detect changed workspaces
+        for workspace in apps libs services tools; do
+          if echo "$CHANGED_FILES" | grep -q "^$workspace/"; then
+            WORKSPACES+=("$workspace")
+            PATHS+=($(echo "$CHANGED_FILES" | grep "^$workspace/" | cut -d'/' -f1-2 | sort -u))
+          fi
+        done
+        
+        # Convert to JSON array
+        WORKSPACES_JSON=$(printf '%s\n' "${WORKSPACES[@]}" | jq -R . | jq -s .)
+        PATHS_LIST=$(printf '%s\n' "${PATHS[@]}")
+        
+        echo "Changed workspaces: $WORKSPACES_JSON"
+        echo "Changed paths: $PATHS_LIST"
+        
+        echo "workspaces=$WORKSPACES_JSON" >> $GITHUB_OUTPUT
+        echo "paths<<EOF" >> $GITHUB_OUTPUT
+        echo "$PATHS_LIST" >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+
+    - name: Create summary
+      shell: bash
+      run: |
+        echo "## 📦 Monorepo Changes Detected" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "The following workspaces have changes:" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo '${{ steps.detect.outputs.workspaces }}' | jq -r '.[]' | while read workspace; do
+          echo "- \`$workspace\`" >> $GITHUB_STEP_SUMMARY
+        done

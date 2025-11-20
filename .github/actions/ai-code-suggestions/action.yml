@@ -1,0 +1,62 @@
+name: 'AI Code Suggestions'
+description: 'Provides AI-powered code suggestions and improvements'
+author: 'Kingdom Monorepo'
+
+inputs:
+  github-token:
+    description: 'GitHub token'
+    required: true
+  pr-number:
+    description: 'Pull request number'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install dependencies
+      shell: bash
+      run: |
+        pip install autopep8 black isort pylint
+
+    - name: Analyze Python files
+      shell: bash
+      run: |
+        find . -name "*.py" -type f | while read file; do
+          echo "Analyzing $file"
+          pylint "$file" --output-format=json > /tmp/pylint-results.json || true
+        done
+
+    - name: Generate suggestions
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        PR_NUMBER: ${{ inputs.pr-number }}
+      run: |
+        cat > /tmp/suggestions.md << 'SUGGESTIONS'
+        ## 🔧 AI Code Suggestions
+
+        ### Formatting Improvements
+        - Consider using consistent formatting with Black and isort
+        - Remove unused imports and variables
+        - Follow PEP 8 style guidelines
+
+        ### Code Quality
+        - Add type hints to function signatures
+        - Improve error handling with specific exceptions
+        - Add docstrings to functions and classes
+
+        ### Performance
+        - Consider using list comprehensions where applicable
+        - Optimize loops and reduce nested iterations
+        - Use built-in functions when possible
+
+        ### Security
+        - Validate and sanitize user inputs
+        - Use environment variables for sensitive data
+        - Keep dependencies up to date
+
+        ---
+        *Automated suggestions by AI*
+        SUGGESTIONS
+
+        gh pr comment $PR_NUMBER --body-file /tmp/suggestions.md

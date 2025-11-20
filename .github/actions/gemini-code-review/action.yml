@@ -1,0 +1,56 @@
+name: 'Google Gemini Code Review'
+description: 'Performs code review using Google Gemini AI'
+author: 'Kingdom Monorepo'
+
+inputs:
+  gemini-api-key:
+    description: 'Google Gemini API key'
+    required: true
+  pr-number:
+    description: 'Pull request number'
+    required: true
+  github-token:
+    description: 'GitHub token'
+    required: true
+  model:
+    description: 'Gemini model to use'
+    default: 'gemini-pro'
+    required: false
+
+outputs:
+  review-comment:
+    description: 'The AI-generated review comment'
+    value: ${{ steps.review.outputs.comment }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        npm init -y
+        npm install @google/generative-ai @octokit/rest
+
+    - name: Perform Gemini Code Review
+      id: review
+      shell: bash
+      env:
+        GEMINI_API_KEY: ${{ inputs.gemini-api-key }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        PR_NUMBER: ${{ inputs.pr-number }}
+        MODEL: ${{ inputs.model }}
+      run: |
+        node ${{ github.action_path }}/scripts/review.js
+
+    - name: Add review label
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        PR_NUMBER: ${{ inputs.pr-number }}
+      run: |
+        gh pr edit $PR_NUMBER --add-label "ai-reviewed"

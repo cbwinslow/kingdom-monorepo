@@ -1,0 +1,199 @@
+name: Release Management
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., v1.0.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  packages: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ inputs.version }}"
+          else
+            VERSION=${GITHUB_REF#refs/tags/}
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Version: $VERSION"
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          
+          if [ -z "$PREVIOUS_TAG" ]; then
+            CHANGELOG="Initial release"
+          else
+            CHANGELOG=$(git log ${PREVIOUS_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges)
+          fi
+          
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: Release ${{ steps.version.outputs.version }}
+          body: |
+            ## 🚀 Release ${{ steps.version.outputs.version }}
+            
+            ### What's Changed
+            ${{ steps.changelog.outputs.CHANGELOG }}
+            
+            ### Installation
+            
+            ```bash
+            git clone -b ${{ steps.version.outputs.version }} https://github.com/${{ github.repository }}
+            ```
+            
+            ### Docker Images
+            
+            ```bash
+            docker pull ghcr.io/${{ github.repository }}:${{ steps.version.outputs.version }}
+            ```
+            
+            ---
+            
+            **Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ steps.version.outputs.version }}
+          draft: false
+          prerelease: false
+
+  build-artifacts:
+    name: Build Release Artifacts
+    needs: create-release
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - os: linux
+            arch: amd64
+          - os: linux
+            arch: arm64
+          - os: darwin
+            arch: amd64
+          - os: darwin
+            arch: arm64
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build --if-present
+
+      - name: Create artifact archive
+        run: |
+          mkdir -p dist
+          tar -czf dist/kingdom-monorepo-${{ needs.create-release.outputs.version }}-${{ matrix.os }}-${{ matrix.arch }}.tar.gz \
+            -C . \
+            --exclude=node_modules \
+            --exclude=.git \
+            --exclude=dist \
+            .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kingdom-monorepo-${{ matrix.os }}-${{ matrix.arch }}
+          path: dist/*.tar.gz
+
+  publish-release:
+    name: Publish Release
+    needs: [create-release, build-artifacts]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Upload artifacts to release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            const release = await github.rest.repos.getReleaseByTag({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag: '${{ needs.create-release.outputs.version }}'
+            });
+            
+            const artifactsDir = 'artifacts';
+            const files = fs.readdirSync(artifactsDir, { recursive: true })
+              .filter(f => f.endsWith('.tar.gz'));
+            
+            for (const file of files) {
+              const filePath = path.join(artifactsDir, file);
+              const fileName = path.basename(filePath);
+              const fileContent = fs.readFileSync(filePath);
+              
+              await github.rest.repos.uploadReleaseAsset({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: release.data.id,
+                name: fileName,
+                data: fileContent
+              });
+            }
+
+  notify-release:
+    name: Notify Release
+    needs: [create-release, publish-release]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create announcement issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🎉 Release ${{ needs.create-release.outputs.version }} Published',
+              body: `Release ${{ needs.create-release.outputs.version }} has been published!\n\nSee the [release notes](https://github.com/${{ github.repository }}/releases/tag/${{ needs.create-release.outputs.version }}) for details.`,
+              labels: ['release', 'announcement']
+            });
+
+      - name: Update project board
+        uses: actions/github-script@v7
+        continue-on-error: true
+        with:
+          script: |
+            // Add release milestone completion logic here
+            console.log('Release ${{ needs.create-release.outputs.version }} completed');
