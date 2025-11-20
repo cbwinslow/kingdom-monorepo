@@ -1,5 +1,12 @@
 # Kingdom Monorepo
 
+
+![CI](https://github.com/cbwinslow/kingdom-monorepo/workflows/CI/badge.svg)
+![Security](https://github.com/cbwinslow/kingdom-monorepo/workflows/Security%20Scanning/badge.svg)
+![License](https://img.shields.io/github/license/cbwinslow/kingdom-monorepo)
+![Last Commit](https://img.shields.io/github/last-commit/cbwinslow/kingdom-monorepo)
+
+
 A comprehensive monorepo for all development projects, tools, and infrastructure.
 
 ## Structure
