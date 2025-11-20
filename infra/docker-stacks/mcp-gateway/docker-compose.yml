@@ -1,0 +1,155 @@
+version: '3.8'
+
+services:
+  # MCP Gateway - HTTP/SSE gateway for MCP servers
+  mcp-gateway:
+    image: node:20-alpine
+    container_name: mcp-gateway
+    working_dir: /app
+    command: sh -c "npm install -g @modelcontextprotocol/gateway && mcp-gateway"
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    volumes:
+      - ./config:/app/config
+      - ./logs:/app/logs
+    networks:
+      - mcp-gateway-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis for session management
+  redis:
+    image: redis:7-alpine
+    container_name: mcp-gateway-redis
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-mcp_redis_pass}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - mcp-gateway-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Nginx reverse proxy for MCP Gateway
+  nginx:
+    image: nginx:alpine
+    container_name: mcp-gateway-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - mcp-gateway
+    networks:
+      - mcp-gateway-network
+    restart: unless-stopped
+
+  # WebSocket test client
+  wscat:
+    image: node:20-alpine
+    container_name: mcp-wscat
+    command: sh -c "npm install -g wscat && sleep infinity"
+    networks:
+      - mcp-gateway-network
+    restart: unless-stopped
+
+  # SSE test client
+  curl:
+    image: curlimages/curl:latest
+    container_name: mcp-curl
+    command: sleep infinity
+    networks:
+      - mcp-gateway-network
+    restart: unless-stopped
+
+  # Gateway monitoring
+  gateway-exporter:
+    image: node:20-alpine
+    container_name: mcp-gateway-exporter
+    working_dir: /app
+    command:
+      - sh
+      - -c
+      - |
+        cat > /app/exporter.js <<'EOFJS'
+        const http = require('http');
+        const metrics = {
+          requests_total: 0,
+          errors_total: 0,
+          active_connections: 0
+        };
+        function checkGateway() {
+          const options = {
+            hostname: 'mcp-gateway',
+            port: 3000,
+            path: '/health',
+            method: 'GET'
+          };
+          const req = http.request(options, (res) => {
+            if (res.statusCode === 200) {
+              metrics.requests_total++;
+            } else {
+              metrics.errors_total++;
+            }
+          });
+          req.on('error', () => {
+            metrics.errors_total++;
+          });
+          req.end();
+        }
+        setInterval(checkGateway, 5000);
+        const server = http.createServer((req, res) => {
+          if (req.url === '/metrics') {
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            res.end(
+              '# HELP mcp_gateway_requests_total Total requests\n' +
+              '# TYPE mcp_gateway_requests_total counter\n' +
+              'mcp_gateway_requests_total ' + metrics.requests_total + '\n' +
+              '# HELP mcp_gateway_errors_total Total errors\n' +
+              '# TYPE mcp_gateway_errors_total counter\n' +
+              'mcp_gateway_errors_total ' + metrics.errors_total + '\n' +
+              '# HELP mcp_gateway_active_connections Active connections\n' +
+              '# TYPE mcp_gateway_active_connections gauge\n' +
+              'mcp_gateway_active_connections ' + metrics.active_connections + '\n'
+            );
+          } else {
+            res.writeHead(404);
+            res.end('Not Found');
+          }
+        });
+        server.listen(9090, () => {
+          console.log('Metrics server listening on port 9090');
+        });
+        EOFJS
+        node /app/exporter.js
+    ports:
+      - "9091:9090"
+    networks:
+      - mcp-gateway-network
+    depends_on:
+      - mcp-gateway
+    restart: unless-stopped
+
+networks:
+  mcp-gateway-network:
+    driver: bridge
+
+volumes:
+  redis_data:
