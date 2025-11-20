@@ -54,6 +54,6 @@ These rules complement the base operating standards and govern all agent activit
 ## 9. Startup Kit Usage
 - When cloning or initializing a new project, copy this **agents/** bundle. Immediately update timestamps, ownership, and project context in all control files.
 - Ensure **project_summary.md** reflects the current initiative and aligns with **srs.md** and **features.md** as the high-level balance sheet for intended outcomes.
-- Use **tasks.md** as the operational cash-flow statement: plan, execute, and verify progress with measurable steps.
+- Use **tasks.md** as the operational income statement: plan, execute, and verify progress with measurable steps.
 
 Non-compliance must be recorded in **journal.md** with corrective actions and responsible agents.
