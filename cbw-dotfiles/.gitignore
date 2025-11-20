@@ -1,0 +1,18 @@
+# Ignore actual secrets file (keep only the .example template)
+bash_secrets
+
+# Ignore bash history files
+.bash_history
+bash_history
+
+# Ignore local configuration
+*.local
+
+# Ignore vim swap files
+*.swp
+*.swo
+*~
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
