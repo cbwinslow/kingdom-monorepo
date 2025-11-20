@@ -1,0 +1,88 @@
+---
+# Service discovery tasks
+- name: Get systemd services
+  shell: systemctl list-units --type=service --all --no-pager
+  register: systemd_services
+  changed_when: false
+  failed_when: false
+
+- name: Get enabled services
+  shell: systemctl list-unit-files --type=service --state=enabled --no-pager
+  register: enabled_services
+  changed_when: false
+  failed_when: false
+
+- name: Get running services
+  shell: systemctl list-units --type=service --state=running --no-pager
+  register: running_services
+  changed_when: false
+  failed_when: false
+
+- name: Get failed services
+  shell: systemctl list-units --type=service --state=failed --no-pager
+  register: failed_services
+  changed_when: false
+  failed_when: false
+
+- name: Get init.d services (legacy)
+  shell: ls -la /etc/init.d/
+  register: initd_services
+  changed_when: false
+  failed_when: false
+
+- name: Get systemd timers
+  shell: systemctl list-timers --all --no-pager
+  register: systemd_timers
+  changed_when: false
+  failed_when: false
+
+- name: Get Docker containers (if installed)
+  shell: docker ps -a 2>/dev/null || echo "Docker not installed"
+  register: docker_containers
+  changed_when: false
+  failed_when: false
+
+- name: Get Docker images (if installed)
+  shell: docker images 2>/dev/null || echo "Docker not installed"
+  register: docker_images
+  changed_when: false
+  failed_when: false
+
+- name: Get Kubernetes pods (if installed)
+  shell: kubectl get pods --all-namespaces 2>/dev/null || echo "Kubernetes not available"
+  register: k8s_pods
+  changed_when: false
+  failed_when: false
+
+- name: Save service information
+  copy:
+    content: |
+      All Systemd Services:
+      {{ systemd_services.stdout | default('N/A') }}
+      
+      Enabled Services:
+      {{ enabled_services.stdout | default('N/A') }}
+      
+      Running Services:
+      {{ running_services.stdout | default('N/A') }}
+      
+      Failed Services:
+      {{ failed_services.stdout | default('N/A') }}
+      
+      Init.d Services:
+      {{ initd_services.stdout | default('N/A') }}
+      
+      Systemd Timers:
+      {{ systemd_timers.stdout | default('N/A') }}
+      
+      Docker Containers:
+      {{ docker_containers.stdout | default('N/A') }}
+      
+      Docker Images:
+      {{ docker_images.stdout | default('N/A') }}
+      
+      Kubernetes Pods:
+      {{ k8s_pods.stdout | default('N/A') }}
+    dest: "{{ output_path }}/services.txt"
+  delegate_to: localhost
+  become: false

@@ -1,0 +1,7 @@
+---
+# Handlers for system restore role
+- name: restart ssh
+  service:
+    name: "{{ 'sshd' if ansible_os_family == 'RedHat' else 'ssh' }}"
+    state: restarted
+  ignore_errors: yes

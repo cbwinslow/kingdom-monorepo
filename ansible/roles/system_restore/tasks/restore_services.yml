@@ -1,0 +1,21 @@
+---
+# Service restoration tasks
+- name: Warning about service restoration
+  debug:
+    msg: "WARNING: Service restoration is disabled by default. Manual configuration recommended."
+
+- name: Read services file
+  set_fact:
+    services_file: "{{ restore_discovery_path }}/services.txt"
+
+- name: Check if services file exists
+  stat:
+    path: "{{ services_file }}"
+  register: services_stat
+  delegate_to: localhost
+  become: false
+
+- name: Display services restoration info
+  debug:
+    msg: "Services configuration found in {{ services_file }}. Manual review and restoration recommended."
+  when: services_stat.stat.exists

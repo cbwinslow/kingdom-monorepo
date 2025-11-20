@@ -1,0 +1,61 @@
+---
+# Firewall discovery tasks
+- name: Get UFW status (Ubuntu/Debian)
+  shell: ufw status verbose
+  register: ufw_status
+  changed_when: false
+  failed_when: false
+
+- name: Get UFW rules
+  shell: ufw show added
+  register: ufw_rules
+  changed_when: false
+  failed_when: false
+
+- name: Get firewalld status (RedHat/CentOS)
+  shell: firewall-cmd --state
+  register: firewalld_status
+  changed_when: false
+  failed_when: false
+
+- name: Get firewalld zones
+  shell: firewall-cmd --list-all-zones
+  register: firewalld_zones
+  changed_when: false
+  failed_when: false
+
+- name: Get firewalld services
+  shell: firewall-cmd --list-services
+  register: firewalld_services
+  changed_when: false
+  failed_when: false
+
+- name: Get nftables rules
+  shell: nft list ruleset
+  register: nftables_rules
+  changed_when: false
+  failed_when: false
+
+- name: Save firewall information
+  copy:
+    content: |
+      UFW Status:
+      {{ ufw_status.stdout | default('N/A') }}
+      
+      UFW Rules:
+      {{ ufw_rules.stdout | default('N/A') }}
+      
+      Firewalld Status:
+      {{ firewalld_status.stdout | default('N/A') }}
+      
+      Firewalld Zones:
+      {{ firewalld_zones.stdout | default('N/A') }}
+      
+      Firewalld Services:
+      {{ firewalld_services.stdout | default('N/A') }}
+      
+      NFTables Rules:
+      {{ nftables_rules.stdout | default('N/A') }}
+    dest: "{{ output_path }}/firewall.txt"
+  delegate_to: localhost
+  become: false

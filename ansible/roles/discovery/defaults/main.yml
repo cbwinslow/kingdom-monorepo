@@ -1,0 +1,43 @@
+---
+# Default variables for discovery role
+discovery_output_dir: "/tmp/system_discovery"
+discovery_timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
+discovery_hostname: "{{ ansible_hostname }}"
+discovery_report_format: "json"  # json or yaml
+
+# Discovery modules to enable
+discover_packages: true
+discover_users: true
+discover_filesystem: true
+discover_network: true
+discover_ssh: true
+discover_services: true
+discover_ports: true
+discover_config_files: true
+discover_ceph: true
+discover_mcp_servers: true
+discover_system_info: true
+discover_firewall: true
+discover_cron_jobs: true
+discover_installed_software: true
+
+# Paths to discover configuration files
+config_file_paths:
+  - /etc/ssh/sshd_config
+  - /etc/network/interfaces
+  - /etc/netplan
+  - /etc/hosts
+  - /etc/hostname
+  - /etc/resolv.conf
+  - /etc/fstab
+  - /etc/exports
+  - /etc/sudoers
+  - /etc/sysctl.conf
+  - /etc/systemd
+  - /etc/nginx
+  - /etc/apache2
+  - /etc/mysql
+  - /etc/postgresql
+  - /etc/ceph
+  - /etc/docker
+  - /etc/kubernetes

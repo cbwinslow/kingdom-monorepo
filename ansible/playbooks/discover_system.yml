@@ -1,0 +1,35 @@
+---
+# Playbook to discover system configuration
+# Usage: ansible-playbook playbooks/discover_system.yml
+# Usage (remote): ansible-playbook playbooks/discover_system.yml -i inventory/hosts.yml -l target_host
+
+- name: Discover System Configuration
+  hosts: all
+  gather_facts: yes
+  become: yes
+  
+  vars:
+    discovery_output_dir: "/tmp/system_discovery"
+    discovery_timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
+    
+  roles:
+    - role: discovery
+      tags: ['discovery', 'all']
+  
+  post_tasks:
+    - name: Display discovery completion message
+      debug:
+        msg: |
+          ========================================
+          System Discovery Complete!
+          ========================================
+          Output directory: {{ discovery_output_dir }}/{{ ansible_hostname }}_{{ discovery_timestamp }}
+          
+          Next steps:
+          1. Review the collected data
+          2. Generate a report: ansible-playbook playbooks/generate_report.yml
+          3. Restore on a new system: ansible-playbook playbooks/restore_system.yml
+          ========================================
+      delegate_to: localhost
+      become: false
+      run_once: true

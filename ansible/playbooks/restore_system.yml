@@ -1,0 +1,85 @@
+---
+# Playbook to restore system configuration on a new VM
+# Usage: ansible-playbook playbooks/restore_system.yml -e "restore_discovery_path=/tmp/system_discovery/hostname_timestamp"
+# Usage (remote): ansible-playbook playbooks/restore_system.yml -i inventory/hosts.yml -l target_host -e "restore_discovery_path=/path/to/discovery"
+
+- name: Restore System Configuration
+  hosts: all
+  gather_facts: yes
+  become: yes
+  
+  vars:
+    # This MUST be provided via -e flag
+    restore_discovery_path: ""
+    
+    # Safety settings - adjust as needed
+    dry_run: false
+    backup_existing: true
+    backup_dir: "/tmp/system_restore_backup"
+    
+    # What to restore - be careful with these
+    restore_packages: true
+    restore_users: true
+    restore_network: false  # DANGER: Can break connectivity
+    restore_ssh: true
+    restore_services: false  # DANGER: May cause issues
+    restore_config_files: true
+    restore_firewall: false  # DANGER: Can block access
+    restore_cron_jobs: true
+  
+  pre_tasks:
+    - name: Display warning
+      debug:
+        msg: |
+          ========================================
+          WARNING: System Restoration
+          ========================================
+          This playbook will restore system configuration from:
+          {{ restore_discovery_path }}
+          
+          Target system: {{ ansible_hostname }}
+          
+          Enabled restorations:
+          - Packages: {{ restore_packages }}
+          - Users: {{ restore_users }}
+          - SSH: {{ restore_ssh }}
+          - Config Files: {{ restore_config_files }}
+          - Cron Jobs: {{ restore_cron_jobs }}
+          
+          DISABLED (for safety):
+          - Network: {{ restore_network }}
+          - Services: {{ restore_services }}
+          - Firewall: {{ restore_firewall }}
+          
+          Dry run: {{ dry_run }}
+          Backup existing: {{ backup_existing }}
+          ========================================
+      
+    - name: Verify discovery path is provided
+      fail:
+        msg: "restore_discovery_path must be provided via -e flag"
+      when: restore_discovery_path == ""
+  
+  roles:
+    - role: system_restore
+      tags: ['restore', 'all']
+  
+  post_tasks:
+    - name: Display completion message
+      debug:
+        msg: |
+          ========================================
+          System Restoration Complete!
+          ========================================
+          Review the changes and test the system.
+          
+          {% if backup_existing %}
+          Backups saved to: {{ backup_dir }}
+          {% endif %}
+          
+          You may need to:
+          1. Review network configuration manually
+          2. Enable/start required services
+          3. Configure firewall rules
+          4. Reboot the system
+          ========================================

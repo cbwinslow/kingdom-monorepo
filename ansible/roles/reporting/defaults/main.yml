@@ -1,0 +1,8 @@
+---
+# Default variables for reporting role
+report_output_dir: "/tmp/system_reports"
+report_format: "html"  # html, markdown, or text
+report_timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
+report_hostname: "{{ ansible_hostname }}"
+include_summary: true
+include_graphs: false

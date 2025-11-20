@@ -1,0 +1,97 @@
+---
+# Package restoration tasks
+- name: Read package list
+  set_fact:
+    packages_file: "{{ restore_discovery_path }}/packages.txt"
+
+- name: Check if packages file exists
+  stat:
+    path: "{{ packages_file }}"
+  register: packages_stat
+  delegate_to: localhost
+  become: false
+
+- name: Parse package list (Debian/Ubuntu)
+  shell: |
+    grep -A 1000 "Installed Packages:" "{{ packages_file }}" | \
+    grep "=" | \
+    awk -F'=' '{print $1}' | \
+    grep -v "^$" | \
+    head -100
+  register: package_list_debian
+  delegate_to: localhost
+  become: false
+  when: 
+    - packages_stat.stat.exists
+    - ansible_os_family == "Debian"
+  failed_when: false
+
+- name: Display packages to install
+  debug:
+    msg: "{{ package_list_debian.stdout_lines | default([]) }}"
+  when: 
+    - ansible_os_family == "Debian"
+    - package_list_debian is defined
+
+- name: Install packages (Debian/Ubuntu)
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop: "{{ package_list_debian.stdout_lines | default([]) }}"
+  when: 
+    - ansible_os_family == "Debian"
+    - not dry_run
+    - package_list_debian is defined
+    - package_list_debian.stdout_lines is defined
+  ignore_errors: yes
+
+- name: Parse package list (RedHat/CentOS)
+  shell: |
+    grep -A 1000 "Installed Packages:" "{{ packages_file }}" | \
+    grep -v "^Installed Packages:" | \
+    grep -v "^$" | \
+    head -100
+  register: package_list_redhat
+  delegate_to: localhost
+  become: false
+  when: 
+    - packages_stat.stat.exists
+    - ansible_os_family == "RedHat"
+  failed_when: false
+
+- name: Install packages (RedHat/CentOS)
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ package_list_redhat.stdout_lines | default([]) }}"
+  when: 
+    - ansible_os_family == "RedHat"
+    - not dry_run
+    - package_list_redhat is defined
+    - package_list_redhat.stdout_lines is defined
+  ignore_errors: yes
+
+- name: Restore pip packages
+  shell: |
+    grep -A 1000 "Pip Packages:" "{{ packages_file }}" | \
+    grep -v "^Pip Packages:" | \
+    grep -v "^$" | \
+    grep -v "pip not installed" | \
+    head -50
+  register: pip_packages
+  delegate_to: localhost
+  become: false
+  when: packages_stat.stat.exists
+  failed_when: false
+
+- name: Install pip packages
+  pip:
+    name: "{{ pip_packages.stdout_lines }}"
+    state: present
+  when: 
+    - not dry_run
+    - pip_packages is defined
+    - pip_packages.stdout_lines is defined
+    - pip_packages.stdout_lines | length > 0
+  ignore_errors: yes

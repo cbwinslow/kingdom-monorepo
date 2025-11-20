@@ -1,0 +1,117 @@
+---
+# Ceph cluster discovery tasks
+- name: Check if Ceph is installed
+  shell: which ceph
+  register: ceph_installed
+  changed_when: false
+  failed_when: false
+
+- name: Get Ceph cluster status
+  shell: ceph status
+  register: ceph_status
+  changed_when: false
+  failed_when: false
+  when: ceph_installed.rc == 0
+
+- name: Get Ceph health
+  shell: ceph health detail
+  register: ceph_health
+  changed_when: false
+  failed_when: false
+  when: ceph_installed.rc == 0
+
+- name: Get Ceph OSD tree
+  shell: ceph osd tree
+  register: ceph_osd_tree
+  changed_when: false
+  failed_when: false
+  when: ceph_installed.rc == 0
+
+- name: Get Ceph OSD status
+  shell: ceph osd stat
+  register: ceph_osd_stat
+  changed_when: false
+  failed_when: false
+  when: ceph_installed.rc == 0
+
+- name: Get Ceph pools
+  shell: ceph osd pool ls detail
+  register: ceph_pools
+  changed_when: false
+  failed_when: false
+  when: ceph_installed.rc == 0
+
+- name: Get Ceph monitors
+  shell: ceph mon stat
+  register: ceph_mon_stat
+  changed_when: false
+  failed_when: false
+  when: ceph_installed.rc == 0
+
+- name: Get Ceph configuration
+  shell: ceph config dump
+  register: ceph_config
+  changed_when: false
+  failed_when: false
+  when: ceph_installed.rc == 0
+
+- name: Get Ceph configuration files
+  shell: |
+    if [ -f /etc/ceph/ceph.conf ]; then
+      echo "=== ceph.conf ==="
+      cat /etc/ceph/ceph.conf
+    fi
+    if [ -d /etc/ceph ]; then
+      echo ""
+      echo "=== Ceph directory contents ==="
+      ls -la /etc/ceph/
+    fi
+  register: ceph_config_files
+  changed_when: false
+  failed_when: false
+
+- name: Get Ceph version
+  shell: ceph --version
+  register: ceph_version
+  changed_when: false
+  failed_when: false
+  when: ceph_installed.rc == 0
+
+- name: Save Ceph information
+  copy:
+    content: |
+      Ceph Installed: {{ 'Yes' if ceph_installed.rc == 0 else 'No' }}
+      
+      {% if ceph_installed.rc == 0 %}
+      Ceph Version:
+      {{ ceph_version.stdout | default('N/A') }}
+      
+      Ceph Status:
+      {{ ceph_status.stdout | default('N/A') }}
+      
+      Ceph Health:
+      {{ ceph_health.stdout | default('N/A') }}
+      
+      Ceph OSD Tree:
+      {{ ceph_osd_tree.stdout | default('N/A') }}
+      
+      Ceph OSD Status:
+      {{ ceph_osd_stat.stdout | default('N/A') }}
+      
+      Ceph Pools:
+      {{ ceph_pools.stdout | default('N/A') }}
+      
+      Ceph Monitors:
+      {{ ceph_mon_stat.stdout | default('N/A') }}
+      
+      Ceph Configuration:
+      {{ ceph_config.stdout | default('N/A') }}
+      
+      Ceph Configuration Files:
+      {{ ceph_config_files.stdout | default('N/A') }}
+      {% else %}
+      Ceph is not installed on this system.
+      {% endif %}
+    dest: "{{ output_path }}/ceph.txt"
+  delegate_to: localhost
+  become: false

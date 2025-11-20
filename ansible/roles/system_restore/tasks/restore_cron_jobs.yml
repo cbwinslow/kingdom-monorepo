@@ -1,0 +1,22 @@
+---
+# Cron jobs restoration tasks
+- name: Read cron jobs file
+  set_fact:
+    cron_file: "{{ restore_discovery_path }}/cron_jobs.txt"
+
+- name: Check if cron jobs file exists
+  stat:
+    path: "{{ cron_file }}"
+  register: cron_stat
+  delegate_to: localhost
+  become: false
+
+- name: Display cron restoration info
+  debug:
+    msg: "Cron jobs found in {{ cron_file }}. Manual review and restoration recommended due to complexity."
+  when: cron_stat.stat.exists
+
+- name: Warning about cron restoration
+  debug:
+    msg: "WARNING: Automated cron job restoration is not recommended. Please manually review and recreate cron jobs from the discovery data."
+  when: cron_stat.stat.exists

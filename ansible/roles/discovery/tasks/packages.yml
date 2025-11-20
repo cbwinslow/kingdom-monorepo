@@ -1,0 +1,103 @@
+---
+# Package discovery tasks
+- name: Get installed packages (Debian/Ubuntu)
+  shell: dpkg -l | grep '^ii' | awk '{print $2 "=" $3}'
+  register: dpkg_packages
+  changed_when: false
+  failed_when: false
+  when: ansible_os_family == "Debian"
+
+- name: Get APT sources (Debian/Ubuntu)
+  shell: cat /etc/apt/sources.list && find /etc/apt/sources.list.d/ -type f -exec cat {} \;
+  register: apt_sources
+  changed_when: false
+  failed_when: false
+  when: ansible_os_family == "Debian"
+
+- name: Get installed packages (RedHat/CentOS)
+  shell: rpm -qa --qf "%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n"
+  register: rpm_packages
+  changed_when: false
+  failed_when: false
+  when: ansible_os_family == "RedHat"
+
+- name: Get YUM/DNF repositories (RedHat/CentOS)
+  shell: yum repolist -v || dnf repolist -v
+  register: yum_repos
+  changed_when: false
+  failed_when: false
+  when: ansible_os_family == "RedHat"
+
+- name: Get pip packages
+  shell: pip3 list --format=freeze 2>/dev/null || pip list --format=freeze 2>/dev/null || echo "pip not installed"
+  register: pip_packages
+  changed_when: false
+  failed_when: false
+
+- name: Get npm global packages
+  shell: npm list -g --depth=0 2>/dev/null || echo "npm not installed"
+  register: npm_packages
+  changed_when: false
+  failed_when: false
+
+- name: Get snap packages
+  shell: snap list 2>/dev/null || echo "snap not installed"
+  register: snap_packages
+  changed_when: false
+  failed_when: false
+
+- name: Get flatpak packages
+  shell: flatpak list 2>/dev/null || echo "flatpak not installed"
+  register: flatpak_packages
+  changed_when: false
+  failed_when: false
+
+- name: Save package information (Debian/Ubuntu)
+  copy:
+    content: |
+      Installed Packages:
+      {{ dpkg_packages.stdout | default('N/A') }}
+      
+      APT Sources:
+      {{ apt_sources.stdout | default('N/A') }}
+      
+      Pip Packages:
+      {{ pip_packages.stdout | default('N/A') }}
+      
+      NPM Global Packages:
+      {{ npm_packages.stdout | default('N/A') }}
+      
+      Snap Packages:
+      {{ snap_packages.stdout | default('N/A') }}
+      
+      Flatpak Packages:
+      {{ flatpak_packages.stdout | default('N/A') }}
+    dest: "{{ output_path }}/packages.txt"
+  delegate_to: localhost
+  become: false
+  when: ansible_os_family == "Debian"
+
+- name: Save package information (RedHat/CentOS)
+  copy:
+    content: |
+      Installed Packages:
+      {{ rpm_packages.stdout | default('N/A') }}
+      
+      YUM/DNF Repositories:
+      {{ yum_repos.stdout | default('N/A') }}
+      
+      Pip Packages:
+      {{ pip_packages.stdout | default('N/A') }}
+      
+      NPM Global Packages:
+      {{ npm_packages.stdout | default('N/A') }}
+      
+      Snap Packages:
+      {{ snap_packages.stdout | default('N/A') }}
+      
+      Flatpak Packages:
+      {{ flatpak_packages.stdout | default('N/A') }}
+    dest: "{{ output_path }}/packages.txt"
+  delegate_to: localhost
+  become: false
+  when: ansible_os_family == "RedHat"

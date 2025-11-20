@@ -1,0 +1,78 @@
+---
+# Cron jobs and scheduled tasks discovery
+- name: Get system crontabs
+  shell: |
+    echo "=== /etc/crontab ==="
+    cat /etc/crontab
+    echo ""
+    echo "=== /etc/cron.d/ ==="
+    find /etc/cron.d/ -type f -exec echo "--- {} ---" \; -exec cat {} \;
+  register: system_crontabs
+  changed_when: false
+  failed_when: false
+
+- name: Get cron.daily jobs
+  shell: ls -la /etc/cron.daily/
+  register: cron_daily
+  changed_when: false
+  failed_when: false
+
+- name: Get cron.weekly jobs
+  shell: ls -la /etc/cron.weekly/
+  register: cron_weekly
+  changed_when: false
+  failed_when: false
+
+- name: Get cron.monthly jobs
+  shell: ls -la /etc/cron.monthly/
+  register: cron_monthly
+  changed_when: false
+  failed_when: false
+
+- name: Get user crontabs
+  shell: |
+    for user in $(cut -f1 -d: /etc/passwd); do
+      crontab -u $user -l 2>/dev/null && echo "=== User: $user ==="
+    done
+  register: user_crontabs
+  changed_when: false
+  failed_when: false
+
+- name: Get at jobs
+  shell: atq
+  register: at_jobs
+  changed_when: false
+  failed_when: false
+
+- name: Get anacron configuration
+  shell: cat /etc/anacrontab
+  register: anacrontab
+  changed_when: false
+  failed_when: false
+
+- name: Save cron and scheduled tasks information
+  copy:
+    content: |
+      System Crontabs:
+      {{ system_crontabs.stdout | default('N/A') }}
+      
+      Cron.daily Jobs:
+      {{ cron_daily.stdout | default('N/A') }}
+      
+      Cron.weekly Jobs:
+      {{ cron_weekly.stdout | default('N/A') }}
+      
+      Cron.monthly Jobs:
+      {{ cron_monthly.stdout | default('N/A') }}
+      
+      User Crontabs:
+      {{ user_crontabs.stdout | default('N/A') }}
+      
+      At Jobs:
+      {{ at_jobs.stdout | default('N/A') }}
+      
+      Anacron Configuration:
+      {{ anacrontab.stdout | default('N/A') }}
+    dest: "{{ output_path }}/cron_jobs.txt"
+  delegate_to: localhost
+  become: false

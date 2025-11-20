@@ -1,0 +1,50 @@
+---
+# Generate comprehensive system configuration report
+- name: Create report output directory
+  file:
+    path: "{{ report_output_dir }}"
+    state: directory
+    mode: '0755'
+  delegate_to: localhost
+  become: false
+
+- name: Set discovery source directory
+  set_fact:
+    discovery_dir: "{{ discovery_output_dir }}/{{ report_hostname }}_{{ discovery_timestamp }}"
+
+- name: Check if discovery data exists
+  stat:
+    path: "{{ discovery_dir }}"
+  register: discovery_data
+  delegate_to: localhost
+  become: false
+
+- name: Generate HTML report
+  template:
+    src: report.html.j2
+    dest: "{{ report_output_dir }}/{{ report_hostname }}_report_{{ report_timestamp }}.html"
+  delegate_to: localhost
+  become: false
+  when: 
+    - report_format == "html"
+    - discovery_data.stat.exists
+
+- name: Generate Markdown report
+  template:
+    src: report.md.j2
+    dest: "{{ report_output_dir }}/{{ report_hostname }}_report_{{ report_timestamp }}.md"
+  delegate_to: localhost
+  become: false
+  when: 
+    - report_format == "markdown"
+    - discovery_data.stat.exists
+
+- name: Display report location
+  debug:
+    msg: "Report generated at: {{ report_output_dir }}/{{ report_hostname }}_report_{{ report_timestamp }}.{{ report_format }}"
+  when: discovery_data.stat.exists
+
+- name: Warning if no discovery data
+  debug:
+    msg: "No discovery data found. Please run the discovery playbook first."
+  when: not discovery_data.stat.exists

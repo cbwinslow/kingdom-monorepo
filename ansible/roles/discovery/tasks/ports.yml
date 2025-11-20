@@ -1,0 +1,70 @@
+---
+# Port and firewall discovery tasks
+- name: Get listening ports with processes
+  shell: ss -tunlp
+  register: listening_ports
+  changed_when: false
+  failed_when: false
+
+- name: Get all ports with netstat
+  shell: netstat -tulpn 2>/dev/null || ss -tulpn
+  register: all_ports
+  changed_when: false
+  failed_when: false
+
+- name: Get open ports with lsof
+  shell: lsof -i -P -n | grep LISTEN
+  register: lsof_ports
+  changed_when: false
+  failed_when: false
+
+- name: Get iptables rules
+  shell: iptables -L -v -n
+  register: iptables_rules
+  changed_when: false
+  failed_when: false
+
+- name: Get iptables NAT rules
+  shell: iptables -t nat -L -v -n
+  register: iptables_nat
+  changed_when: false
+  failed_when: false
+
+- name: Get ip6tables rules
+  shell: ip6tables -L -v -n
+  register: ip6tables_rules
+  changed_when: false
+  failed_when: false
+
+- name: Save iptables rules to file
+  shell: iptables-save
+  register: iptables_save
+  changed_when: false
+  failed_when: false
+
+- name: Save port and firewall information
+  copy:
+    content: |
+      Listening Ports:
+      {{ listening_ports.stdout | default('N/A') }}
+      
+      All Ports (netstat/ss):
+      {{ all_ports.stdout | default('N/A') }}
+      
+      Open Ports (lsof):
+      {{ lsof_ports.stdout | default('N/A') }}
+      
+      IPTables Rules:
+      {{ iptables_rules.stdout | default('N/A') }}
+      
+      IPTables NAT Rules:
+      {{ iptables_nat.stdout | default('N/A') }}
+      
+      IP6Tables Rules:
+      {{ ip6tables_rules.stdout | default('N/A') }}
+      
+      IPTables Save:
+      {{ iptables_save.stdout | default('N/A') }}
+    dest: "{{ output_path }}/ports.txt"
+  delegate_to: localhost
+  become: false

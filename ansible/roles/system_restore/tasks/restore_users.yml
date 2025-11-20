@@ -1,0 +1,71 @@
+---
+# User restoration tasks
+- name: Read users file
+  set_fact:
+    users_file: "{{ restore_discovery_path }}/users_groups.txt"
+
+- name: Check if users file exists
+  stat:
+    path: "{{ users_file }}"
+  register: users_stat
+  delegate_to: localhost
+  become: false
+
+- name: Parse user list
+  shell: |
+    grep -A 1000 "^Users:" "{{ users_file }}" | \
+    grep -B 1000 "^Groups:" | \
+    grep -v "^Users:" | \
+    grep -v "^Groups:" | \
+    awk -F: '$3 >= 1000 && $3 < 65534 {print $1":"$3":"$4":"$5":"$6":"$7}'
+  register: user_list
+  delegate_to: localhost
+  become: false
+  when: users_stat.stat.exists
+  failed_when: false
+
+- name: Display users to create
+  debug:
+    msg: "{{ user_list.stdout_lines | default([]) }}"
+  when: user_list is defined
+
+- name: Create users
+  user:
+    name: "{{ item.split(':')[0] }}"
+    uid: "{{ item.split(':')[1] }}"
+    group: "{{ item.split(':')[2] }}"
+    comment: "{{ item.split(':')[3] }}"
+    home: "{{ item.split(':')[4] }}"
+    shell: "{{ item.split(':')[5] }}"
+    state: present
+  loop: "{{ user_list.stdout_lines | default([]) }}"
+  when: 
+    - not dry_run
+    - user_list is defined
+    - user_list.stdout_lines is defined
+  ignore_errors: yes
+
+- name: Parse group list
+  shell: |
+    grep -A 1000 "^Groups:" "{{ users_file }}" | \
+    grep -B 1000 "^Sudoers" | \
+    grep -v "^Groups:" | \
+    grep -v "^Sudoers" | \
+    awk -F: '$2 >= 1000 && $2 < 65534 {print $1":"$2}'
+  register: group_list
+  delegate_to: localhost
+  become: false
+  when: users_stat.stat.exists
+  failed_when: false
+
+- name: Create groups
+  group:
+    name: "{{ item.split(':')[0] }}"
+    gid: "{{ item.split(':')[1] }}"
+    state: present
+  loop: "{{ group_list.stdout_lines | default([]) }}"
+  when: 
+    - not dry_run
+    - group_list is defined
+    - group_list.stdout_lines is defined
+  ignore_errors: yes

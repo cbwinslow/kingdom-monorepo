@@ -1,0 +1,77 @@
+---
+# Main tasks for system discovery
+- name: Create discovery output directory
+  file:
+    path: "{{ discovery_output_dir }}/{{ discovery_hostname }}_{{ discovery_timestamp }}"
+    state: directory
+    mode: '0755'
+  delegate_to: localhost
+  become: false
+
+- name: Set output path fact
+  set_fact:
+    output_path: "{{ discovery_output_dir }}/{{ discovery_hostname }}_{{ discovery_timestamp }}"
+
+- name: Gather all system facts
+  setup:
+    gather_subset: all
+
+- name: Include system information discovery tasks
+  include_tasks: system_info.yml
+  when: discover_system_info
+
+- name: Include package discovery tasks
+  include_tasks: packages.yml
+  when: discover_packages
+
+- name: Include user discovery tasks
+  include_tasks: users.yml
+  when: discover_users
+
+- name: Include filesystem discovery tasks
+  include_tasks: filesystem.yml
+  when: discover_filesystem
+
+- name: Include network discovery tasks
+  include_tasks: network.yml
+  when: discover_network
+
+- name: Include SSH configuration discovery tasks
+  include_tasks: ssh.yml
+  when: discover_ssh
+
+- name: Include service discovery tasks
+  include_tasks: services.yml
+  when: discover_services
+
+- name: Include port discovery tasks
+  include_tasks: ports.yml
+  when: discover_ports
+
+- name: Include configuration files discovery tasks
+  include_tasks: config_files.yml
+  when: discover_config_files
+
+- name: Include Ceph discovery tasks
+  include_tasks: ceph.yml
+  when: discover_ceph
+
+- name: Include MCP server discovery tasks
+  include_tasks: mcp_servers.yml
+  when: discover_mcp_servers
+
+- name: Include firewall discovery tasks
+  include_tasks: firewall.yml
+  when: discover_firewall
+
+- name: Include cron jobs discovery tasks
+  include_tasks: cron_jobs.yml
+  when: discover_cron_jobs
+
+- name: Include installed software discovery tasks
+  include_tasks: installed_software.yml
+  when: discover_installed_software
+
+- name: Display completion message
+  debug:
+    msg: "System discovery complete. Output saved to: {{ output_path }}"

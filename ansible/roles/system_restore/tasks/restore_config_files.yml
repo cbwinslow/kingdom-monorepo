@@ -1,0 +1,49 @@
+---
+# Configuration files restoration tasks
+- name: Set config files directory
+  set_fact:
+    config_files_dir: "{{ restore_discovery_path }}/config_files"
+
+- name: Check if config files directory exists
+  stat:
+    path: "{{ config_files_dir }}"
+  register: config_dir_stat
+  delegate_to: localhost
+  become: false
+
+- name: List available config archives
+  find:
+    paths: "{{ config_files_dir }}"
+    patterns: "*.tar.gz"
+  register: config_archives
+  delegate_to: localhost
+  become: false
+  when: config_dir_stat.stat.exists
+
+- name: Display found config archives
+  debug:
+    msg: "Found config archives: {{ config_archives.files | map(attribute='path') | list }}"
+  when: 
+    - config_archives is defined
+    - config_archives.files is defined
+
+- name: Warning about config restoration
+  debug:
+    msg: "WARNING: Config file restoration is a manual process. Review files in {{ config_files_dir }} before restoring."
+  when: config_dir_stat.stat.exists
+
+- name: Restore environment file
+  set_fact:
+    env_file: "{{ restore_discovery_path }}/environment.txt"
+
+- name: Check if environment file exists
+  stat:
+    path: "{{ env_file }}"
+  register: env_stat
+  delegate_to: localhost
+  become: false
+
+- name: Display environment restoration info
+  debug:
+    msg: "Environment variables found in {{ env_file }}. Manual review recommended."
+  when: env_stat.stat.exists

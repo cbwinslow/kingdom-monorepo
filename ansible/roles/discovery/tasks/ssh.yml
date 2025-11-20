@@ -1,0 +1,77 @@
+---
+# SSH configuration discovery tasks
+- name: Get SSH server configuration
+  shell: cat /etc/ssh/sshd_config
+  register: sshd_config
+  changed_when: false
+  failed_when: false
+
+- name: Get SSH client configuration
+  shell: cat /etc/ssh/ssh_config
+  register: ssh_config
+  changed_when: false
+  failed_when: false
+
+- name: Get SSH host keys
+  shell: ls -la /etc/ssh/ssh_host_* 2>/dev/null || echo "No host keys found"
+  register: ssh_host_keys
+  changed_when: false
+  failed_when: false
+
+- name: Get authorized keys for users
+  shell: |
+    for user_home in /home/*; do
+      if [ -f "$user_home/.ssh/authorized_keys" ]; then
+        echo "=== $(basename $user_home) ==="
+        cat "$user_home/.ssh/authorized_keys"
+      fi
+    done
+    if [ -f "/root/.ssh/authorized_keys" ]; then
+      echo "=== root ==="
+      cat "/root/.ssh/authorized_keys"
+    fi
+  register: authorized_keys
+  changed_when: false
+  failed_when: false
+
+- name: Get SSH known hosts
+  shell: |
+    for user_home in /home/*; do
+      if [ -f "$user_home/.ssh/known_hosts" ]; then
+        echo "=== $(basename $user_home) ==="
+        cat "$user_home/.ssh/known_hosts"
+      fi
+    done
+  register: known_hosts
+  changed_when: false
+  failed_when: false
+
+- name: Check SSH service status
+  shell: systemctl status sshd 2>/dev/null || systemctl status ssh 2>/dev/null || service ssh status 2>/dev/null || echo "SSH service not found"
+  register: ssh_service_status
+  changed_when: false
+  failed_when: false
+
+- name: Save SSH configuration
+  copy:
+    content: |
+      SSH Server Configuration:
+      {{ sshd_config.stdout | default('N/A') }}
+      
+      SSH Client Configuration:
+      {{ ssh_config.stdout | default('N/A') }}
+      
+      SSH Host Keys:
+      {{ ssh_host_keys.stdout | default('N/A') }}
+      
+      Authorized Keys:
+      {{ authorized_keys.stdout | default('N/A') }}
+      
+      Known Hosts:
+      {{ known_hosts.stdout | default('N/A') }}
+      
+      SSH Service Status:
+      {{ ssh_service_status.stdout | default('N/A') }}
+    dest: "{{ output_path }}/ssh_config.txt"
+  delegate_to: localhost
+  become: false

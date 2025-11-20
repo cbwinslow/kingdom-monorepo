@@ -1,0 +1,111 @@
+---
+# Filesystem and disk discovery tasks
+- name: Get partition information
+  shell: lsblk -o NAME,SIZE,TYPE,MOUNTPOINT,FSTYPE,UUID
+  register: partition_info
+  changed_when: false
+
+- name: Get detailed disk information
+  shell: fdisk -l
+  register: disk_info
+  changed_when: false
+  failed_when: false
+
+- name: Get filesystem usage
+  shell: df -h
+  register: fs_usage
+  changed_when: false
+
+- name: Get inode usage
+  shell: df -i
+  register: inode_usage
+  changed_when: false
+
+- name: Get mount points
+  shell: mount | column -t
+  register: mount_points
+  changed_when: false
+
+- name: Get fstab configuration
+  shell: cat /etc/fstab
+  register: fstab_config
+  changed_when: false
+  failed_when: false
+
+- name: Get LVM information
+  shell: |
+    pvdisplay 2>/dev/null
+    echo "---"
+    vgdisplay 2>/dev/null
+    echo "---"
+    lvdisplay 2>/dev/null
+  register: lvm_info
+  changed_when: false
+  failed_when: false
+
+- name: Get RAID information
+  shell: cat /proc/mdstat
+  register: raid_info
+  changed_when: false
+  failed_when: false
+
+- name: Get disk I/O statistics
+  shell: iostat -x 2 2
+  register: io_stats
+  changed_when: false
+  failed_when: false
+
+- name: Get NFS exports
+  shell: cat /etc/exports
+  register: nfs_exports
+  changed_when: false
+  failed_when: false
+
+- name: Get SMART disk health
+  shell: |
+    for disk in $(lsblk -d -n -o NAME | grep -E '^sd|^nvme'); do
+      echo "=== /dev/$disk ==="
+      smartctl -H /dev/$disk 2>/dev/null || echo "SMART not available"
+    done
+  register: smart_health
+  changed_when: false
+  failed_when: false
+
+- name: Save filesystem information
+  copy:
+    content: |
+      Partition Information:
+      {{ partition_info.stdout }}
+      
+      Disk Information:
+      {{ disk_info.stdout | default('N/A') }}
+      
+      Filesystem Usage:
+      {{ fs_usage.stdout }}
+      
+      Inode Usage:
+      {{ inode_usage.stdout }}
+      
+      Mount Points:
+      {{ mount_points.stdout }}
+      
+      /etc/fstab:
+      {{ fstab_config.stdout | default('N/A') }}
+      
+      LVM Information:
+      {{ lvm_info.stdout | default('N/A') }}
+      
+      RAID Information:
+      {{ raid_info.stdout | default('N/A') }}
+      
+      I/O Statistics:
+      {{ io_stats.stdout | default('N/A') }}
+      
+      NFS Exports:
+      {{ nfs_exports.stdout | default('N/A') }}
+      
+      SMART Disk Health:
+      {{ smart_health.stdout | default('N/A') }}
+    dest: "{{ output_path }}/filesystem.txt"
+  delegate_to: localhost
+  become: false

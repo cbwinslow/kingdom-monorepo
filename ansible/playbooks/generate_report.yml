@@ -1,0 +1,59 @@
+---
+# Playbook to generate system configuration report
+# Usage: ansible-playbook playbooks/generate_report.yml
+
+- name: Generate System Configuration Report
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+  become: false
+  
+  vars:
+    report_output_dir: "/tmp/system_reports"
+    report_format: "html"  # html or markdown
+    # Set these to match your discovery run
+    discovery_output_dir: "/tmp/system_discovery"
+    # You can override these with -e
+    # discovery_timestamp: "20231215T120000"
+    # report_hostname: "myhost"
+    
+  pre_tasks:
+    - name: Check if discovery output directory exists
+      stat:
+        path: "{{ discovery_output_dir }}"
+      register: discovery_dir
+      
+    - name: Fail if no discovery data found
+      fail:
+        msg: "No discovery data found in {{ discovery_output_dir }}. Please run discover_system.yml first."
+      when: not discovery_dir.stat.exists
+      
+    - name: Find latest discovery directory
+      find:
+        paths: "{{ discovery_output_dir }}"
+        file_type: directory
+        recurse: no
+      register: discovery_dirs
+      
+    - name: Set discovery directory
+      set_fact:
+        latest_discovery: "{{ (discovery_dirs.files | sort(attribute='mtime') | last).path }}"
+        report_hostname: "{{ (discovery_dirs.files | sort(attribute='mtime') | last).path | basename | regex_replace('_[0-9T]+$', '') }}"
+        discovery_timestamp: "{{ (discovery_dirs.files | sort(attribute='mtime') | last).path | basename | regex_search('[0-9T]+$') }}"
+      when: discovery_dirs.files | length > 0
+  
+  roles:
+    - role: reporting
+      tags: ['reporting', 'all']
+  
+  post_tasks:
+    - name: Display report location
+      debug:
+        msg: |
+          ========================================
+          Report Generation Complete!
+          ========================================
+          Report: {{ report_output_dir }}/{{ report_hostname }}_report_{{ report_timestamp }}.{{ report_format }}
+          
+          View the report in your browser or text editor.
+          ========================================

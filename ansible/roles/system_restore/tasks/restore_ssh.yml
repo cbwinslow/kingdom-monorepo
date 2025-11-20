@@ -1,0 +1,63 @@
+---
+# SSH configuration restoration tasks
+- name: Read SSH config file
+  set_fact:
+    ssh_file: "{{ restore_discovery_path }}/ssh_config.txt"
+
+- name: Check if SSH config file exists
+  stat:
+    path: "{{ ssh_file }}"
+  register: ssh_stat
+  delegate_to: localhost
+  become: false
+
+- name: Backup existing SSH configuration
+  copy:
+    src: /etc/ssh/sshd_config
+    dest: "{{ backup_dir }}/sshd_config.backup"
+    remote_src: yes
+  when: 
+    - backup_existing
+    - ssh_stat.stat.exists
+  ignore_errors: yes
+
+- name: Extract SSH server configuration
+  shell: |
+    sed -n '/^SSH Server Configuration:/,/^SSH Client Configuration:/p' "{{ ssh_file }}" | \
+    grep -v "^SSH Server Configuration:" | \
+    grep -v "^SSH Client Configuration:"
+  register: sshd_config_content
+  delegate_to: localhost
+  become: false
+  when: ssh_stat.stat.exists
+  failed_when: false
+
+- name: Restore SSH server configuration
+  copy:
+    content: "{{ sshd_config_content.stdout }}"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: '0644'
+  when: 
+    - not dry_run
+    - ssh_stat.stat.exists
+    - sshd_config_content.stdout is defined
+    - sshd_config_content.stdout | length > 0
+  notify: restart ssh
+  ignore_errors: yes
+
+- name: Validate SSH configuration
+  command: sshd -t
+  register: ssh_validation
+  when: 
+    - not dry_run
+    - ssh_stat.stat.exists
+  failed_when: false
+
+- name: Display SSH validation result
+  debug:
+    msg: "SSH configuration validation: {{ 'PASSED' if ssh_validation.rc == 0 else 'FAILED' }}"
+  when: 
+    - ssh_validation is defined
+    - ssh_validation.rc is defined
