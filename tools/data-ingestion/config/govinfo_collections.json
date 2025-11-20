@@ -1,0 +1,109 @@
+{
+  "collections": [
+    {
+      "code": "BILLS",
+      "name": "Congressional Bills",
+      "description": "Bills introduced in Congress",
+      "table": "govinfo_bills",
+      "has_granules": false
+    },
+    {
+      "code": "BILLSTATUS",
+      "name": "Bill Status",
+      "description": "Bill status XML from Congress.gov",
+      "table": "govinfo_bill_status",
+      "has_granules": false
+    },
+    {
+      "code": "CREC",
+      "name": "Congressional Record",
+      "description": "Daily Congressional Record proceedings",
+      "table": "govinfo_congressional_record",
+      "has_granules": true
+    },
+    {
+      "code": "FR",
+      "name": "Federal Register",
+      "description": "Daily Federal Register",
+      "table": "govinfo_federal_register",
+      "has_granules": true
+    },
+    {
+      "code": "CHRG",
+      "name": "Congressional Hearings",
+      "description": "Congressional committee hearings",
+      "table": "govinfo_hearings",
+      "has_granules": true
+    },
+    {
+      "code": "CRPT",
+      "name": "Congressional Reports",
+      "description": "Congressional committee reports",
+      "table": "govinfo_reports",
+      "has_granules": false
+    },
+    {
+      "code": "CPRT",
+      "name": "Congressional Committee Prints",
+      "description": "Congressional committee prints",
+      "table": "govinfo_committee_prints",
+      "has_granules": false
+    },
+    {
+      "code": "PLAW",
+      "name": "Public and Private Laws",
+      "description": "Enacted legislation",
+      "table": "govinfo_laws",
+      "has_granules": false
+    },
+    {
+      "code": "STATUTE",
+      "name": "Statutes at Large",
+      "description": "Historical statutes",
+      "table": "govinfo_statutes",
+      "has_granules": false
+    },
+    {
+      "code": "USCOURTS",
+      "name": "US Court Opinions",
+      "description": "Federal court opinions",
+      "table": "govinfo_court_opinions",
+      "has_granules": false
+    },
+    {
+      "code": "CFR",
+      "name": "Code of Federal Regulations",
+      "description": "Administrative law regulations",
+      "table": "govinfo_cfr",
+      "has_granules": false
+    },
+    {
+      "code": "USCODE",
+      "name": "United States Code",
+      "description": "Codified laws of the United States",
+      "table": "govinfo_us_code",
+      "has_granules": false
+    },
+    {
+      "code": "CDIR",
+      "name": "Congressional Directory",
+      "description": "Congressional member directory",
+      "table": "govinfo_congressional_directory",
+      "has_granules": true
+    },
+    {
+      "code": "CZIC",
+      "name": "Congressional Documents",
+      "description": "Congressional documents collection",
+      "table": "govinfo_congressional_documents",
+      "has_granules": false
+    },
+    {
+      "code": "HOB",
+      "name": "History of Bills",
+      "description": "Bill history summaries",
+      "table": "govinfo_bill_history",
+      "has_granules": false
+    }
+  ]
+}

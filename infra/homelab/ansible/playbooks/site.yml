@@ -1,0 +1,33 @@
+---
+# Main playbook for homelab infrastructure setup
+
+- name: Setup all homelab servers
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  pre_tasks:
+    - name: Wait for system to be ready
+      wait_for_connection:
+        timeout: 300
+
+    - name: Gather facts
+      setup:
+
+  roles:
+    - common
+
+- name: Setup Docker on servers
+  hosts: servers
+  become: yes
+
+  roles:
+    - docker
+
+- name: Setup monitoring
+  hosts: servers
+  become: yes
+
+  roles:
+    - monitoring
+  when: monitoring_enabled | default(true)

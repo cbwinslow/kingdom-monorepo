@@ -1,0 +1,280 @@
+{
+  "endpoints": [
+    {
+      "name": "Jurisdictions",
+      "path": "/jurisdictions",
+      "description": "State, DC, Puerto Rico, and municipal jurisdictions",
+      "table": "openstates_jurisdictions",
+      "filters": []
+    },
+    {
+      "name": "People",
+      "path": "/people",
+      "description": "State legislators, governors, and other officials",
+      "table": "openstates_people",
+      "filters": [
+        "jurisdiction",
+        "name",
+        "district",
+        "party",
+        "current_role"
+      ]
+    },
+    {
+      "name": "People by Location",
+      "path": "/people.geo",
+      "description": "Find legislators by latitude/longitude",
+      "table": "openstates_people",
+      "filters": [
+        "lat",
+        "lng"
+      ]
+    },
+    {
+      "name": "Bills",
+      "path": "/bills",
+      "description": "State bills, resolutions, and other legislative measures",
+      "table": "openstates_bills",
+      "filters": [
+        "jurisdiction",
+        "session",
+        "chamber",
+        "q",
+        "subject",
+        "classification",
+        "updated_since"
+      ]
+    },
+    {
+      "name": "Committees",
+      "path": "/committees",
+      "description": "State legislative committees",
+      "table": "openstates_committees",
+      "filters": [
+        "jurisdiction",
+        "chamber"
+      ]
+    },
+    {
+      "name": "Events",
+      "path": "/events",
+      "description": "Legislative events, hearings, and sessions",
+      "table": "openstates_events",
+      "filters": [
+        "jurisdiction",
+        "start_date",
+        "end_date"
+      ]
+    }
+  ],
+  "jurisdictions": [
+    {
+      "abbreviation": "al",
+      "name": "Alabama"
+    },
+    {
+      "abbreviation": "ak",
+      "name": "Alaska"
+    },
+    {
+      "abbreviation": "az",
+      "name": "Arizona"
+    },
+    {
+      "abbreviation": "ar",
+      "name": "Arkansas"
+    },
+    {
+      "abbreviation": "ca",
+      "name": "California"
+    },
+    {
+      "abbreviation": "co",
+      "name": "Colorado"
+    },
+    {
+      "abbreviation": "ct",
+      "name": "Connecticut"
+    },
+    {
+      "abbreviation": "de",
+      "name": "Delaware"
+    },
+    {
+      "abbreviation": "fl",
+      "name": "Florida"
+    },
+    {
+      "abbreviation": "ga",
+      "name": "Georgia"
+    },
+    {
+      "abbreviation": "hi",
+      "name": "Hawaii"
+    },
+    {
+      "abbreviation": "id",
+      "name": "Idaho"
+    },
+    {
+      "abbreviation": "il",
+      "name": "Illinois"
+    },
+    {
+      "abbreviation": "in",
+      "name": "Indiana"
+    },
+    {
+      "abbreviation": "ia",
+      "name": "Iowa"
+    },
+    {
+      "abbreviation": "ks",
+      "name": "Kansas"
+    },
+    {
+      "abbreviation": "ky",
+      "name": "Kentucky"
+    },
+    {
+      "abbreviation": "la",
+      "name": "Louisiana"
+    },
+    {
+      "abbreviation": "me",
+      "name": "Maine"
+    },
+    {
+      "abbreviation": "md",
+      "name": "Maryland"
+    },
+    {
+      "abbreviation": "ma",
+      "name": "Massachusetts"
+    },
+    {
+      "abbreviation": "mi",
+      "name": "Michigan"
+    },
+    {
+      "abbreviation": "mn",
+      "name": "Minnesota"
+    },
+    {
+      "abbreviation": "ms",
+      "name": "Mississippi"
+    },
+    {
+      "abbreviation": "mo",
+      "name": "Missouri"
+    },
+    {
+      "abbreviation": "mt",
+      "name": "Montana"
+    },
+    {
+      "abbreviation": "ne",
+      "name": "Nebraska"
+    },
+    {
+      "abbreviation": "nv",
+      "name": "Nevada"
+    },
+    {
+      "abbreviation": "nh",
+      "name": "New Hampshire"
+    },
+    {
+      "abbreviation": "nj",
+      "name": "New Jersey"
+    },
+    {
+      "abbreviation": "nm",
+      "name": "New Mexico"
+    },
+    {
+      "abbreviation": "ny",
+      "name": "New York"
+    },
+    {
+      "abbreviation": "nc",
+      "name": "North Carolina"
+    },
+    {
+      "abbreviation": "nd",
+      "name": "North Dakota"
+    },
+    {
+      "abbreviation": "oh",
+      "name": "Ohio"
+    },
+    {
+      "abbreviation": "ok",
+      "name": "Oklahoma"
+    },
+    {
+      "abbreviation": "or",
+      "name": "Oregon"
+    },
+    {
+      "abbreviation": "pa",
+      "name": "Pennsylvania"
+    },
+    {
+      "abbreviation": "ri",
+      "name": "Rhode Island"
+    },
+    {
+      "abbreviation": "sc",
+      "name": "South Carolina"
+    },
+    {
+      "abbreviation": "sd",
+      "name": "South Dakota"
+    },
+    {
+      "abbreviation": "tn",
+      "name": "Tennessee"
+    },
+    {
+      "abbreviation": "tx",
+      "name": "Texas"
+    },
+    {
+      "abbreviation": "ut",
+      "name": "Utah"
+    },
+    {
+      "abbreviation": "vt",
+      "name": "Vermont"
+    },
+    {
+      "abbreviation": "va",
+      "name": "Virginia"
+    },
+    {
+      "abbreviation": "wa",
+      "name": "Washington"
+    },
+    {
+      "abbreviation": "wv",
+      "name": "West Virginia"
+    },
+    {
+      "abbreviation": "wi",
+      "name": "Wisconsin"
+    },
+    {
+      "abbreviation": "wy",
+      "name": "Wyoming"
+    },
+    {
+      "abbreviation": "dc",
+      "name": "District of Columbia"
+    },
+    {
+      "abbreviation": "pr",
+      "name": "Puerto Rico"
+    }
+  ]
+}
