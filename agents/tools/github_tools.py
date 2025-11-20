@@ -4,7 +4,7 @@ Provides utilities for interacting with GitHub API
 """
 
 import os
-from typing import Dict, List, Optional
+from typing import List, Optional
 from github import Github, GithubException
 from dataclasses import dataclass
 
@@ -322,17 +322,16 @@ class GitHubTools:
 
 def main():
     """Example usage"""
-    tools = GitHubTools()
-    
     # Example: Get PR details
-    # pr = tools.get_pull_request("owner/repo", 123)
+    # gh_tools = GitHubTools()
+    # pr = gh_tools.get_pull_request("owner/repo", 123)
     # print(f"PR #{pr.number}: {pr.title}")
     
     # Example: Comment on PR
-    # tools.comment_on_pr("owner/repo", 123, "Great work! 🎉")
+    # gh_tools.comment_on_pr("owner/repo", 123, "Great work! 🎉")
     
     # Example: Add labels
-    # tools.add_labels_to_pr("owner/repo", 123, ["approved", "ready-to-merge"])
+    # gh_tools.add_labels_to_pr("owner/repo", 123, ["approved", "ready-to-merge"])
     
     print("GitHub tools initialized successfully")
 

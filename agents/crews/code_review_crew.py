@@ -3,8 +3,8 @@ Code Review Crew - A CrewAI configuration for automated code reviews
 """
 
 from crewai import Agent, Task, Crew, Process
-from langchain.llms import OpenAI
-from typing import List, Dict
+from langchain_openai import OpenAI
+from typing import Dict
 
 
 class CodeReviewCrew:

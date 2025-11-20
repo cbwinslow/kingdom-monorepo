@@ -71,13 +71,13 @@ jobs:
 
       - name: Install duplication detector
         run: |
-          pip install duplicity
+          pip install pylint
           npm install -g jscpd
 
       - name: Check Python duplication
         run: |
           echo "## Python Duplication Report" > duplication-report.md
-          find . -name "*.py" -type f | xargs duplicity --min-lines 5 || echo "No significant duplication found" >> duplication-report.md
+          pylint --disable=all --enable=duplicate-code --output-format=text . >> duplication-report.md 2>&1 || echo "No significant duplication found" >> duplication-report.md
 
       - name: Check JavaScript duplication
         run: |
