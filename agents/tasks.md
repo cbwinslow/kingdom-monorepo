@@ -17,6 +17,8 @@ _Created: 2025-11-19 20:18 UTC by AI Agent (ChatGPT)_
   - Git backup: commit created containing the control files.
 - **Sign-off:** Pending completion and verification.
 
+- When completing a task, record executed tests (commands and outcomes), attach evidence links, and add agent sign-off with timestamp.
+
 ### Updating Tasks
 - Add new tasks with clear owners, timestamps, microgoals, and explicit tests.
 - When completing a task, record executed tests (commands and outcomes), attach evidence links, and add agent sign-off with timestamp.
