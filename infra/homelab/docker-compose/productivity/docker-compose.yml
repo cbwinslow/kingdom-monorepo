@@ -1,0 +1,122 @@
+version: '3.8'
+
+services:
+  nextcloud-db:
+    image: postgres:15-alpine
+    container_name: nextcloud-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=${DB_USER:-nextcloud}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-changeme}
+    volumes:
+      - nextcloud-db:/var/lib/postgresql/data
+    networks:
+      - productivity
+
+  nextcloud-redis:
+    image: redis:alpine
+    container_name: nextcloud-redis
+    restart: unless-stopped
+    networks:
+      - productivity
+
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - POSTGRES_HOST=nextcloud-db
+      - POSTGRES_DB=nextcloud
+      - POSTGRES_USER=${DB_USER:-nextcloud}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-changeme}
+      - REDIS_HOST=nextcloud-redis
+      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_ADMIN:-admin}
+      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_PASSWORD:-changeme}
+      - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_DOMAIN:-localhost}
+    volumes:
+      - nextcloud-data:/var/www/html
+      - ${NEXTCLOUD_DATA_DIR:-./nextcloud-data}:/var/www/html/data
+    depends_on:
+      - nextcloud-db
+      - nextcloud-redis
+    networks:
+      - productivity
+
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ=${TZ:-America/New_York}
+    volumes:
+      - ./homeassistant/config:/config
+    privileged: true
+
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=${TZ:-America/New_York}
+      - PASSWORD=${CODE_SERVER_PASSWORD:-changeme}
+      - SUDO_PASSWORD=${CODE_SERVER_SUDO_PASSWORD:-changeme}
+    volumes:
+      - ./code-server/config:/config
+      - ${CODE_SERVER_WORKSPACE:-./workspace}:/workspace
+    ports:
+      - "8443:8443"
+    restart: unless-stopped
+    networks:
+      - productivity
+
+  bookstack:
+    image: lscr.io/linuxserver/bookstack:latest
+    container_name: bookstack
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - APP_URL=http://localhost:6875
+      - DB_HOST=bookstack-db
+      - DB_PORT=3306
+      - DB_DATABASE=bookstackapp
+      - DB_USERNAME=${BOOKSTACK_DB_USER:-bookstack}
+      - DB_PASSWORD=${BOOKSTACK_DB_PASSWORD:-changeme}
+    volumes:
+      - ./bookstack/config:/config
+    ports:
+      - "6875:80"
+    restart: unless-stopped
+    depends_on:
+      - bookstack-db
+    networks:
+      - productivity
+
+  bookstack-db:
+    image: lscr.io/linuxserver/mariadb:latest
+    container_name: bookstack-db
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MYSQL_ROOT_PASSWORD=${BOOKSTACK_DB_ROOT_PASSWORD:-changeme}
+      - MYSQL_DATABASE=bookstackapp
+      - MYSQL_USER=${BOOKSTACK_DB_USER:-bookstack}
+      - MYSQL_PASSWORD=${BOOKSTACK_DB_PASSWORD:-changeme}
+    volumes:
+      - bookstack-db:/config
+    restart: unless-stopped
+    networks:
+      - productivity
+
+networks:
+  productivity:
+    driver: bridge
+
+volumes:
+  nextcloud-db:
+  nextcloud-data:
+  bookstack-db:
