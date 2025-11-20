@@ -248,14 +248,16 @@ check_requirements() {
     local min_disk_gb=${2:-10}
     
     # Check RAM
-    local total_ram=$(free -g | awk '/^Mem:/{print $2}')
+    local total_ram
+    total_ram=$(free -g | awk '/^Mem:/{print $2}')
     if [[ $total_ram -lt $min_ram_gb ]]; then
         log_error "Insufficient RAM: ${total_ram}GB (minimum: ${min_ram_gb}GB)"
         return 1
     fi
     
     # Check disk space
-    local free_disk=$(df -BG / | awk 'NR==2 {print $4}' | sed 's/G//')
+    local free_disk
+    free_disk=$(df -BG / | awk 'NR==2 {print $4}' | sed 's/G//')
     if [[ $free_disk -lt $min_disk_gb ]]; then
         log_error "Insufficient disk space: ${free_disk}GB (minimum: ${min_disk_gb}GB)"
         return 1
