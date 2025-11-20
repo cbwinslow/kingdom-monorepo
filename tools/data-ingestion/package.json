@@ -1,0 +1,22 @@
+{
+  "name": "@kingdom/data-ingestion",
+  "version": "1.0.0",
+  "description": "Comprehensive data ingestion scripts for GovInfo.gov, Congress.gov API, and OpenStates.org",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"No tests yet\" && exit 0",
+    "lint": "echo \"No linting configured yet\" && exit 0"
+  },
+  "keywords": [
+    "data-ingestion",
+    "govinfo",
+    "congress",
+    "openstates",
+    "api"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

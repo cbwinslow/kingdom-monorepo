@@ -1,0 +1,200 @@
+{
+  "info": {
+    "name": "GovInfo.gov API",
+    "description": "Comprehensive collection for GovInfo.gov API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.govinfo.gov",
+      "type": "string"
+    },
+    {
+      "key": "api_key",
+      "value": "YOUR_API_KEY_HERE",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Collections",
+      "description": "Discovery endpoints for collections",
+      "item": [
+        {
+          "name": "List Collections",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/collections?api_key={{api_key}}",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get list of all available collections"
+          },
+          "response": []
+        },
+        {
+          "name": "Congressional Record Updates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/collections/CREC/2024-01-01T00:00:00Z?offsetMark=*&pageSize=100&api_key={{api_key}}",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get Congressional Record packages updated since date"
+          },
+          "response": []
+        },
+        {
+          "name": "Bills Updates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/collections/BILLS/2024-01-01T00:00:00Z?offsetMark=*&pageSize=100&api_key={{api_key}}",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get Bills packages updated since date"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Packages",
+      "description": "Retrieval endpoints for packages",
+      "item": [
+        {
+          "name": "Get Package Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/packages/BILLS-118hr1/summary?api_key={{api_key}}",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get summary metadata for a package"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Package Granules",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/packages/CREC-2024-01-03/granules?offsetMark=*&pageSize=100&api_key={{api_key}}",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get granules within a package"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Granule Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/packages/CREC-2024-01-03/granules/CREC-2024-01-03-pt1-PgH1/summary?api_key={{api_key}}",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get summary metadata for a granule"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Published",
+      "description": "Discovery by publication date",
+      "item": [
+        {
+          "name": "Get Published Packages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/published/2024-01-01/2024-12-31?offsetMark=*&pageSize=100&collection=BILLS&api_key={{api_key}}",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get packages published within date range"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Related",
+      "description": "Related content discovery",
+      "item": [
+        {
+          "name": "Get Related Packages",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/related/BILLS-118hr1?api_key={{api_key}}",
+              "host": [],
+              "path": [],
+              "query": []
+            },
+            "description": "Get packages related to an access ID"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "description": "Search endpoints",
+      "item": [
+        {
+          "name": "Search Content",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"collection:(BILLS) congress:118\",\n  \"pageSize\": \"100\",\n  \"offsetMark\": \"*\",\n  \"sorts\": [\n    {\n      \"field\": \"score\",\n      \"sortOrder\": \"DESC\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/search",
+              "host": [
+                "api",
+                "govinfo",
+                "gov"
+              ],
+              "path": [
+                "search"
+              ]
+            },
+            "description": "Search GovInfo content"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

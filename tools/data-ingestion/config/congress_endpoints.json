@@ -1,0 +1,150 @@
+{
+  "endpoints": [
+    {
+      "name": "Bills",
+      "path": "/bill",
+      "description": "Congressional bills, resolutions, and legislation",
+      "table": "congress_bills",
+      "sub_endpoints": [
+        "actions",
+        "amendments",
+        "committees",
+        "cosponsors",
+        "relatedBills",
+        "subjects",
+        "summaries",
+        "text",
+        "titles"
+      ]
+    },
+    {
+      "name": "Amendments",
+      "path": "/amendment",
+      "description": "Amendments to bills and other legislative measures",
+      "table": "congress_amendments",
+      "sub_endpoints": [
+        "actions",
+        "cosponsors",
+        "text"
+      ]
+    },
+    {
+      "name": "Laws",
+      "path": "/law",
+      "description": "Public and private laws",
+      "table": "congress_laws",
+      "sub_endpoints": []
+    },
+    {
+      "name": "Members",
+      "path": "/member",
+      "description": "Members of Congress (past and present)",
+      "table": "congress_members",
+      "sub_endpoints": [
+        "sponsored-legislation",
+        "cosponsored-legislation"
+      ]
+    },
+    {
+      "name": "Committees",
+      "path": "/committee",
+      "description": "Congressional committees and subcommittees",
+      "table": "congress_committees",
+      "sub_endpoints": [
+        "bills",
+        "reports",
+        "nominations",
+        "house-communication",
+        "senate-communication"
+      ]
+    },
+    {
+      "name": "Committee Reports",
+      "path": "/committee-report",
+      "description": "Committee reports on legislation",
+      "table": "congress_committee_reports",
+      "sub_endpoints": [
+        "text"
+      ]
+    },
+    {
+      "name": "Committee Prints",
+      "path": "/committee-print",
+      "description": "Committee prints and publications",
+      "table": "congress_committee_prints",
+      "sub_endpoints": [
+        "text"
+      ]
+    },
+    {
+      "name": "Hearings",
+      "path": "/hearing",
+      "description": "Congressional committee hearings",
+      "table": "congress_hearings",
+      "sub_endpoints": []
+    },
+    {
+      "name": "Nominations",
+      "path": "/nomination",
+      "description": "Presidential nominations",
+      "table": "congress_nominations",
+      "sub_endpoints": [
+        "actions",
+        "committees",
+        "hearings"
+      ]
+    },
+    {
+      "name": "Treaties",
+      "path": "/treaty",
+      "description": "Treaties submitted to Senate",
+      "table": "congress_treaties",
+      "sub_endpoints": [
+        "actions",
+        "committees"
+      ]
+    },
+    {
+      "name": "Summaries",
+      "path": "/summaries",
+      "description": "CRS bill summaries",
+      "table": "congress_summaries",
+      "sub_endpoints": []
+    },
+    {
+      "name": "Congressional Record",
+      "path": "/congressional-record",
+      "description": "Daily Congressional Record",
+      "table": "congress_congressional_record",
+      "sub_endpoints": []
+    },
+    {
+      "name": "House Communications",
+      "path": "/house-communication",
+      "description": "Communications to the House",
+      "table": "congress_house_communications",
+      "sub_endpoints": []
+    },
+    {
+      "name": "Senate Communications",
+      "path": "/senate-communication",
+      "description": "Communications to the Senate",
+      "table": "congress_senate_communications",
+      "sub_endpoints": []
+    },
+    {
+      "name": "House Requirements",
+      "path": "/house-requirement",
+      "description": "House legislative requirements",
+      "table": "congress_house_requirements",
+      "sub_endpoints": []
+    },
+    {
+      "name": "Senate Requirements",
+      "path": "/senate-requirement",
+      "description": "Senate legislative requirements",
+      "table": "congress_senate_requirements",
+      "sub_endpoints": []
+    }
+  ]
+}
