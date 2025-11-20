@@ -1,6 +1,6 @@
 # Agents Operating Guide
 
-_Last updated: 2025-11-19 20:18 UTC by AI Agent (ChatGPT)_
+_Created: 2025-11-19 20:18 UTC by AI Agent (ChatGPT)_
 
 This guide governs how agents operate within the **agents/** workspace. It explains how to use **rules.md**, maintain **tasks.md**, and manage the supporting project journals and summaries. All agents must follow these instructions for every activity inside this directory tree.
 
