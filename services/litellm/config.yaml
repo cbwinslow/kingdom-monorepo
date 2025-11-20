@@ -1,0 +1,105 @@
+model_list:
+  # OpenAI Models
+  - model_name: gpt-4
+    litellm_params:
+      model: openai/gpt-4
+      api_key: os.environ/OPENAI_API_KEY
+  
+  - model_name: gpt-4-turbo
+    litellm_params:
+      model: openai/gpt-4-turbo-preview
+      api_key: os.environ/OPENAI_API_KEY
+  
+  - model_name: gpt-3.5-turbo
+    litellm_params:
+      model: openai/gpt-3.5-turbo
+      api_key: os.environ/OPENAI_API_KEY
+
+  # Anthropic Models
+  - model_name: claude-3-opus
+    litellm_params:
+      model: anthropic/claude-3-opus-20240229
+      api_key: os.environ/ANTHROPIC_API_KEY
+  
+  - model_name: claude-3-sonnet
+    litellm_params:
+      model: anthropic/claude-3-sonnet-20240229
+      api_key: os.environ/ANTHROPIC_API_KEY
+  
+  - model_name: claude-3-haiku
+    litellm_params:
+      model: anthropic/claude-3-haiku-20240307
+      api_key: os.environ/ANTHROPIC_API_KEY
+
+  # Google Models
+  - model_name: gemini-pro
+    litellm_params:
+      model: gemini/gemini-pro
+      api_key: os.environ/GEMINI_API_KEY
+
+  # Local/Open Source Models via Ollama (if running)
+  - model_name: llama2
+    litellm_params:
+      model: ollama/llama2
+      api_base: http://localhost:11434
+
+  - model_name: mistral
+    litellm_params:
+      model: ollama/mistral
+      api_base: http://localhost:11434
+
+litellm_settings:
+  # Enable detailed logging
+  set_verbose: true
+  
+  # Request timeout in seconds
+  request_timeout: 600
+  
+  # Enable caching
+  cache: true
+  cache_type: redis
+  cache_host: localhost
+  cache_port: 6379
+  
+  # Enable fallbacks
+  fallbacks:
+    - model: gpt-3.5-turbo
+    - model: claude-3-haiku
+
+  # Rate limiting per model
+  model_max_retries: 3
+  model_retry_delay: 10
+
+  # Callbacks for monitoring
+  success_callback: ["langfuse"]
+  failure_callback: ["langfuse"]
+
+general_settings:
+  # Master key for authentication (set via environment variable)
+  master_key: os.environ/LITELLM_MASTER_KEY
+  
+  # Database URL for storing keys and config
+  database_url: os.environ/LITELLM_DATABASE_URL
+  
+  # Allow creation of API keys
+  store_model_in_db: true
+  
+  # UI Settings
+  ui_username: os.environ/LITELLM_UI_USERNAME
+  ui_password: os.environ/LITELLM_UI_PASSWORD
+  
+  # Health check endpoint
+  health_check_path: /health
+
+router_settings:
+  # Load balancing
+  routing_strategy: usage-based-routing
+  
+  # Enable model fallbacks
+  enable_fallbacks: true
+  
+  # Context window fallbacks
+  context_window_fallbacks:
+    - model: gpt-4-turbo
+      fallback_models:
+        - gpt-3.5-turbo
