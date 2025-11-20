@@ -20,4 +20,4 @@ _Created: 2025-11-19 20:18 UTC by AI Agent (ChatGPT)_
 ### Updating Tasks
 - Add new tasks with clear owners, timestamps, microgoals, and explicit tests.
 - When completing a task, record executed tests (commands and outcomes), attach evidence links, and add agent sign-off with timestamp.
-- Maintain chronological integrity; do not delete prior entries. Use git history for traceability.
+- Maintain chronological integrity. Completed tasks should be marked as such and can be moved to an archive file periodically. Use git history for full traceability of all changes.
