@@ -1,0 +1,12 @@
+{
+  "name": "db_record",
+  "description": "Persists a structured record into PostgreSQL for auditing and retrieval.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "table": { "type": "string", "description": "Table name" },
+      "payload": { "type": "object", "description": "JSON payload to store" }
+    },
+    "required": ["table", "payload"]
+  }
+}

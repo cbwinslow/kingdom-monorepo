@@ -1,0 +1,12 @@
+{
+  "name": "bus_consume",
+  "description": "Subscribes to a RabbitMQ topic to retrieve the latest messages for a crew.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "topic": { "type": "string", "description": "Topic or routing key" },
+      "limit": { "type": "integer", "description": "Number of messages to pull", "default": 10 }
+    },
+    "required": ["topic"]
+  }
+}

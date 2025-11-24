@@ -1,0 +1,13 @@
+{
+  "name": "web_search",
+  "description": "Searches the web for recent information using a configured search provider.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "query": { "type": "string", "description": "Search terms" },
+      "site": { "type": "string", "description": "Optional site/domain filter" },
+      "results": { "type": "integer", "description": "Number of results to fetch", "default": 5 }
+    },
+    "required": ["query"]
+  }
+}

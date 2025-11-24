@@ -1,0 +1,13 @@
+{
+  "name": "kb_query",
+  "description": "Queries internal knowledge bases or notes by semantic or keyword search.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "query": { "type": "string", "description": "Question or keywords" },
+      "collection": { "type": "string", "description": "Collection or index name", "default": "general" },
+      "limit": { "type": "integer", "description": "Number of chunks to return", "default": 5 }
+    },
+    "required": ["query"]
+  }
+}

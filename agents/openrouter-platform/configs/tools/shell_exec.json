@@ -1,0 +1,12 @@
+{
+  "name": "shell_exec",
+  "description": "Executes a shell command inside the controlled workspace sandbox and returns stdout/stderr.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "command": { "type": "string", "description": "Command to run" },
+      "workdir": { "type": "string", "description": "Working directory", "default": "." }
+    },
+    "required": ["command"]
+  }
+}

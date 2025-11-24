@@ -1,0 +1,13 @@
+{
+  "name": "delivery_core",
+  "tools": [
+    "repo_search",
+    "shell_exec",
+    "web_search",
+    "kb_query",
+    "vote",
+    "bus_publish",
+    "bus_consume",
+    "db_record"
+  ]
+}
