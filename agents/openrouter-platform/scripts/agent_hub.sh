@@ -3,6 +3,7 @@ set -euo pipefail
 
 HUB_ROOT="${HUB_ROOT:-$HOME/.ai_hub}"
 
+# usage prints the command usage and available commands for the agent_hub CLI.
 usage() {
   cat <<'USAGE'
 agent_hub <command> [args]
@@ -16,10 +17,12 @@ Commands:
 USAGE
 }
 
+# ensure_dirs creates the hub directory and the per-user config directories: "$HUB_ROOT", "$HOME/.bash_agents", "$HOME/.bash_crews", and "$HOME/.bash_tools".
 ensure_dirs() {
   mkdir -p "$HUB_ROOT" "$HOME/.bash_agents" "$HOME/.bash_crews" "$HOME/.bash_tools"
 }
 
+# copy_into copies the file at source_path into target_dir preserving its basename, ensures required hub directories exist beforehand, and echoes a confirmation message.
 copy_into() {
   local source_path="$1";
   local target_dir="$2";
@@ -30,6 +33,9 @@ copy_into() {
   echo "Registered $(basename "$source_path") -> $target_dir"
 }
 
+# resolve_file searches base directories for a file named NAME or NAME.json and echoes the first matching path.
+# resolve_file accepts two arguments: NAME (the filename to locate) and PATHS (a nameref to an array of base directories to search).
+# Exits with status 0 and prints the resolved path when found; exits with status 1 if no match is found.
 resolve_file() {
   local name="$1"; shift
   local -n paths=$1
@@ -46,6 +52,8 @@ resolve_file() {
   return 1
 }
 
+# render_payload builds an OpenRouter-compatible JSON payload for the specified crew reference and task file and writes the payload to stdout.
+# It resolves crew, toolset, tools, agents, and optional workflow from configured search paths (overridable via environment variables) and will exit with an error if the crew lacks a toolset or members.
 render_payload() {
   local crew_ref="$1"; local task_file="$2"
   python3 - "$crew_ref" "$task_file" <<'PY'
@@ -153,6 +161,9 @@ print(json.dumps(payload, indent=2))
 PY
 }
 
+# submit_payload posts the given JSON payload to the OpenRouter chat completions endpoint or prints it and fails if no API key is set.
+# If OPENROUTER_API_KEY is unset, writes a warning to stderr, echoes the payload to stdout, and returns exit code 1.
+# If the API key is set, sends the payload to OPENROUTER_BASE_URL (or the default endpoint) with the Authorization header and emits the HTTP response.
 submit_payload() {
   local payload="$1"
   local endpoint="${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1/chat/completions}"
@@ -167,6 +178,8 @@ submit_payload() {
     --data @-
 }
 
+# main dispatches agent_hub CLI commands and routes arguments to the appropriate handlers.
+# It supports: register-agent <path>, register-crew <path>, register-toolset <path>, render <crew> <task>, and run <crew> <task>; render and run require two arguments.
 main() {
   local cmd="${1:-}"; shift || true
   case "$cmd" in

@@ -21,7 +21,7 @@ export AGENT_TOOL_PATHS="agents/openrouter-platform/configs/tools:$AI_TOOL_HOME"
 export AGENT_WORKFLOW_PATHS="agents/openrouter-platform/configs/workflows:$AI_CREW_HOME"
 export AGENT_CREW_PATHS="agents/openrouter-platform/configs/crews:$AI_CREW_HOME"
 
-# Search helper that scans dotfile-aware directories and falls back to a quick web lookup.
+# ai_search searches for QUERY in PATH (defaults to HOME), printing local ripgrep matches (including hidden files) and then querying DuckDuckGo's Instant Answer API to print a short web snippet.
 ai_search() {
     if [ -z "$1" ]; then
         echo "Usage: ai_search <query> [path]";
@@ -36,7 +36,7 @@ ai_search() {
       python3 -c "import json,sys; data=json.load(sys.stdin); print(data.get('AbstractText') or data.get('Answer') or 'no web snippet found')"
 }
 
-# Open the agent hub script quickly
+# agent_hub invokes the repository's agent_hub.sh script and forwards all provided arguments.
 agent_hub() {
     "${AI_SHELL_REPO_ROOT}/agents/openrouter-platform/scripts/agent_hub.sh" "$@"
 }
@@ -45,7 +45,7 @@ agent_hub() {
 export AGENT_HUB_PAYLOAD_DIR="${AI_LOG_HOME}/payloads"
 mkdir -p "$AGENT_HUB_PAYLOAD_DIR"
 
-# Convenience function to stream task payloads into a file and optionally run
+# ai_payload renders a payload from a crew JSON and task Markdown into a timestamped JSON file and optionally runs the task.
 ai_payload() {
     if [ $# -lt 2 ]; then
         echo "Usage: ai_payload <crew.json> <task.md> [run]";
