@@ -43,3 +43,21 @@ submodule:update:
 
 submodule:status:
 	git submodule status
+# Test targets for agents documentation
+.PHONY: test-agents test-agents-unit test-agents-integration test-agents-all
+
+test-agents: ## Run all agent documentation tests
+	@echo "Running agent documentation tests..."
+	pytest tests/agents/ -v
+
+test-agents-unit: ## Run unit tests for agent documentation structure
+	@echo "Running agent documentation structure tests..."
+	pytest tests/agents/test_agent_documentation.py -v
+
+test-agents-integration: ## Run integration tests for agent workflows
+	@echo "Running agent workflow integration tests..."
+	pytest tests/agents/test_agent_workflow_integration.py -v
+
+test-agents-all: test-agents ## Alias for test-agents
+
+test-docs: test-agents ## Run documentation validation tests
