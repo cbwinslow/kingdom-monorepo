@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# AI automation helpers for shell-first multi-agent workflows.
+# ai_stack_bootstrap creates a predefined set of hidden AI stack directories under the given root (defaults to $HOME) and prints a confirmation message.
 
 ai_stack_bootstrap() {
     local root="${1:-$HOME}"
@@ -9,6 +9,7 @@ ai_stack_bootstrap() {
     echo "Initialized AI stack directories under $root"
 }
 
+# ai_stack_sync synchronizes agents, crews, and tools configuration from a repository into the home root, creating target directories as needed (defaults: repo_root=$PWD, home_root=$HOME).
 ai_stack_sync() {
     local repo_root="${1:-$PWD}"
     local home_root="${2:-$HOME}"
@@ -20,6 +21,7 @@ ai_stack_sync() {
     echo "Synced agent configs, crews, and tools from $repo_root into $home_root"
 }
 
+# ai_shell_scan searches for a pattern in shell scripts and AI asset directories under a specified path (defaults to $HOME).
 ai_shell_scan() {
     local needle="$1"; shift
     if [ -z "$needle" ]; then
@@ -31,12 +33,14 @@ ai_shell_scan() {
     rg --hidden --glob "*.sh" "$needle" "$search_path" "$HOME/.bash_agents" "$HOME/.bash_crews" "$HOME/.bash_tools" 2>/dev/null
 }
 
+# ai_agents_status prints counts of JSON files directly under $HOME/.bash_agents, $HOME/.bash_crews, and $HOME/.bash_tools.
 ai_agents_status() {
     echo "Agents: $(find "$HOME/.bash_agents" -maxdepth 1 -name '*.json' 2>/dev/null | wc -l)"
     echo "Crews:  $(find "$HOME/.bash_crews" -maxdepth 1 -name '*.json' 2>/dev/null | wc -l)"
     echo "Tools:  $(find "$HOME/.bash_tools" -maxdepth 1 -name '*.json' 2>/dev/null | wc -l)"
 }
 
+# ai_agents_run_task runs a task for the crew described in the given JSON file using the provided Markdown task file by invoking `agent_hub run`; prints a usage message and returns 1 if fewer than two arguments are provided.
 ai_agents_run_task() {
     if [ $# -lt 2 ]; then
         echo "Usage: ai_agents_run_task <crew.json> <task.md>";
@@ -45,6 +49,7 @@ ai_agents_run_task() {
     agent_hub run "$1" "$2"
 }
 
+# ai_agents_plan_task renders a task plan for a given crew JSON and task markdown file by invoking `agent_hub render`.
 ai_agents_plan_task() {
     if [ $# -lt 2 ]; then
         echo "Usage: ai_agents_plan_task <crew.json> <task.md>";
@@ -53,12 +58,14 @@ ai_agents_plan_task() {
     agent_hub render "$1" "$2"
 }
 
+# ai_agents_toggle_autonomy sets the AI_AUTONOMY_STATE environment variable to the given state (default: on) and echoes the new state.
 ai_agents_toggle_autonomy() {
     local state="${1:-on}"
     export AI_AUTONOMY_STATE="$state"
     echo "Autonomy switch set to: $state"
 }
 
+# ai_agents_vote_sweep records a sample set of agent votes for the given proposal into a JSON file (default path: $HOME/.bash_logs/votes_<timestamp>.json).
 ai_agents_vote_sweep() {
     local proposal_id="${1:-default_proposal}"
     local votes_file="${2:-$HOME/.bash_logs/votes_$(date -u +%Y%m%dT%H%M%SZ).json}"
