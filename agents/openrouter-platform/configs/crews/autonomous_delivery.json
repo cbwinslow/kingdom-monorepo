@@ -1,0 +1,27 @@
+{
+  "name": "autonomous_delivery",
+  "description": "Full-cycle autonomous execution crew using planning, execution, and QA loops.",
+  "members": [
+    { "agent": "research_lead", "channel": "planning" },
+    { "agent": "builder", "channel": "execution" },
+    { "agent": "qa_chair", "channel": "qa" }
+  ],
+  "toolset": "delivery_core",
+  "workflow": "democratic_swarm",
+  "bus": {
+    "type": "rabbitmq",
+    "topic_prefix": "agent_hub.autonomous_delivery"
+  },
+  "database": {
+    "type": "postgres",
+    "dsn": "postgresql://${AGENT_DB_USER:-agent}:${AGENT_DB_PASS:-agentpass}@localhost:5432/${AGENT_DB_NAME:-agent_hub}"
+  },
+  "policies": {
+    "routing": "capability_round_robin",
+    "decision": "weighted_majority",
+    "self_heal": {
+      "max_retries": 2,
+      "fallback_agent": "research_lead"
+    }
+  }
+}

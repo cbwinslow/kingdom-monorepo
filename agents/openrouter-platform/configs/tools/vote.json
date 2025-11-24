@@ -1,0 +1,14 @@
+{
+  "name": "vote",
+  "description": "Casts a vote with confidence to support consensus algorithms.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "proposal_id": { "type": "string", "description": "Identifier for the item under consideration" },
+      "choice": { "type": "string", "description": "Selected option or verdict" },
+      "confidence": { "type": "number", "description": "0-1 confidence score", "default": 0.5 },
+      "notes": { "type": "string", "description": "Rationale for the vote" }
+    },
+    "required": ["proposal_id", "choice"]
+  }
+}

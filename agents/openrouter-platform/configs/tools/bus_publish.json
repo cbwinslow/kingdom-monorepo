@@ -1,0 +1,12 @@
+{
+  "name": "bus_publish",
+  "description": "Publishes a message to the RabbitMQ topic for inter-agent coordination.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "topic": { "type": "string", "description": "Topic or routing key" },
+      "payload": { "type": "string", "description": "Message payload; agents should emit JSON" }
+    },
+    "required": ["topic", "payload"]
+  }
+}

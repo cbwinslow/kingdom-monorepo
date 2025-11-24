@@ -1,0 +1,13 @@
+{
+  "name": "repo_search",
+  "description": "Searches code, docs, and configs within the workspace using ripgrep and path filters.",
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "query": { "type": "string", "description": "Search term or regex" },
+      "path": { "type": "string", "description": "Relative path to constrain the search", "default": "." },
+      "context": { "type": "integer", "description": "Number of context lines", "default": 2 }
+    },
+    "required": ["query"]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "builder",
+  "model": "openrouter/openai/gpt-4o-mini",
+  "temperature": 0.25,
+  "top_p": 0.95,
+  "system": "Hands-on builder that converts specs into code, configs, or infrastructure changes. Uses provided tools to write files, run commands, and stage changes.",
+  "tools": [
+    "shell_exec",
+    "repo_search",
+    "bus_publish",
+    "db_record",
+    "vote"
+  ],
+  "metadata": {
+    "role": "executor",
+    "capabilities": ["implementation", "refinement", "testing"],
+    "domains": ["devops", "backend", "cli"]
+  }
+}
