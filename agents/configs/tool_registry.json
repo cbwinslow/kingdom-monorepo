@@ -1,0 +1,3704 @@
+{
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "observability_tool_001",
+        "description": "Observability and telemetry collection; utility #001 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "security_tool_002",
+        "description": "Security analysis and policy enforcement; utility #002 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ml_tool_003",
+        "description": "Machine learning evaluation and dataset curation; utility #003 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ops_tool_004",
+        "description": "Operational runbook execution; utility #004 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "product_tool_005",
+        "description": "Product research and UX mapping; utility #005 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "finance_tool_006",
+        "description": "Financial modeling and risk analysis; utility #006 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "growth_tool_007",
+        "description": "Growth experimentation and messaging; utility #007 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "qa_tool_008",
+        "description": "Quality analysis and test execution; utility #008 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "data_tool_009",
+        "description": "Data engineering and warehousing; utility #009 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "content_tool_010",
+        "description": "Content creation and localization; utility #010 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "observability_tool_011",
+        "description": "Observability and telemetry collection; utility #011 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "security_tool_012",
+        "description": "Security analysis and policy enforcement; utility #012 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ml_tool_013",
+        "description": "Machine learning evaluation and dataset curation; utility #013 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ops_tool_014",
+        "description": "Operational runbook execution; utility #014 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "product_tool_015",
+        "description": "Product research and UX mapping; utility #015 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "finance_tool_016",
+        "description": "Financial modeling and risk analysis; utility #016 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "growth_tool_017",
+        "description": "Growth experimentation and messaging; utility #017 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "qa_tool_018",
+        "description": "Quality analysis and test execution; utility #018 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "data_tool_019",
+        "description": "Data engineering and warehousing; utility #019 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "content_tool_020",
+        "description": "Content creation and localization; utility #020 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "observability_tool_021",
+        "description": "Observability and telemetry collection; utility #021 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "security_tool_022",
+        "description": "Security analysis and policy enforcement; utility #022 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ml_tool_023",
+        "description": "Machine learning evaluation and dataset curation; utility #023 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ops_tool_024",
+        "description": "Operational runbook execution; utility #024 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "product_tool_025",
+        "description": "Product research and UX mapping; utility #025 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "finance_tool_026",
+        "description": "Financial modeling and risk analysis; utility #026 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "growth_tool_027",
+        "description": "Growth experimentation and messaging; utility #027 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "qa_tool_028",
+        "description": "Quality analysis and test execution; utility #028 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "data_tool_029",
+        "description": "Data engineering and warehousing; utility #029 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "content_tool_030",
+        "description": "Content creation and localization; utility #030 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "observability_tool_031",
+        "description": "Observability and telemetry collection; utility #031 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "security_tool_032",
+        "description": "Security analysis and policy enforcement; utility #032 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ml_tool_033",
+        "description": "Machine learning evaluation and dataset curation; utility #033 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ops_tool_034",
+        "description": "Operational runbook execution; utility #034 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "product_tool_035",
+        "description": "Product research and UX mapping; utility #035 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "finance_tool_036",
+        "description": "Financial modeling and risk analysis; utility #036 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "growth_tool_037",
+        "description": "Growth experimentation and messaging; utility #037 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "qa_tool_038",
+        "description": "Quality analysis and test execution; utility #038 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "data_tool_039",
+        "description": "Data engineering and warehousing; utility #039 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "content_tool_040",
+        "description": "Content creation and localization; utility #040 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "observability_tool_041",
+        "description": "Observability and telemetry collection; utility #041 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "security_tool_042",
+        "description": "Security analysis and policy enforcement; utility #042 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ml_tool_043",
+        "description": "Machine learning evaluation and dataset curation; utility #043 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ops_tool_044",
+        "description": "Operational runbook execution; utility #044 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "product_tool_045",
+        "description": "Product research and UX mapping; utility #045 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "finance_tool_046",
+        "description": "Financial modeling and risk analysis; utility #046 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "growth_tool_047",
+        "description": "Growth experimentation and messaging; utility #047 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "qa_tool_048",
+        "description": "Quality analysis and test execution; utility #048 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "data_tool_049",
+        "description": "Data engineering and warehousing; utility #049 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "content_tool_050",
+        "description": "Content creation and localization; utility #050 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "observability_tool_051",
+        "description": "Observability and telemetry collection; utility #051 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "security_tool_052",
+        "description": "Security analysis and policy enforcement; utility #052 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ml_tool_053",
+        "description": "Machine learning evaluation and dataset curation; utility #053 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ops_tool_054",
+        "description": "Operational runbook execution; utility #054 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "product_tool_055",
+        "description": "Product research and UX mapping; utility #055 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "finance_tool_056",
+        "description": "Financial modeling and risk analysis; utility #056 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "growth_tool_057",
+        "description": "Growth experimentation and messaging; utility #057 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "qa_tool_058",
+        "description": "Quality analysis and test execution; utility #058 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "data_tool_059",
+        "description": "Data engineering and warehousing; utility #059 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "content_tool_060",
+        "description": "Content creation and localization; utility #060 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "observability_tool_061",
+        "description": "Observability and telemetry collection; utility #061 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "security_tool_062",
+        "description": "Security analysis and policy enforcement; utility #062 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ml_tool_063",
+        "description": "Machine learning evaluation and dataset curation; utility #063 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ops_tool_064",
+        "description": "Operational runbook execution; utility #064 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "product_tool_065",
+        "description": "Product research and UX mapping; utility #065 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "finance_tool_066",
+        "description": "Financial modeling and risk analysis; utility #066 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "growth_tool_067",
+        "description": "Growth experimentation and messaging; utility #067 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "qa_tool_068",
+        "description": "Quality analysis and test execution; utility #068 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "data_tool_069",
+        "description": "Data engineering and warehousing; utility #069 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "content_tool_070",
+        "description": "Content creation and localization; utility #070 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "observability_tool_071",
+        "description": "Observability and telemetry collection; utility #071 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "security_tool_072",
+        "description": "Security analysis and policy enforcement; utility #072 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ml_tool_073",
+        "description": "Machine learning evaluation and dataset curation; utility #073 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ops_tool_074",
+        "description": "Operational runbook execution; utility #074 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "product_tool_075",
+        "description": "Product research and UX mapping; utility #075 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "finance_tool_076",
+        "description": "Financial modeling and risk analysis; utility #076 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "growth_tool_077",
+        "description": "Growth experimentation and messaging; utility #077 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "qa_tool_078",
+        "description": "Quality analysis and test execution; utility #078 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "data_tool_079",
+        "description": "Data engineering and warehousing; utility #079 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "content_tool_080",
+        "description": "Content creation and localization; utility #080 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "observability_tool_081",
+        "description": "Observability and telemetry collection; utility #081 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "security_tool_082",
+        "description": "Security analysis and policy enforcement; utility #082 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ml_tool_083",
+        "description": "Machine learning evaluation and dataset curation; utility #083 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ops_tool_084",
+        "description": "Operational runbook execution; utility #084 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "product_tool_085",
+        "description": "Product research and UX mapping; utility #085 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "finance_tool_086",
+        "description": "Financial modeling and risk analysis; utility #086 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "growth_tool_087",
+        "description": "Growth experimentation and messaging; utility #087 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "qa_tool_088",
+        "description": "Quality analysis and test execution; utility #088 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "data_tool_089",
+        "description": "Data engineering and warehousing; utility #089 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "content_tool_090",
+        "description": "Content creation and localization; utility #090 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "observability_tool_091",
+        "description": "Observability and telemetry collection; utility #091 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "security_tool_092",
+        "description": "Security analysis and policy enforcement; utility #092 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ml_tool_093",
+        "description": "Machine learning evaluation and dataset curation; utility #093 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "ops_tool_094",
+        "description": "Operational runbook execution; utility #094 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "product_tool_095",
+        "description": "Product research and UX mapping; utility #095 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "finance_tool_096",
+        "description": "Financial modeling and risk analysis; utility #096 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "growth_tool_097",
+        "description": "Growth experimentation and messaging; utility #097 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "qa_tool_098",
+        "description": "Quality analysis and test execution; utility #098 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "data_tool_099",
+        "description": "Data engineering and warehousing; utility #099 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "content_tool_100",
+        "description": "Content creation and localization; utility #100 for structured pipelines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "task": {
+              "type": "string",
+              "description": "High-level request the agent is trying to satisfy."
+            },
+            "context": {
+              "type": "string",
+              "description": "Relevant context, source snippets, or caller intent."
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ],
+              "description": "Execution priority communicated to downstream runners."
+            },
+            "deadline": {
+              "type": "string",
+              "description": "ISO 8601 deadline or expectation to pass through orchestration."
+            }
+          },
+          "required": [
+            "task"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}
