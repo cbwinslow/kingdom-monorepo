@@ -1,0 +1,29 @@
+.TH agent-platform 1 "Agent Platform" "kingdom-monorepo" "User Commands"
+.SH NAME
+agent-platform \- load OpenAI-compatible agents, tools, and crews
+.SH SYNOPSIS
+.B python -m agents.platform.runner
+.br
+.B python - <<'PY' \n[script]\nPY
+.SH DESCRIPTION
+The agent platform ships 100 agents, 100 tools, and CrewAI-style crew definitions.
+It builds OpenAI Chat Completions payloads locally without sending network traffic.
+Use it to explore the registry, simulate crew kickoffs, and prepare tool definitions for downstream runtimes.
+.SH COMMANDS
+.TP
+.B load_default_platform()
+Construct a platform instance pointing at the bundled JSON registries.
+.TP
+.B AgentPlatform.build_openai_chat_request(agent_id, prompt)
+Return a dict containing the model name, chat messages, and tool schema list ready for OpenAI tool calling.
+.TP
+.B AgentPlatform.simulate_handshake(crew_id, objective)
+Produce a deterministic kickoff plan that mirrors the crew playbook and handoff policy.
+.SH FILES
+.I agents/configs/agent_registry.json
+.br
+.I agents/configs/tool_registry.json
+.br
+.I agents/crews/crewai_configs.json
+.SH AUTHORS
+kingdom-monorepo automation team

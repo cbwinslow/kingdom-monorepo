@@ -1,0 +1,3404 @@
+{
+  "agents": [
+    {
+      "id": "agent-001",
+      "name": "Observability Orchestrator 001",
+      "model": "gpt-4o",
+      "instructions": "Act as a observability and telemetry collection specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "observability_tool_001",
+        "security_tool_002",
+        "observability_tool_011"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-002",
+      "name": "Security Orchestrator 002",
+      "model": "gpt-4o",
+      "instructions": "Act as a security analysis and policy enforcement specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "security_tool_002",
+        "ml_tool_003",
+        "security_tool_012"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-003",
+      "name": "Ml Orchestrator 003",
+      "model": "gpt-4o",
+      "instructions": "Act as a machine learning evaluation and dataset curation specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ml_tool_003",
+        "ops_tool_004",
+        "ml_tool_013"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-004",
+      "name": "Ops Orchestrator 004",
+      "model": "gpt-4o",
+      "instructions": "Act as a operational runbook execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ops_tool_004",
+        "product_tool_005",
+        "ops_tool_014"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-005",
+      "name": "Product Orchestrator 005",
+      "model": "gpt-4o",
+      "instructions": "Act as a product research and ux mapping specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "product_tool_005",
+        "finance_tool_006",
+        "product_tool_015"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-006",
+      "name": "Finance Orchestrator 006",
+      "model": "gpt-4o",
+      "instructions": "Act as a financial modeling and risk analysis specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "finance_tool_006",
+        "growth_tool_007",
+        "finance_tool_016"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-007",
+      "name": "Growth Orchestrator 007",
+      "model": "gpt-4o",
+      "instructions": "Act as a growth experimentation and messaging specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "growth_tool_007",
+        "qa_tool_008",
+        "growth_tool_017"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-008",
+      "name": "Qa Orchestrator 008",
+      "model": "gpt-4o",
+      "instructions": "Act as a quality analysis and test execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "qa_tool_008",
+        "data_tool_009",
+        "qa_tool_018"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-009",
+      "name": "Data Orchestrator 009",
+      "model": "gpt-4o",
+      "instructions": "Act as a data engineering and warehousing specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "data_tool_009",
+        "content_tool_010",
+        "data_tool_019"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-010",
+      "name": "Content Orchestrator 010",
+      "model": "gpt-4o",
+      "instructions": "Act as a content creation and localization specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "content_tool_010",
+        "observability_tool_011",
+        "content_tool_020"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-011",
+      "name": "Observability Orchestrator 011",
+      "model": "gpt-4o",
+      "instructions": "Act as a observability and telemetry collection specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "observability_tool_011",
+        "security_tool_012",
+        "observability_tool_021"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-012",
+      "name": "Security Orchestrator 012",
+      "model": "gpt-4o",
+      "instructions": "Act as a security analysis and policy enforcement specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "security_tool_012",
+        "ml_tool_013",
+        "security_tool_022"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-013",
+      "name": "Ml Orchestrator 013",
+      "model": "gpt-4o",
+      "instructions": "Act as a machine learning evaluation and dataset curation specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ml_tool_013",
+        "ops_tool_014",
+        "ml_tool_023"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-014",
+      "name": "Ops Orchestrator 014",
+      "model": "gpt-4o",
+      "instructions": "Act as a operational runbook execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ops_tool_014",
+        "product_tool_015",
+        "ops_tool_024"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-015",
+      "name": "Product Orchestrator 015",
+      "model": "gpt-4o",
+      "instructions": "Act as a product research and ux mapping specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "product_tool_015",
+        "finance_tool_016",
+        "product_tool_025"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-016",
+      "name": "Finance Orchestrator 016",
+      "model": "gpt-4o",
+      "instructions": "Act as a financial modeling and risk analysis specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "finance_tool_016",
+        "growth_tool_017",
+        "finance_tool_026"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-017",
+      "name": "Growth Orchestrator 017",
+      "model": "gpt-4o",
+      "instructions": "Act as a growth experimentation and messaging specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "growth_tool_017",
+        "qa_tool_018",
+        "growth_tool_027"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-018",
+      "name": "Qa Orchestrator 018",
+      "model": "gpt-4o",
+      "instructions": "Act as a quality analysis and test execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "qa_tool_018",
+        "data_tool_019",
+        "qa_tool_028"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-019",
+      "name": "Data Orchestrator 019",
+      "model": "gpt-4o",
+      "instructions": "Act as a data engineering and warehousing specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "data_tool_019",
+        "content_tool_020",
+        "data_tool_029"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-020",
+      "name": "Content Orchestrator 020",
+      "model": "gpt-4o",
+      "instructions": "Act as a content creation and localization specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "content_tool_020",
+        "observability_tool_021",
+        "content_tool_030"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-021",
+      "name": "Observability Orchestrator 021",
+      "model": "gpt-4o",
+      "instructions": "Act as a observability and telemetry collection specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "observability_tool_021",
+        "security_tool_022",
+        "observability_tool_031"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-022",
+      "name": "Security Orchestrator 022",
+      "model": "gpt-4o",
+      "instructions": "Act as a security analysis and policy enforcement specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "security_tool_022",
+        "ml_tool_023",
+        "security_tool_032"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-023",
+      "name": "Ml Orchestrator 023",
+      "model": "gpt-4o",
+      "instructions": "Act as a machine learning evaluation and dataset curation specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ml_tool_023",
+        "ops_tool_024",
+        "ml_tool_033"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-024",
+      "name": "Ops Orchestrator 024",
+      "model": "gpt-4o",
+      "instructions": "Act as a operational runbook execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ops_tool_024",
+        "product_tool_025",
+        "ops_tool_034"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-025",
+      "name": "Product Orchestrator 025",
+      "model": "gpt-4o",
+      "instructions": "Act as a product research and ux mapping specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "product_tool_025",
+        "finance_tool_026",
+        "product_tool_035"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-026",
+      "name": "Finance Orchestrator 026",
+      "model": "gpt-4o",
+      "instructions": "Act as a financial modeling and risk analysis specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "finance_tool_026",
+        "growth_tool_027",
+        "finance_tool_036"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-027",
+      "name": "Growth Orchestrator 027",
+      "model": "gpt-4o",
+      "instructions": "Act as a growth experimentation and messaging specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "growth_tool_027",
+        "qa_tool_028",
+        "growth_tool_037"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-028",
+      "name": "Qa Orchestrator 028",
+      "model": "gpt-4o",
+      "instructions": "Act as a quality analysis and test execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "qa_tool_028",
+        "data_tool_029",
+        "qa_tool_038"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-029",
+      "name": "Data Orchestrator 029",
+      "model": "gpt-4o",
+      "instructions": "Act as a data engineering and warehousing specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "data_tool_029",
+        "content_tool_030",
+        "data_tool_039"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-030",
+      "name": "Content Orchestrator 030",
+      "model": "gpt-4o",
+      "instructions": "Act as a content creation and localization specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "content_tool_030",
+        "observability_tool_031",
+        "content_tool_040"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-031",
+      "name": "Observability Orchestrator 031",
+      "model": "gpt-4o",
+      "instructions": "Act as a observability and telemetry collection specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "observability_tool_031",
+        "security_tool_032",
+        "observability_tool_041"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-032",
+      "name": "Security Orchestrator 032",
+      "model": "gpt-4o",
+      "instructions": "Act as a security analysis and policy enforcement specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "security_tool_032",
+        "ml_tool_033",
+        "security_tool_042"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-033",
+      "name": "Ml Orchestrator 033",
+      "model": "gpt-4o",
+      "instructions": "Act as a machine learning evaluation and dataset curation specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ml_tool_033",
+        "ops_tool_034",
+        "ml_tool_043"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-034",
+      "name": "Ops Orchestrator 034",
+      "model": "gpt-4o",
+      "instructions": "Act as a operational runbook execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ops_tool_034",
+        "product_tool_035",
+        "ops_tool_044"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-035",
+      "name": "Product Orchestrator 035",
+      "model": "gpt-4o",
+      "instructions": "Act as a product research and ux mapping specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "product_tool_035",
+        "finance_tool_036",
+        "product_tool_045"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-036",
+      "name": "Finance Orchestrator 036",
+      "model": "gpt-4o",
+      "instructions": "Act as a financial modeling and risk analysis specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "finance_tool_036",
+        "growth_tool_037",
+        "finance_tool_046"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-037",
+      "name": "Growth Orchestrator 037",
+      "model": "gpt-4o",
+      "instructions": "Act as a growth experimentation and messaging specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "growth_tool_037",
+        "qa_tool_038",
+        "growth_tool_047"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-038",
+      "name": "Qa Orchestrator 038",
+      "model": "gpt-4o",
+      "instructions": "Act as a quality analysis and test execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "qa_tool_038",
+        "data_tool_039",
+        "qa_tool_048"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-039",
+      "name": "Data Orchestrator 039",
+      "model": "gpt-4o",
+      "instructions": "Act as a data engineering and warehousing specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "data_tool_039",
+        "content_tool_040",
+        "data_tool_049"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-040",
+      "name": "Content Orchestrator 040",
+      "model": "gpt-4o",
+      "instructions": "Act as a content creation and localization specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "content_tool_040",
+        "observability_tool_041",
+        "content_tool_050"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-041",
+      "name": "Observability Orchestrator 041",
+      "model": "gpt-4o",
+      "instructions": "Act as a observability and telemetry collection specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "observability_tool_041",
+        "security_tool_042",
+        "observability_tool_051"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-042",
+      "name": "Security Orchestrator 042",
+      "model": "gpt-4o",
+      "instructions": "Act as a security analysis and policy enforcement specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "security_tool_042",
+        "ml_tool_043",
+        "security_tool_052"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-043",
+      "name": "Ml Orchestrator 043",
+      "model": "gpt-4o",
+      "instructions": "Act as a machine learning evaluation and dataset curation specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ml_tool_043",
+        "ops_tool_044",
+        "ml_tool_053"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-044",
+      "name": "Ops Orchestrator 044",
+      "model": "gpt-4o",
+      "instructions": "Act as a operational runbook execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ops_tool_044",
+        "product_tool_045",
+        "ops_tool_054"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-045",
+      "name": "Product Orchestrator 045",
+      "model": "gpt-4o",
+      "instructions": "Act as a product research and ux mapping specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "product_tool_045",
+        "finance_tool_046",
+        "product_tool_055"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-046",
+      "name": "Finance Orchestrator 046",
+      "model": "gpt-4o",
+      "instructions": "Act as a financial modeling and risk analysis specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "finance_tool_046",
+        "growth_tool_047",
+        "finance_tool_056"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-047",
+      "name": "Growth Orchestrator 047",
+      "model": "gpt-4o",
+      "instructions": "Act as a growth experimentation and messaging specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "growth_tool_047",
+        "qa_tool_048",
+        "growth_tool_057"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-048",
+      "name": "Qa Orchestrator 048",
+      "model": "gpt-4o",
+      "instructions": "Act as a quality analysis and test execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "qa_tool_048",
+        "data_tool_049",
+        "qa_tool_058"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-049",
+      "name": "Data Orchestrator 049",
+      "model": "gpt-4o",
+      "instructions": "Act as a data engineering and warehousing specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "data_tool_049",
+        "content_tool_050",
+        "data_tool_059"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-050",
+      "name": "Content Orchestrator 050",
+      "model": "gpt-4o",
+      "instructions": "Act as a content creation and localization specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "content_tool_050",
+        "observability_tool_051",
+        "content_tool_060"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-051",
+      "name": "Observability Orchestrator 051",
+      "model": "gpt-4o",
+      "instructions": "Act as a observability and telemetry collection specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "observability_tool_051",
+        "security_tool_052",
+        "observability_tool_061"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-052",
+      "name": "Security Orchestrator 052",
+      "model": "gpt-4o",
+      "instructions": "Act as a security analysis and policy enforcement specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "security_tool_052",
+        "ml_tool_053",
+        "security_tool_062"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-053",
+      "name": "Ml Orchestrator 053",
+      "model": "gpt-4o",
+      "instructions": "Act as a machine learning evaluation and dataset curation specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ml_tool_053",
+        "ops_tool_054",
+        "ml_tool_063"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-054",
+      "name": "Ops Orchestrator 054",
+      "model": "gpt-4o",
+      "instructions": "Act as a operational runbook execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ops_tool_054",
+        "product_tool_055",
+        "ops_tool_064"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-055",
+      "name": "Product Orchestrator 055",
+      "model": "gpt-4o",
+      "instructions": "Act as a product research and ux mapping specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "product_tool_055",
+        "finance_tool_056",
+        "product_tool_065"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-056",
+      "name": "Finance Orchestrator 056",
+      "model": "gpt-4o",
+      "instructions": "Act as a financial modeling and risk analysis specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "finance_tool_056",
+        "growth_tool_057",
+        "finance_tool_066"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-057",
+      "name": "Growth Orchestrator 057",
+      "model": "gpt-4o",
+      "instructions": "Act as a growth experimentation and messaging specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "growth_tool_057",
+        "qa_tool_058",
+        "growth_tool_067"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-058",
+      "name": "Qa Orchestrator 058",
+      "model": "gpt-4o",
+      "instructions": "Act as a quality analysis and test execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "qa_tool_058",
+        "data_tool_059",
+        "qa_tool_068"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-059",
+      "name": "Data Orchestrator 059",
+      "model": "gpt-4o",
+      "instructions": "Act as a data engineering and warehousing specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "data_tool_059",
+        "content_tool_060",
+        "data_tool_069"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-060",
+      "name": "Content Orchestrator 060",
+      "model": "gpt-4o",
+      "instructions": "Act as a content creation and localization specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "content_tool_060",
+        "observability_tool_061",
+        "content_tool_070"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-061",
+      "name": "Observability Orchestrator 061",
+      "model": "gpt-4o",
+      "instructions": "Act as a observability and telemetry collection specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "observability_tool_061",
+        "security_tool_062",
+        "observability_tool_071"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-062",
+      "name": "Security Orchestrator 062",
+      "model": "gpt-4o",
+      "instructions": "Act as a security analysis and policy enforcement specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "security_tool_062",
+        "ml_tool_063",
+        "security_tool_072"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-063",
+      "name": "Ml Orchestrator 063",
+      "model": "gpt-4o",
+      "instructions": "Act as a machine learning evaluation and dataset curation specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ml_tool_063",
+        "ops_tool_064",
+        "ml_tool_073"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-064",
+      "name": "Ops Orchestrator 064",
+      "model": "gpt-4o",
+      "instructions": "Act as a operational runbook execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ops_tool_064",
+        "product_tool_065",
+        "ops_tool_074"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-065",
+      "name": "Product Orchestrator 065",
+      "model": "gpt-4o",
+      "instructions": "Act as a product research and ux mapping specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "product_tool_065",
+        "finance_tool_066",
+        "product_tool_075"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-066",
+      "name": "Finance Orchestrator 066",
+      "model": "gpt-4o",
+      "instructions": "Act as a financial modeling and risk analysis specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "finance_tool_066",
+        "growth_tool_067",
+        "finance_tool_076"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-067",
+      "name": "Growth Orchestrator 067",
+      "model": "gpt-4o",
+      "instructions": "Act as a growth experimentation and messaging specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "growth_tool_067",
+        "qa_tool_068",
+        "growth_tool_077"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-068",
+      "name": "Qa Orchestrator 068",
+      "model": "gpt-4o",
+      "instructions": "Act as a quality analysis and test execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "qa_tool_068",
+        "data_tool_069",
+        "qa_tool_078"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-069",
+      "name": "Data Orchestrator 069",
+      "model": "gpt-4o",
+      "instructions": "Act as a data engineering and warehousing specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "data_tool_069",
+        "content_tool_070",
+        "data_tool_079"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-070",
+      "name": "Content Orchestrator 070",
+      "model": "gpt-4o",
+      "instructions": "Act as a content creation and localization specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "content_tool_070",
+        "observability_tool_071",
+        "content_tool_080"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-071",
+      "name": "Observability Orchestrator 071",
+      "model": "gpt-4o",
+      "instructions": "Act as a observability and telemetry collection specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "observability_tool_071",
+        "security_tool_072",
+        "observability_tool_081"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-072",
+      "name": "Security Orchestrator 072",
+      "model": "gpt-4o",
+      "instructions": "Act as a security analysis and policy enforcement specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "security_tool_072",
+        "ml_tool_073",
+        "security_tool_082"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-073",
+      "name": "Ml Orchestrator 073",
+      "model": "gpt-4o",
+      "instructions": "Act as a machine learning evaluation and dataset curation specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ml_tool_073",
+        "ops_tool_074",
+        "ml_tool_083"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-074",
+      "name": "Ops Orchestrator 074",
+      "model": "gpt-4o",
+      "instructions": "Act as a operational runbook execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ops_tool_074",
+        "product_tool_075",
+        "ops_tool_084"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-075",
+      "name": "Product Orchestrator 075",
+      "model": "gpt-4o",
+      "instructions": "Act as a product research and ux mapping specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "product_tool_075",
+        "finance_tool_076",
+        "product_tool_085"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-076",
+      "name": "Finance Orchestrator 076",
+      "model": "gpt-4o",
+      "instructions": "Act as a financial modeling and risk analysis specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "finance_tool_076",
+        "growth_tool_077",
+        "finance_tool_086"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-077",
+      "name": "Growth Orchestrator 077",
+      "model": "gpt-4o",
+      "instructions": "Act as a growth experimentation and messaging specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "growth_tool_077",
+        "qa_tool_078",
+        "growth_tool_087"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-078",
+      "name": "Qa Orchestrator 078",
+      "model": "gpt-4o",
+      "instructions": "Act as a quality analysis and test execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "qa_tool_078",
+        "data_tool_079",
+        "qa_tool_088"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-079",
+      "name": "Data Orchestrator 079",
+      "model": "gpt-4o",
+      "instructions": "Act as a data engineering and warehousing specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "data_tool_079",
+        "content_tool_080",
+        "data_tool_089"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-080",
+      "name": "Content Orchestrator 080",
+      "model": "gpt-4o",
+      "instructions": "Act as a content creation and localization specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "content_tool_080",
+        "observability_tool_081",
+        "content_tool_090"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-081",
+      "name": "Observability Orchestrator 081",
+      "model": "gpt-4o",
+      "instructions": "Act as a observability and telemetry collection specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "observability_tool_081",
+        "security_tool_082",
+        "observability_tool_091"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-082",
+      "name": "Security Orchestrator 082",
+      "model": "gpt-4o",
+      "instructions": "Act as a security analysis and policy enforcement specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "security_tool_082",
+        "ml_tool_083",
+        "security_tool_092"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-083",
+      "name": "Ml Orchestrator 083",
+      "model": "gpt-4o",
+      "instructions": "Act as a machine learning evaluation and dataset curation specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ml_tool_083",
+        "ops_tool_084",
+        "ml_tool_093"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-084",
+      "name": "Ops Orchestrator 084",
+      "model": "gpt-4o",
+      "instructions": "Act as a operational runbook execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ops_tool_084",
+        "product_tool_085",
+        "ops_tool_094"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-085",
+      "name": "Product Orchestrator 085",
+      "model": "gpt-4o",
+      "instructions": "Act as a product research and ux mapping specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "product_tool_085",
+        "finance_tool_086",
+        "product_tool_095"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-086",
+      "name": "Finance Orchestrator 086",
+      "model": "gpt-4o",
+      "instructions": "Act as a financial modeling and risk analysis specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "finance_tool_086",
+        "growth_tool_087",
+        "finance_tool_096"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-087",
+      "name": "Growth Orchestrator 087",
+      "model": "gpt-4o",
+      "instructions": "Act as a growth experimentation and messaging specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "growth_tool_087",
+        "qa_tool_088",
+        "growth_tool_097"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-088",
+      "name": "Qa Orchestrator 088",
+      "model": "gpt-4o",
+      "instructions": "Act as a quality analysis and test execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "qa_tool_088",
+        "data_tool_089",
+        "qa_tool_098"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-089",
+      "name": "Data Orchestrator 089",
+      "model": "gpt-4o",
+      "instructions": "Act as a data engineering and warehousing specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "data_tool_089",
+        "content_tool_090",
+        "data_tool_099"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-090",
+      "name": "Content Orchestrator 090",
+      "model": "gpt-4o",
+      "instructions": "Act as a content creation and localization specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "content_tool_090",
+        "observability_tool_091",
+        "content_tool_100"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-091",
+      "name": "Observability Orchestrator 091",
+      "model": "gpt-4o",
+      "instructions": "Act as a observability and telemetry collection specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "observability_tool_091",
+        "security_tool_092",
+        "observability_tool_001"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-092",
+      "name": "Security Orchestrator 092",
+      "model": "gpt-4o",
+      "instructions": "Act as a security analysis and policy enforcement specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "security_tool_092",
+        "ml_tool_093",
+        "security_tool_002"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-093",
+      "name": "Ml Orchestrator 093",
+      "model": "gpt-4o",
+      "instructions": "Act as a machine learning evaluation and dataset curation specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ml_tool_093",
+        "ops_tool_094",
+        "ml_tool_003"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-094",
+      "name": "Ops Orchestrator 094",
+      "model": "gpt-4o",
+      "instructions": "Act as a operational runbook execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "ops_tool_094",
+        "product_tool_095",
+        "ops_tool_004"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-095",
+      "name": "Product Orchestrator 095",
+      "model": "gpt-4o",
+      "instructions": "Act as a product research and ux mapping specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "product_tool_095",
+        "finance_tool_096",
+        "product_tool_005"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-096",
+      "name": "Finance Orchestrator 096",
+      "model": "gpt-4o",
+      "instructions": "Act as a financial modeling and risk analysis specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "finance_tool_096",
+        "growth_tool_097",
+        "finance_tool_006"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-097",
+      "name": "Growth Orchestrator 097",
+      "model": "gpt-4o",
+      "instructions": "Act as a growth experimentation and messaging specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "growth_tool_097",
+        "qa_tool_098",
+        "growth_tool_007"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-098",
+      "name": "Qa Orchestrator 098",
+      "model": "gpt-4o",
+      "instructions": "Act as a quality analysis and test execution specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "qa_tool_098",
+        "data_tool_099",
+        "qa_tool_008"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-099",
+      "name": "Data Orchestrator 099",
+      "model": "gpt-4o",
+      "instructions": "Act as a data engineering and warehousing specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "data_tool_099",
+        "content_tool_100",
+        "data_tool_009"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "agent-100",
+      "name": "Content Orchestrator 100",
+      "model": "gpt-4o",
+      "instructions": "Act as a content creation and localization specialist. Collect requirements, choose the best tool, and explain reasoning concisely. Escalate if inputs are unsafe or ambiguous.",
+      "tools": [
+        "content_tool_100",
+        "observability_tool_001",
+        "content_tool_010"
+      ],
+      "style": {
+        "tone": "structured",
+        "audience": "delivery engineers",
+        "format": "markdown"
+      },
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "objective": {
+            "type": "string"
+          },
+          "constraints": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "objective"
+        ],
+        "additionalProperties": false
+      }
+    }
+  ]
+}

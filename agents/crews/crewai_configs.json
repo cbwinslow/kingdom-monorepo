@@ -1,0 +1,334 @@
+{
+  "crews": [
+    {
+      "id": "crew-01",
+      "name": "Delivery Crew 01",
+      "mission": "Ship reliable AI workflows that align to enterprise guardrails.",
+      "entry_agent": "agent-001",
+      "collaborators": [
+        "agent-002",
+        "agent-003",
+        "agent-004",
+        "agent-005",
+        "agent-006",
+        "agent-007",
+        "agent-008",
+        "agent-009",
+        "agent-010"
+      ],
+      "playbook": [
+        "intake requirements",
+        "propose plan",
+        "select tools",
+        "simulate interactions",
+        "produce report"
+      ],
+      "hand_off": {
+        "format": "markdown",
+        "channels": [
+          "slack",
+          "email",
+          "web"
+        ],
+        "checkpoint_policy": "two-person approval"
+      }
+    },
+    {
+      "id": "crew-02",
+      "name": "Delivery Crew 02",
+      "mission": "Ship reliable AI workflows that align to enterprise guardrails.",
+      "entry_agent": "agent-011",
+      "collaborators": [
+        "agent-012",
+        "agent-013",
+        "agent-014",
+        "agent-015",
+        "agent-016",
+        "agent-017",
+        "agent-018",
+        "agent-019",
+        "agent-020"
+      ],
+      "playbook": [
+        "intake requirements",
+        "propose plan",
+        "select tools",
+        "simulate interactions",
+        "produce report"
+      ],
+      "hand_off": {
+        "format": "markdown",
+        "channels": [
+          "slack",
+          "email",
+          "web"
+        ],
+        "checkpoint_policy": "two-person approval"
+      }
+    },
+    {
+      "id": "crew-03",
+      "name": "Delivery Crew 03",
+      "mission": "Ship reliable AI workflows that align to enterprise guardrails.",
+      "entry_agent": "agent-021",
+      "collaborators": [
+        "agent-022",
+        "agent-023",
+        "agent-024",
+        "agent-025",
+        "agent-026",
+        "agent-027",
+        "agent-028",
+        "agent-029",
+        "agent-030"
+      ],
+      "playbook": [
+        "intake requirements",
+        "propose plan",
+        "select tools",
+        "simulate interactions",
+        "produce report"
+      ],
+      "hand_off": {
+        "format": "markdown",
+        "channels": [
+          "slack",
+          "email",
+          "web"
+        ],
+        "checkpoint_policy": "two-person approval"
+      }
+    },
+    {
+      "id": "crew-04",
+      "name": "Delivery Crew 04",
+      "mission": "Ship reliable AI workflows that align to enterprise guardrails.",
+      "entry_agent": "agent-031",
+      "collaborators": [
+        "agent-032",
+        "agent-033",
+        "agent-034",
+        "agent-035",
+        "agent-036",
+        "agent-037",
+        "agent-038",
+        "agent-039",
+        "agent-040"
+      ],
+      "playbook": [
+        "intake requirements",
+        "propose plan",
+        "select tools",
+        "simulate interactions",
+        "produce report"
+      ],
+      "hand_off": {
+        "format": "markdown",
+        "channels": [
+          "slack",
+          "email",
+          "web"
+        ],
+        "checkpoint_policy": "two-person approval"
+      }
+    },
+    {
+      "id": "crew-05",
+      "name": "Delivery Crew 05",
+      "mission": "Ship reliable AI workflows that align to enterprise guardrails.",
+      "entry_agent": "agent-041",
+      "collaborators": [
+        "agent-042",
+        "agent-043",
+        "agent-044",
+        "agent-045",
+        "agent-046",
+        "agent-047",
+        "agent-048",
+        "agent-049",
+        "agent-050"
+      ],
+      "playbook": [
+        "intake requirements",
+        "propose plan",
+        "select tools",
+        "simulate interactions",
+        "produce report"
+      ],
+      "hand_off": {
+        "format": "markdown",
+        "channels": [
+          "slack",
+          "email",
+          "web"
+        ],
+        "checkpoint_policy": "two-person approval"
+      }
+    },
+    {
+      "id": "crew-06",
+      "name": "Delivery Crew 06",
+      "mission": "Ship reliable AI workflows that align to enterprise guardrails.",
+      "entry_agent": "agent-051",
+      "collaborators": [
+        "agent-052",
+        "agent-053",
+        "agent-054",
+        "agent-055",
+        "agent-056",
+        "agent-057",
+        "agent-058",
+        "agent-059",
+        "agent-060"
+      ],
+      "playbook": [
+        "intake requirements",
+        "propose plan",
+        "select tools",
+        "simulate interactions",
+        "produce report"
+      ],
+      "hand_off": {
+        "format": "markdown",
+        "channels": [
+          "slack",
+          "email",
+          "web"
+        ],
+        "checkpoint_policy": "two-person approval"
+      }
+    },
+    {
+      "id": "crew-07",
+      "name": "Delivery Crew 07",
+      "mission": "Ship reliable AI workflows that align to enterprise guardrails.",
+      "entry_agent": "agent-061",
+      "collaborators": [
+        "agent-062",
+        "agent-063",
+        "agent-064",
+        "agent-065",
+        "agent-066",
+        "agent-067",
+        "agent-068",
+        "agent-069",
+        "agent-070"
+      ],
+      "playbook": [
+        "intake requirements",
+        "propose plan",
+        "select tools",
+        "simulate interactions",
+        "produce report"
+      ],
+      "hand_off": {
+        "format": "markdown",
+        "channels": [
+          "slack",
+          "email",
+          "web"
+        ],
+        "checkpoint_policy": "two-person approval"
+      }
+    },
+    {
+      "id": "crew-08",
+      "name": "Delivery Crew 08",
+      "mission": "Ship reliable AI workflows that align to enterprise guardrails.",
+      "entry_agent": "agent-071",
+      "collaborators": [
+        "agent-072",
+        "agent-073",
+        "agent-074",
+        "agent-075",
+        "agent-076",
+        "agent-077",
+        "agent-078",
+        "agent-079",
+        "agent-080"
+      ],
+      "playbook": [
+        "intake requirements",
+        "propose plan",
+        "select tools",
+        "simulate interactions",
+        "produce report"
+      ],
+      "hand_off": {
+        "format": "markdown",
+        "channels": [
+          "slack",
+          "email",
+          "web"
+        ],
+        "checkpoint_policy": "two-person approval"
+      }
+    },
+    {
+      "id": "crew-09",
+      "name": "Delivery Crew 09",
+      "mission": "Ship reliable AI workflows that align to enterprise guardrails.",
+      "entry_agent": "agent-081",
+      "collaborators": [
+        "agent-082",
+        "agent-083",
+        "agent-084",
+        "agent-085",
+        "agent-086",
+        "agent-087",
+        "agent-088",
+        "agent-089",
+        "agent-090"
+      ],
+      "playbook": [
+        "intake requirements",
+        "propose plan",
+        "select tools",
+        "simulate interactions",
+        "produce report"
+      ],
+      "hand_off": {
+        "format": "markdown",
+        "channels": [
+          "slack",
+          "email",
+          "web"
+        ],
+        "checkpoint_policy": "two-person approval"
+      }
+    },
+    {
+      "id": "crew-10",
+      "name": "Delivery Crew 10",
+      "mission": "Ship reliable AI workflows that align to enterprise guardrails.",
+      "entry_agent": "agent-091",
+      "collaborators": [
+        "agent-092",
+        "agent-093",
+        "agent-094",
+        "agent-095",
+        "agent-096",
+        "agent-097",
+        "agent-098",
+        "agent-099",
+        "agent-100"
+      ],
+      "playbook": [
+        "intake requirements",
+        "propose plan",
+        "select tools",
+        "simulate interactions",
+        "produce report"
+      ],
+      "hand_off": {
+        "format": "markdown",
+        "channels": [
+          "slack",
+          "email",
+          "web"
+        ],
+        "checkpoint_policy": "two-person approval"
+      }
+    }
+  ]
+}

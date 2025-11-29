@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CrewAI Mirror</title>
+  <style>
+    :root {
+      --bg: #0c1116;
+      --panel: #0f1720;
+      --accent: #56c2ff;
+      --muted: #94a3b8;
+      --text: #e2e8f0;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(86,194,255,0.08), transparent 30%),
+                  radial-gradient(circle at 80% 0%, rgba(86,194,255,0.05), transparent 25%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    header {
+      padding: 32px 5vw 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    nav a {
+      color: var(--muted);
+      margin-left: 16px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    nav a:hover { color: var(--text); }
+    .hero {
+      padding: 40px 5vw 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      align-items: center;
+    }
+    .hero-text h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      margin: 0 0 16px 0;
+      line-height: 1.1;
+    }
+    .hero-text p { color: var(--muted); margin-bottom: 24px; }
+    .hero-actions a {
+      display: inline-block;
+      padding: 12px 18px;
+      margin-right: 12px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .primary { background: var(--accent); color: #0b1022; }
+    .ghost { border: 1px solid #1e293b; color: var(--text); }
+    .panel {
+      background: var(--panel);
+      border: 1px solid #1e293b;
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.3);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 0 5vw 20px;
+    }
+    .tag { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    h2 { margin: 0 0 8px 0; }
+    ul { padding-left: 18px; }
+    footer {
+      padding: 24px 5vw 48px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0 0 0;
+    }
+    .pill {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #1e293b;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">CrewAI Mirror</div>
+    <nav>
+      <a href="#product">Product</a>
+      <a href="#features">Features</a>
+      <a href="#crews">Crews</a>
+      <a href="#docs">Docs</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <div class="tag">AI teamwork for shipping faster</div>
+      <h1>Compose agents into reliable crews.</h1>
+      <p>Launch orchestrated AI teams with zero ops overhead. Define roles, connect tools, and run deterministic handoffs through a friendly OpenAI-compatible interface.</p>
+      <div class="hero-actions">
+        <a class="primary" href="#features">Explore the launchpad</a>
+        <a class="ghost" href="#docs">View docs</a>
+      </div>
+      <div class="pill-list">
+        <span class="pill">100 agents</span>
+        <span class="pill">100 tools</span>
+        <span class="pill">CrewAI style configs</span>
+        <span class="pill">OpenAI ready</span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="tag">Launch preview</div>
+      <h2>Delivery Crew 01</h2>
+      <p>Entry agent: agent-001 · Mission: Ship reliable AI workflows.</p>
+      <ul>
+        <li>Intake requirements</li>
+        <li>Propose plan</li>
+        <li>Select tools</li>
+        <li>Simulate interactions</li>
+        <li>Produce report</li>
+      </ul>
+      <a class="primary" href="#crews">View crews</a>
+    </div>
+  </section>
+
+  <section id="product" class="grid">
+    <div class="panel">
+      <div class="tag">Platform</div>
+      <h2>OpenAI compatible</h2>
+      <p>Use `build_openai_chat_request` to produce payloads that drop into Chat Completions. No vendor lock-in, no extra dependencies.</p>
+    </div>
+    <div class="panel">
+      <div class="tag">Registry</div>
+      <h2>100 agents · 100 tools</h2>
+      <p>Curated personas with explicit tool bindings and schemas for predictable orchestration.</p>
+    </div>
+    <div class="panel">
+      <div class="tag">Crews</div>
+      <h2>CrewAI inspired</h2>
+      <p>Entry agents, collaborator rosters, playbooks, and handoff policies packaged for repeatable runs.</p>
+    </div>
+  </section>
+
+  <section id="features" class="grid">
+    <div class="panel">
+      <div class="tag">Execution</div>
+      <h2>Deterministic runs</h2>
+      <p>Keep temperature low and schemas strict. Every payload is validated before you hit send.</p>
+    </div>
+    <div class="panel">
+      <div class="tag">Governance</div>
+      <h2>Guardrails</h2>
+      <p>Input schemas and role guidance help teams stay compliant and reproducible.</p>
+    </div>
+    <div class="panel">
+      <div class="tag">Handoffs</div>
+      <h2>Multi-channel</h2>
+      <p>Ship results to Slack, email, or web dashboards with consistent markdown outputs.</p>
+    </div>
+  </section>
+
+  <section id="crews" class="grid">
+    <div class="panel">
+      <div class="tag">Crew playbook</div>
+      <h2>Kickoff template</h2>
+      <ul>
+        <li>Objective capture</li>
+        <li>Agent alignment</li>
+        <li>Tool selection</li>
+        <li>Run simulation</li>
+        <li>Human approval</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <div class="tag">Roster</div>
+      <h2>10 delivery crews</h2>
+      <p>Each crew bundles 10 agents with complementary expertise across observability, security, ML, ops, product, finance, growth, QA, data, and content.</p>
+    </div>
+    <div class="panel">
+      <div class="tag">Launch controls</div>
+      <h2>Platform ready</h2>
+      <p>Use the Python platform to list crews, build chat payloads, and simulate handoffs before sending to production.</p>
+    </div>
+  </section>
+
+  <section id="docs" class="panel" style="margin: 20px 5vw 0 5vw;">
+    <div class="tag">Docs</div>
+    <h2>Fast start</h2>
+    <div class="columns">
+      <div>
+        <strong>Install</strong>
+        <p>No install needed for the static registries. Import the platform and run.</p>
+      </div>
+      <div>
+        <strong>Examples</strong>
+        <p><code>platform.build_openai_chat_request('agent-010', 'Draft a release note')</code></p>
+      </div>
+      <div>
+        <strong>Support</strong>
+        <p>OpenAI compatible, CrewAI inspired, built for deterministic delivery.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    CrewAI Mirror · Built for the kingdom-monorepo agent platform
+  </footer>
+</body>
+</html>
