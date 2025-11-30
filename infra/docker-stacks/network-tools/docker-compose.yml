@@ -1,0 +1,269 @@
+version: '3.8'
+
+services:
+  # Network troubleshooting toolkit
+  netshoot:
+    image: nicolaka/netshoot:latest
+    container_name: netshoot
+    command: sleep infinity
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    privileged: true
+    restart: unless-stopped
+
+  # DNS server (Pi-hole alternative)
+  dnsmasq:
+    image: jpillora/dnsmasq:latest
+    container_name: dnsmasq
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "5380:8080"
+    environment:
+      - HTTP_USER=admin
+      - HTTP_PASS=admin
+    volumes:
+      - ./dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # Network monitoring and packet analyzer
+  ntopng:
+    image: ntop/ntopng:stable
+    container_name: ntopng
+    ports:
+      - "3050:3000"
+    environment:
+      - NTOPNG_ARGS=--community
+    volumes:
+      - ntopng_data:/var/lib/ntopng
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    restart: unless-stopped
+
+  # Speedtest server
+  speedtest:
+    image: openspeedtest/latest:latest
+    container_name: speedtest
+    ports:
+      - "3060:3000"
+      - "3061:3001"
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # Network scanner (Nmap web interface)
+  nmap-web:
+    image: instrumentisto/nmap:latest
+    container_name: nmap-web
+    command: sleep infinity
+    networks:
+      - network-tools
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    restart: unless-stopped
+
+  # HTTP/HTTPS proxy with web interface
+  tinyproxy:
+    image: vimagick/tinyproxy:latest
+    container_name: tinyproxy
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./tinyproxy/tinyproxy.conf:/etc/tinyproxy/tinyproxy.conf
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # SOCKS5 proxy
+  dante:
+    image: vimagick/dante:latest
+    container_name: dante-socks
+    ports:
+      - "1080:1080"
+    volumes:
+      - ./dante/sockd.conf:/etc/sockd.conf
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # Network traffic analyzer
+  tcpdump:
+    image: kaazing/tcpdump:latest
+    container_name: tcpdump
+    command: tcpdump -i any -w /data/capture.pcap
+    volumes:
+      - ./captures:/data
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    restart: unless-stopped
+
+  # Bandwidth monitor
+  bmon:
+    image: alpine:latest
+    container_name: bmon
+    command: sh -c "apk add --no-cache bmon && bmon"
+    network_mode: host
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+  # Network performance testing
+  iperf3:
+    image: networkstatic/iperf3:latest
+    container_name: iperf3
+    command: -s
+    ports:
+      - "5201:5201/tcp"
+      - "5201:5201/udp"
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # HTTP load testing tool
+  hey:
+    image: williamyeh/hey:latest
+    container_name: hey
+    command: sleep infinity
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # Advanced curl with UI
+  httpie:
+    image: alpine:latest
+    container_name: httpie
+    command: sh -c "apk add --no-cache httpie curl wget && sleep infinity"
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # DNS utilities
+  dns-tools:
+    image: alpine:latest
+    container_name: dns-tools
+    command: sh -c "apk add --no-cache bind-tools drill ldns && sleep infinity"
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # Network mapper and port scanner
+  masscan:
+    image: ibre5041/masscan:latest
+    container_name: masscan
+    command: sleep infinity
+    networks:
+      - network-tools
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    restart: unless-stopped
+
+  # Traceroute and ping tools
+  traceroute:
+    image: alpine:latest
+    container_name: traceroute
+    command: sh -c "apk add --no-cache iputils bind-tools mtr && sleep infinity"
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # WebSocket testing
+  wscat:
+    image: node:20-alpine
+    container_name: wscat
+    command: sh -c "npm install -g wscat && sleep infinity"
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # gRPC testing tools
+  grpcurl:
+    image: fullstorydev/grpcurl:latest
+    container_name: grpcurl
+    command: sleep infinity
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # Network diagnostics UI
+  netdata:
+    image: netdata/netdata:latest
+    container_name: netdata
+    hostname: netdata
+    ports:
+      - "19999:19999"
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # Network latency testing
+  smokeping:
+    image: linuxserver/smokeping:latest
+    container_name: smokeping
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+    ports:
+      - "8480:80"
+    volumes:
+      - smokeping_config:/config
+      - smokeping_data:/data
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+  # Multi-tool container with various utilities
+  network-multitool:
+    image: praqma/network-multitool:latest
+    container_name: network-multitool
+    environment:
+      - HTTP_PORT=8080
+      - HTTPS_PORT=8443
+    ports:
+      - "8070:8080"
+      - "8443:8443"
+    networks:
+      - network-tools
+    restart: unless-stopped
+
+networks:
+  network-tools:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  ntopng_data:
+  netdataconfig:
+  netdatalib:
+  netdatacache:
+  smokeping_config:
+  smokeping_data:

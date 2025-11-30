@@ -1,0 +1,445 @@
+version: '3.8'
+
+services:
+  # OpenAI-compatible API server
+  openai-api:
+    image: ghcr.io/berriai/litellm:latest
+    container_name: ai-openai-api
+    ports:
+      - "4000:4000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - COHERE_API_KEY=${COHERE_API_KEY}
+      - DATABASE_URL=${DATABASE_URL:-sqlite:////app/data/litellm.db}
+    volumes:
+      - ./litellm/config.yaml:/app/config.yaml
+      - litellm_data:/app/data
+    networks:
+      - ai-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Local LLM with Ollama
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ai-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    networks:
+      - ai-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # Ollama Web UI
+  ollama-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: ai-ollama-webui
+    ports:
+      - "3000:8080"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY:-changeme}
+    volumes:
+      - ollama_webui_data:/app/backend/data
+    depends_on:
+      - ollama
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # Text Generation WebUI (oobabooga)
+  text-generation-webui:
+    image: atinoda/text-generation-webui:default
+    container_name: ai-text-generation-webui
+    ports:
+      - "7860:7860"
+      - "5000:5000"
+      - "5005:5005"
+    volumes:
+      - ./text-generation-webui/models:/app/models
+      - ./text-generation-webui/loras:/app/loras
+      - ./text-generation-webui/presets:/app/presets
+      - text_gen_data:/app/outputs
+    environment:
+      - CLI_ARGS=--listen --api --extensions api
+    networks:
+      - ai-network
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # LangChain agent runtime
+  langchain-agent:
+    image: python:3.11
+    container_name: ai-langchain-agent
+    working_dir: /app
+    command:
+      - sh
+      - -c
+      - |
+        pip install --no-cache-dir langchain langchain-openai langchain-anthropic langserve fastapi uvicorn &&
+        cat > /app/agent.py <<'EOFPY'
+        from fastapi import FastAPI
+        from langserve import add_routes
+        from langchain.agents import AgentExecutor, create_openai_functions_agent
+        from langchain_openai import ChatOpenAI
+        from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
+        from langchain.tools import Tool
+        import os
+        app = FastAPI(title='LangChain Agent API')
+        llm = ChatOpenAI(
+            openai_api_base=os.getenv('OPENAI_API_BASE', 'http://openai-api:4000/v1'),
+            openai_api_key=os.getenv('OPENAI_API_KEY', 'dummy')
+        )
+        tools = []
+        prompt = ChatPromptTemplate.from_messages([
+            ('system', 'You are a helpful AI assistant.'),
+            MessagesPlaceholder(variable_name='chat_history', optional=True),
+            ('user', '{input}'),
+            MessagesPlaceholder(variable_name='agent_scratchpad')
+        ])
+        agent = create_openai_functions_agent(llm, tools, prompt)
+        agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+        add_routes(app, agent_executor, path='/agent')
+        if __name__ == '__main__':
+            import uvicorn
+            uvicorn.run(app, host='0.0.0.0', port=8000)
+        EOFPY
+        python /app/agent.py
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_API_BASE=http://openai-api:4000/v1
+    volumes:
+      - ./langchain/agents:/app/agents
+      - ./langchain/data:/app/data
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # AutoGPT
+  autogpt:
+    image: significantgravitas/auto-gpt:latest
+    container_name: ai-autogpt
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - EXECUTE_LOCAL_COMMANDS=true
+    volumes:
+      - ./autogpt/data:/app/data
+      - ./autogpt/workspace:/app/workspace
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # AgentGPT (web-based AutoGPT)
+  agentgpt:
+    image: reworkd/agentgpt:latest
+    container_name: ai-agentgpt
+    ports:
+      - "3001:3000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DATABASE_URL=postgresql://agentgpt:agentgpt@agentgpt-db:5432/agentgpt
+      - NEXTAUTH_URL=http://localhost:3001
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-changeme}
+    depends_on:
+      - agentgpt-db
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # PostgreSQL for AgentGPT
+  agentgpt-db:
+    image: postgres:16-alpine
+    container_name: ai-agentgpt-db
+    environment:
+      POSTGRES_DB: agentgpt
+      POSTGRES_USER: agentgpt
+      POSTGRES_PASSWORD: agentgpt
+    volumes:
+      - agentgpt_db_data:/var/lib/postgresql/data
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # CrewAI Multi-Agent System
+  crewai:
+    image: python:3.11
+    container_name: ai-crewai
+    working_dir: /app
+    command:
+      - sh
+      - -c
+      - |
+        pip install --no-cache-dir crewai crewai-tools openai anthropic fastapi uvicorn &&
+        cat > /app/crew.py <<'EOFCREW'
+        from crewai import Agent, Task, Crew, Process
+        from langchain_openai import ChatOpenAI
+        import os
+        import time
+        llm = ChatOpenAI(
+            openai_api_base=os.getenv('OPENAI_API_BASE', 'http://openai-api:4000/v1'),
+            openai_api_key=os.getenv('OPENAI_API_KEY', 'dummy')
+        )
+        researcher = Agent(
+            role='Research Analyst',
+            goal='Research and analyze information',
+            backstory='Expert researcher with analytical skills',
+            llm=llm,
+            verbose=True
+        )
+        writer = Agent(
+            role='Content Writer',
+            goal='Create engaging content',
+            backstory='Experienced writer with creative flair',
+            llm=llm,
+            verbose=True
+        )
+        research_task = Task(
+            description='Research the given topic',
+            agent=researcher,
+            expected_output='Research findings'
+        )
+        write_task = Task(
+            description='Write content based on research',
+            agent=writer,
+            expected_output='Written content'
+        )
+        crew = Crew(
+            agents=[researcher, writer],
+            tasks=[research_task, write_task],
+            process=Process.sequential,
+            verbose=True
+        )
+        print('CrewAI initialized and ready')
+        while True:
+            time.sleep(60)
+        EOFCREW
+        python /app/crew.py
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_API_BASE=http://openai-api:4000/v1
+    volumes:
+      - ./crewai/crews:/app/crews
+      - ./crewai/data:/app/data
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # n8n - Workflow automation with AI
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: ai-n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-admin}
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=UTC
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # Flowise - LangChain visual builder
+  flowise:
+    image: flowiseai/flowise:latest
+    container_name: ai-flowise
+    ports:
+      - "3002:3000"
+    environment:
+      - FLOWISE_USERNAME=${FLOWISE_USER:-admin}
+      - FLOWISE_PASSWORD=${FLOWISE_PASSWORD:-admin}
+      - DATABASE_PATH=/root/.flowise
+      - APIKEY_PATH=/root/.flowise
+      - SECRETKEY_PATH=/root/.flowise
+      - LOG_PATH=/root/.flowise/logs
+    volumes:
+      - flowise_data:/root/.flowise
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # LangFlow - Another LangChain UI
+  langflow:
+    image: logspace/langflow:latest
+    container_name: ai-langflow
+    ports:
+      - "7861:7860"
+    environment:
+      - LANGFLOW_DATABASE_URL=sqlite:////app/langflow/langflow.db
+    volumes:
+      - langflow_data:/app/langflow
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # Vector database (Qdrant)
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: ai-qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # Vector database (Weaviate)
+  weaviate:
+    image: semitechnologies/weaviate:latest
+    container_name: ai-weaviate
+    ports:
+      - "8080:8080"
+    environment:
+      - QUERY_DEFAULTS_LIMIT=25
+      - AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true
+      - PERSISTENCE_DATA_PATH=/var/lib/weaviate
+      - DEFAULT_VECTORIZER_MODULE=none
+      - CLUSTER_HOSTNAME=node1
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # Chroma vector database
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: ai-chromadb
+    ports:
+      - "8001:8000"
+    volumes:
+      - chromadb_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=FALSE
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: ai-redis
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-ai_redis_pass}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # MinIO for S3-compatible storage
+  minio:
+    image: minio/minio:latest
+    container_name: ai-minio
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=${MINIO_USER:-minioadmin}
+      - MINIO_ROOT_PASSWORD=${MINIO_PASSWORD:-minioadmin}
+    volumes:
+      - minio_data:/data
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # Jupyter for AI development
+  jupyter:
+    image: jupyter/datascience-notebook:latest
+    container_name: ai-jupyter
+    ports:
+      - "8888:8888"
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - GRANT_SUDO=yes
+    volumes:
+      - ./jupyter/notebooks:/home/jovyan/work
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+  # Agent monitoring dashboard
+  agent-monitor:
+    image: python:3.11
+    container_name: ai-agent-monitor
+    working_dir: /app
+    command:
+      - sh
+      - -c
+      - |
+        pip install --no-cache-dir fastapi uvicorn prometheus-client &&
+        cat > /app/monitor.py <<'EOFMON'
+        from fastapi import FastAPI
+        from prometheus_client import Counter, Gauge, generate_latest
+        app = FastAPI(title='Agent Monitor')
+        agent_requests = Counter('agent_requests_total', 'Total agent requests')
+        agent_errors = Counter('agent_errors_total', 'Total agent errors')
+        active_agents = Gauge('active_agents', 'Currently active agents')
+        @app.get('/metrics')
+        async def metrics():
+            return generate_latest()
+        @app.get('/health')
+        async def health():
+            return {'status': 'healthy'}
+        if __name__ == '__main__':
+            import uvicorn
+            uvicorn.run(app, host='0.0.0.0', port=9090)
+        EOFMON
+        python /app/monitor.py
+    ports:
+      - "9090:9090"
+    networks:
+      - ai-network
+    restart: unless-stopped
+
+networks:
+  ai-network:
+    driver: bridge
+
+volumes:
+  litellm_data:
+  ollama_data:
+  ollama_webui_data:
+  text_gen_data:
+  agentgpt_db_data:
+  n8n_data:
+  flowise_data:
+  langflow_data:
+  qdrant_data:
+  weaviate_data:
+  chromadb_data:
+  redis_data:
+  minio_data:

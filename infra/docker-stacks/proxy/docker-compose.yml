@@ -1,0 +1,213 @@
+version: '3.8'
+
+services:
+  # Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: proxy-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./nginx/logs:/var/log/nginx
+      - ./nginx/cache:/var/cache/nginx
+    networks:
+      - proxy-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Traefik reverse proxy and load balancer
+  traefik:
+    image: traefik:v2.10
+    container_name: proxy-traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=${ACME_EMAIL:-admin@example.com}"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--log.level=${TRAEFIK_LOG_LEVEL:-INFO}"
+      - "--accesslog=true"
+      - "--metrics.prometheus=true"
+    ports:
+      - "8080:80"
+      - "8443:443"
+      - "8888:8080"  # Traefik dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/letsencrypt:/letsencrypt
+      - ./traefik/config:/etc/traefik
+      - ./traefik/logs:/var/log/traefik
+    networks:
+      - proxy-network
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.localhost`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+
+  # HAProxy load balancer
+  haproxy:
+    image: haproxy:2.8-alpine
+    container_name: proxy-haproxy
+    ports:
+      - "9080:80"
+      - "9443:443"
+      - "8404:8404"  # Stats page
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - ./haproxy/ssl:/etc/ssl/certs:ro
+      - ./haproxy/errors:/etc/haproxy/errors:ro
+    networks:
+      - proxy-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "haproxy", "-c", "-f", "/usr/local/etc/haproxy/haproxy.cfg"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Caddy server (automatic HTTPS)
+  caddy:
+    image: caddy:2-alpine
+    container_name: proxy-caddy
+    ports:
+      - "10080:80"
+      - "10443:443"
+      - "10443:443/udp"  # HTTP/3
+      - "2019:2019"      # Admin API
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+      - ./caddy/logs:/var/log/caddy
+    networks:
+      - proxy-network
+    restart: unless-stopped
+
+  # Squid proxy
+  squid:
+    image: ubuntu/squid:latest
+    container_name: proxy-squid
+    ports:
+      - "3128:3128"
+    volumes:
+      - ./squid/squid.conf:/etc/squid/squid.conf:ro
+      - ./squid/cache:/var/spool/squid
+      - ./squid/logs:/var/log/squid
+    networks:
+      - proxy-network
+    restart: unless-stopped
+
+  # Privoxy (privacy-focused proxy)
+  privoxy:
+    image: vimagick/privoxy:latest
+    container_name: proxy-privoxy
+    ports:
+      - "8118:8118"
+    volumes:
+      - ./privoxy/config:/etc/privoxy
+      - ./privoxy/logs:/var/log/privoxy
+    networks:
+      - proxy-network
+    restart: unless-stopped
+
+  # SOCKS5 proxy (Dante)
+  dante:
+    image: vimagick/dante:latest
+    container_name: proxy-dante
+    ports:
+      - "1080:1080"
+    volumes:
+      - ./dante/sockd.conf:/etc/sockd.conf:ro
+    networks:
+      - proxy-network
+    restart: unless-stopped
+
+  # HTTP proxy (tinyproxy)
+  tinyproxy:
+    image: vimagick/tinyproxy:latest
+    container_name: proxy-tinyproxy
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./tinyproxy/tinyproxy.conf:/etc/tinyproxy/tinyproxy.conf:ro
+    networks:
+      - proxy-network
+    restart: unless-stopped
+
+  # mitmproxy - SSL-capable proxy
+  mitmproxy:
+    image: mitmproxy/mitmproxy:latest
+    container_name: proxy-mitmproxy
+    command: mitmweb --web-host 0.0.0.0 --web-port 8081 --listen-host 0.0.0.0 --listen-port 8080
+    ports:
+      - "8282:8080"  # Proxy port
+      - "8281:8081"  # Web interface
+    volumes:
+      - ./mitmproxy:/home/mitmproxy/.mitmproxy
+    networks:
+      - proxy-network
+    restart: unless-stopped
+
+  # Envoy proxy
+  envoy:
+    image: envoyproxy/envoy:v1.28-latest
+    container_name: proxy-envoy
+    command: /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
+    ports:
+      - "10000:10000"  # Listener
+      - "9901:9901"    # Admin interface
+    volumes:
+      - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml:ro
+      - ./envoy/logs:/var/log/envoy
+    networks:
+      - proxy-network
+    restart: unless-stopped
+
+  # Test backend service
+  whoami:
+    image: traefik/whoami:latest
+    container_name: proxy-whoami
+    networks:
+      - proxy-network
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
+      - "traefik.http.services.whoami.loadbalancer.server.port=80"
+
+  # Test backend service 2
+  httpbin:
+    image: kennethreitz/httpbin:latest
+    container_name: proxy-httpbin
+    networks:
+      - proxy-network
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.httpbin.rule=Host(`httpbin.localhost`)"
+      - "traefik.http.services.httpbin.loadbalancer.server.port=80"
+
+  # Proxy test and monitoring tool
+  proxy-tester:
+    image: alpine:latest
+    container_name: proxy-tester
+    command: sh -c "apk add --no-cache curl wget netcat-openbsd && sleep infinity"
+    networks:
+      - proxy-network
+    restart: unless-stopped
+
+networks:
+  proxy-network:
+    driver: bridge

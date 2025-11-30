@@ -1,0 +1,237 @@
+version: '3.8'
+
+services:
+  # SSH Bastion Host
+  bastion:
+    image: linuxserver/openssh-server:latest
+    container_name: ssh-bastion
+    hostname: bastion
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=UTC
+      - PUBLIC_KEY_FILE=/config/authorized_keys
+      - SUDO_ACCESS=false
+      - PASSWORD_ACCESS=false
+      - USER_NAME=${BASTION_USER:-bastion}
+    ports:
+      - "2222:2222"
+    volumes:
+      - ./config:/config
+      - ./ssh_keys:/ssh_keys:ro
+      - ./logs:/var/log
+    networks:
+      - bastion-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "2222"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # SSH Jump Host with audit logging
+  jump-host:
+    image: alpine:latest
+    container_name: ssh-jumphost
+    command:
+      - sh
+      - -c
+      - |
+        apk add --no-cache openssh-server openssh-client sudo &&
+        ssh-keygen -A &&
+        mkdir -p /var/log/ssh &&
+        echo "root:$${JUMP_ROOT_PASSWORD:-changeme}" | chpasswd &&
+        echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config &&
+        echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config &&
+        echo 'PubkeyAuthentication yes' >> /etc/ssh/sshd_config &&
+        echo 'LogLevel VERBOSE' >> /etc/ssh/sshd_config &&
+        echo 'SyslogFacility AUTHPRIV' >> /etc/ssh/sshd_config &&
+        /usr/sbin/sshd -D -e
+    ports:
+      - "2223:22"
+    volumes:
+      - ./jump-host/config:/etc/ssh
+      - ./jump-host/logs:/var/log/ssh
+      - ./jump-host/keys:/root/.ssh
+    networks:
+      - bastion-network
+    restart: unless-stopped
+
+  # Teleport Community Edition - Modern SSH bastion
+  teleport:
+    image: public.ecr.aws/gravitational/teleport:14
+    container_name: ssh-teleport
+    entrypoint: /bin/sh
+    command: -c "teleport configure -o file > /etc/teleport.yaml && teleport start -c /etc/teleport.yaml"
+    ports:
+      - "3023:3023"  # SSH
+      - "3024:3024"  # SSH reverse tunnel
+      - "3025:3025"  # Auth service
+      - "3080:3080"  # Web UI
+    volumes:
+      - teleport_data:/var/lib/teleport
+      - ./teleport/config:/etc/teleport
+      - ./teleport/logs:/var/log/teleport
+    networks:
+      - bastion-network
+    restart: unless-stopped
+    environment:
+      - TELEPORT_UID=1000
+      - TELEPORT_GID=1000
+
+  # Guacamole - Clientless remote desktop gateway
+  guacamole:
+    image: guacamole/guacamole:latest
+    container_name: ssh-guacamole
+    ports:
+      - "8080:8080"
+    environment:
+      - GUACD_HOSTNAME=guacd
+      - POSTGRES_HOSTNAME=guacamole-db
+      - POSTGRES_DATABASE=guacamole_db
+      - POSTGRES_USER=guacamole_user
+      - POSTGRES_PASSWORD=${GUACAMOLE_DB_PASSWORD:-guacamole}
+    depends_on:
+      - guacd
+      - guacamole-db
+    networks:
+      - bastion-network
+    restart: unless-stopped
+
+  # Guacamole daemon
+  guacd:
+    image: guacamole/guacd:latest
+    container_name: ssh-guacd
+    networks:
+      - bastion-network
+    restart: unless-stopped
+
+  # PostgreSQL for Guacamole
+  guacamole-db:
+    image: postgres:16-alpine
+    container_name: ssh-guacamole-db
+    environment:
+      POSTGRES_DB: guacamole_db
+      POSTGRES_USER: guacamole_user
+      POSTGRES_PASSWORD: ${GUACAMOLE_DB_PASSWORD:-guacamole}
+    volumes:
+      - guacamole_db_data:/var/lib/postgresql/data
+      - ./guacamole/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql:ro
+    networks:
+      - bastion-network
+    restart: unless-stopped
+
+  # Audit logging with auditd
+  audit-logger:
+    image: alpine:latest
+    container_name: ssh-audit-logger
+    command:
+      - sh
+      - -c
+      - |
+        apk add --no-cache audit rsyslog &&
+        mkdir -p /var/log/audit &&
+        auditd &&
+        auditctl -a exit,always -F arch=b64 -S connect -S accept -k ssh_connections &&
+        tail -f /var/log/audit/audit.log
+    volumes:
+      - ./audit/logs:/var/log/audit
+      - ./audit/rules:/etc/audit/rules.d
+    networks:
+      - bastion-network
+    privileged: true
+    restart: unless-stopped
+
+  # SSH session recording with asciinema
+  session-recorder:
+    image: alpine:latest
+    container_name: ssh-session-recorder
+    command:
+      - sh
+      - -c
+      - |
+        apk add --no-cache python3 py3-pip &&
+        pip3 install asciinema &&
+        mkdir -p /recordings &&
+        sleep infinity
+    volumes:
+      - ./recordings:/recordings
+    networks:
+      - bastion-network
+    restart: unless-stopped
+
+  # SSH connection monitor
+  connection-monitor:
+    image: alpine:latest
+    container_name: ssh-connection-monitor
+    command: >
+      sh -c "apk add --no-cache netcat-openbsd curl &&
+      while true; do
+        echo '=== SSH Bastion Connections ===' > /logs/connections.log;
+        nc -zv bastion 2222 >> /logs/connections.log 2>&1;
+        nc -zv ssh-jumphost 22 >> /logs/connections.log 2>&1;
+        echo \"Timestamp: $$(date)\" >> /logs/connections.log;
+        sleep 60;
+      done"
+    volumes:
+      - ./monitor/logs:/logs
+    networks:
+      - bastion-network
+    restart: unless-stopped
+
+  # Fail2ban for security
+  fail2ban:
+    image: crazymax/fail2ban:latest
+    container_name: ssh-fail2ban
+    environment:
+      - TZ=UTC
+      - F2B_LOG_LEVEL=INFO
+      - F2B_DB_PURGE_AGE=30d
+    volumes:
+      - ./fail2ban/data:/data
+      - ./logs:/var/log:ro
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    restart: unless-stopped
+
+  # SSH key management service
+  key-manager:
+    image: alpine:latest
+    container_name: ssh-key-manager
+    command:
+      - sh
+      - -c
+      - |
+        apk add --no-cache openssh-keygen openssh-client &&
+        mkdir -p /keys/generated /keys/authorized &&
+        cat > /keys/README.md <<'EOFKEY'
+        # SSH Key Management
+        ## Generate new SSH key pair
+        ssh-keygen -t ed25519 -f /keys/generated/key_name -C 'comment'
+        ## Generate RSA key pair
+        ssh-keygen -t rsa -b 4096 -f /keys/generated/key_name -C 'comment'
+        ## Copy public key
+        cat /keys/generated/key_name.pub >> /keys/authorized/authorized_keys
+        ## Set permissions
+        chmod 600 /keys/generated/* /keys/authorized/authorized_keys
+        chmod 644 /keys/generated/*.pub
+        EOFKEY
+        sleep infinity
+    volumes:
+      - ./ssh_keys:/keys
+    networks:
+      - bastion-network
+    restart: unless-stopped
+
+networks:
+  bastion-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
+
+volumes:
+  teleport_data:
+  guacamole_db_data:
