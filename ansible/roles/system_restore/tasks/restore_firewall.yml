@@ -1,0 +1,21 @@
+---
+# Firewall restoration tasks
+- name: Warning about firewall restoration
+  debug:
+    msg: "WARNING: Firewall restoration is disabled by default as it can cause connectivity issues. Manual configuration recommended."
+
+- name: Read firewall file
+  set_fact:
+    firewall_file: "{{ restore_discovery_path }}/firewall.txt"
+
+- name: Check if firewall file exists
+  stat:
+    path: "{{ firewall_file }}"
+  register: firewall_stat
+  delegate_to: localhost
+  become: false
+
+- name: Display firewall restoration info
+  debug:
+    msg: "Firewall configuration found in {{ firewall_file }}. Manual review and restoration strongly recommended."
+  when: firewall_stat.stat.exists

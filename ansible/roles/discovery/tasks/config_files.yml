@@ -1,0 +1,96 @@
+---
+# Configuration files discovery tasks
+- name: Create config files directory
+  file:
+    path: "{{ output_path }}/config_files"
+    state: directory
+    mode: '0755'
+  delegate_to: localhost
+  become: false
+
+- name: Copy configuration files
+  block:
+    - name: Check which config paths exist
+      stat:
+        path: "{{ item }}"
+      register: config_path_stats
+      loop: "{{ config_file_paths }}"
+      failed_when: false
+
+    - name: Archive existing config directories
+      archive:
+        path: "{{ item.item }}"
+        dest: "/tmp/config_{{ item.item | basename }}.tar.gz"
+        format: gz
+      when: item.stat.exists and item.stat.isdir
+      loop: "{{ config_path_stats.results }}"
+      failed_when: false
+
+    - name: Fetch archived config directories
+      fetch:
+        src: "/tmp/config_{{ item.item | basename }}.tar.gz"
+        dest: "{{ output_path }}/config_files/{{ item.item | basename }}.tar.gz"
+        flat: yes
+      when: item.stat.exists and item.stat.isdir
+      loop: "{{ config_path_stats.results }}"
+      failed_when: false
+
+    - name: Fetch individual config files
+      fetch:
+        src: "{{ item.item }}"
+        dest: "{{ output_path }}/config_files/{{ item.item | basename }}"
+        flat: yes
+      when: item.stat.exists and not item.stat.isdir
+      loop: "{{ config_path_stats.results }}"
+      failed_when: false
+
+- name: Get environment variables
+  shell: env | sort
+  register: env_vars
+  changed_when: false
+
+- name: Get system-wide environment
+  shell: cat /etc/environment
+  register: system_env
+  changed_when: false
+  failed_when: false
+
+- name: Get profile configurations
+  shell: |
+    echo "=== /etc/profile ==="
+    cat /etc/profile
+    echo ""
+    echo "=== /etc/profile.d/ ==="
+    find /etc/profile.d/ -type f -exec echo "--- {} ---" \; -exec cat {} \;
+  register: profile_configs
+  changed_when: false
+  failed_when: false
+
+- name: Get bash configurations
+  shell: |
+    echo "=== /etc/bash.bashrc ==="
+    cat /etc/bash.bashrc 2>/dev/null || echo "Not found"
+    echo ""
+    echo "=== /etc/bashrc ==="
+    cat /etc/bashrc 2>/dev/null || echo "Not found"
+  register: bash_configs
+  changed_when: false
+  failed_when: false
+
+- name: Save environment and profile information
+  copy:
+    content: |
+      Environment Variables:
+      {{ env_vars.stdout }}
+      
+      System Environment:
+      {{ system_env.stdout | default('N/A') }}
+      
+      Profile Configurations:
+      {{ profile_configs.stdout | default('N/A') }}
+      
+      Bash Configurations:
+      {{ bash_configs.stdout | default('N/A') }}
+    dest: "{{ output_path }}/environment.txt"
+  delegate_to: localhost
+  become: false

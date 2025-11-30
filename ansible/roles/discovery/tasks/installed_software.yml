@@ -1,0 +1,151 @@
+---
+# Installed software and applications discovery
+- name: Get installed binary executables in /usr/bin
+  shell: ls -lh /usr/bin/ | head -100
+  register: usr_bin
+  changed_when: false
+  failed_when: false
+
+- name: Get installed applications in /usr/local/bin
+  shell: ls -lh /usr/local/bin/
+  register: usr_local_bin
+  changed_when: false
+  failed_when: false
+
+- name: Get installed applications in /opt
+  shell: ls -la /opt/
+  register: opt_apps
+  changed_when: false
+  failed_when: false
+
+- name: Get desktop applications
+  shell: |
+    find /usr/share/applications/ -name "*.desktop" -exec basename {} \; 2>/dev/null | sort
+  register: desktop_apps
+  changed_when: false
+  failed_when: false
+
+- name: Get programming language versions
+  shell: |
+    echo "=== Python ==="
+    python3 --version 2>&1 || echo "Not installed"
+    python --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== Node.js ==="
+    node --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== NPM ==="
+    npm --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== Java ==="
+    java -version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== Ruby ==="
+    ruby --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== Go ==="
+    go version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== Rust ==="
+    rustc --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== PHP ==="
+    php --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== Perl ==="
+    perl --version 2>&1 || echo "Not installed"
+  register: language_versions
+  changed_when: false
+  failed_when: false
+
+- name: Get database versions
+  shell: |
+    echo "=== MySQL ==="
+    mysql --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== PostgreSQL ==="
+    psql --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== MongoDB ==="
+    mongod --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== Redis ==="
+    redis-server --version 2>&1 || echo "Not installed"
+  register: database_versions
+  changed_when: false
+  failed_when: false
+
+- name: Get web server versions
+  shell: |
+    echo "=== Apache ==="
+    apache2 -v 2>&1 || httpd -v 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== Nginx ==="
+    nginx -v 2>&1 || echo "Not installed"
+  register: webserver_versions
+  changed_when: false
+  failed_when: false
+
+- name: Get container tools
+  shell: |
+    echo "=== Docker ==="
+    docker --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== Podman ==="
+    podman --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== Kubernetes ==="
+    kubectl version --client 2>&1 || echo "Not installed"
+  register: container_tools
+  changed_when: false
+  failed_when: false
+
+- name: Get development tools
+  shell: |
+    echo "=== Git ==="
+    git --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== Make ==="
+    make --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== GCC ==="
+    gcc --version 2>&1 || echo "Not installed"
+    echo ""
+    echo "=== CMake ==="
+    cmake --version 2>&1 || echo "Not installed"
+  register: dev_tools
+  changed_when: false
+  failed_when: false
+
+- name: Save installed software information
+  copy:
+    content: |
+      /usr/bin/ executables (first 100):
+      {{ usr_bin.stdout | default('N/A') }}
+      
+      /usr/local/bin/ applications:
+      {{ usr_local_bin.stdout | default('N/A') }}
+      
+      /opt/ applications:
+      {{ opt_apps.stdout | default('N/A') }}
+      
+      Desktop Applications:
+      {{ desktop_apps.stdout | default('N/A') }}
+      
+      Programming Language Versions:
+      {{ language_versions.stdout | default('N/A') }}
+      
+      Database Versions:
+      {{ database_versions.stdout | default('N/A') }}
+      
+      Web Server Versions:
+      {{ webserver_versions.stdout | default('N/A') }}
+      
+      Container Tools:
+      {{ container_tools.stdout | default('N/A') }}
+      
+      Development Tools:
+      {{ dev_tools.stdout | default('N/A') }}
+    dest: "{{ output_path }}/installed_software.txt"
+  delegate_to: localhost
+  become: false
